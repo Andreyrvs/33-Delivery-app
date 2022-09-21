@@ -1,27 +1,33 @@
-.App {
+.pageContainer {
   align-items: center;
-  background: #0fa36b;
-  color: #464646;
   display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
+  height: 312px;
   justify-content: center;
+  margin-top: 50px;
   width: 100%;
 }
 
-.App > .logo {
-  animation: shake 1.5s infinite ease;
-  color: aliceblue;
-  font-family: Montserrat , sans-serif;
-  font-size: 3em;
-  font-weight: 900;
+.logoContainer {
+  align-items: center;
+  background-color: #b1c2be;
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px 3px grey;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 249px;
+  justify-content: center;
+  width: 249px;
 }
 
-.rocksGlass {
+.rocksGlassLogo {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-  width: 200px;
+  width: 164px;
+}
+
+.logo {
+  color: #036b52;
+  font-size: 1em;
 }
 
 @keyframes shake {
@@ -53,5 +59,3 @@
     transform: rotate(-10deg);
   }
 }
-
-
