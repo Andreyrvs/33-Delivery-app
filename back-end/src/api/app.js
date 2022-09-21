@@ -1,7 +1,15 @@
 const express = require('express');
 
-const app = express();
+const errorMiddleware = require('../middlewares/errorMiddleware');
 
-app.get('/coffee', (_req, res) => res.status(418).end());
-app.get('/', (_req, res) => res.json('Hellow world!'));
+const Router = require('../routes/Router');
+
+const app = express();
+app.use(express.json());
+
+app.use(Router);
+app.use(errorMiddleware);
+
+// app.get('/coffee', (_req, res) => res.status(418).end());
+
 module.exports = app;
