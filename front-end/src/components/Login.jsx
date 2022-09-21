@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-
+import validateEmail from '../util/validateEmail';
 import '../css/Login.css';
 
 export default function Login() {
@@ -8,13 +8,22 @@ export default function Login() {
   const [loginEmail, setloginEmail] = useState('');
   const [loginPassword, setloginPassword] = useState('');
   const [msgError, setmsgError] = useState('');
-  const [loginStatus, setLoginStatus] = useState(false);
+  // const [loginStatus, setLoginStatus] = useState(false);
   const [isDisabled, setisDisabled] = useState(true);
 
-  const validarEmail = (email) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
+  const dataUserArrayTest = [
+    { userEmail: 'zebirita@email.com', senha: '123456' },
+  ];
+
+  const validateDb = dataUserArrayTest.find((item) => {
+    let result = '';
+    if (loginEmail === item.userEmail && loginPassword === item.senha) {
+      result = true;
+    } else {
+      result = false;
+    }
+    return result;
+  });
 
   const handleInputEmail = ({ target }) => {
     setloginEmail(target.value);
@@ -24,25 +33,26 @@ export default function Login() {
     setloginPassword(target.value);
   };
 
-  const clickbutton = () => {
-    const NUMBER = 6;
-    if (loginPassword.length < NUMBER) {
-      setmsgError('A Senha deve ter no mínimo 6 caracteres');
-    } else {
-      setmsgError('');
-      if (loginStatus) return history.push('/trybe');
+  const clickbutton = (event) => {
+    event.preventDefault();
+    if (validateDb) {
+      // setLoginStatus(true);
+      history.push('/register');
+    } else if (!validateDb) {
+      // setLoginStatus(false);
+      setmsgError('Usuário ou senha inválidos');
+      // console.log(loginStatus, 'carai', msgError);
     }
   };
 
   useEffect(() => {
     const SIX = 6;
-    const validateEmail = validarEmail(loginEmail);
+    const validate = validateEmail(loginEmail);
     const psw = loginPassword.length >= SIX;
-    if (validateEmail && psw) {
-      setLoginStatus(true);
+    if (validate && psw) {
       setisDisabled(false);
     }
-  }, [loginEmail, loginPassword]);
+  }, [loginEmail, loginPassword, msgError, validateDb]);
 
   return (
     <div className="loginContainer">
@@ -96,6 +106,7 @@ export default function Login() {
         </button>
         <p
           className="loginMsgErro"
+          dataestid="common_login__element-invalid-email"
         >
           {
             msgError.length > 1 ? msgError : ''

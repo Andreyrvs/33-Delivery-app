@@ -24,6 +24,19 @@
   width: 200px;
 }
 
+.notFound {
+  align-items: center;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  height: 1000px;
+  width: 100%;
+}
+
+.notFound img {
+  max-width: 100%;
+}
+
 @keyframes shake {
 
   0% {
