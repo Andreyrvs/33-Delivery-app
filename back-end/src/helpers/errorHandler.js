@@ -5,8 +5,8 @@ class CustomError extends Error {
   }
 }
 
-function HandleThrowError(message, status) {
+function handleThrowError(message, status) {
   throw new CustomError(message, status);
 }
 
-module.exports = { HandleThrowError, CustomError };
+module.exports = { handleThrowError, CustomError };

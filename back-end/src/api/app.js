@@ -2,10 +2,11 @@ const express = require('express');
 
 const errorMiddleware = require('../middlewares/errorMiddleware');
 
-const Router = require('../routes/Router');
+const Router = require('../routes/router');
 
 const app = express();
 app.use(express.json());
+app.get('/test', (_req, res) => res.status(200).json('testeeeee'));
 
 app.use(Router);
 app.use(errorMiddleware);
