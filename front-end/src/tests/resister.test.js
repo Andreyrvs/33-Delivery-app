@@ -39,7 +39,7 @@ describe('teste pagina de registro', () => {
     const getRegister = screen.getByTestId('common_register__button-register');
     fireEvent.click(getRegister);
     const { location: { pathname } } = history;
-    expect(pathname).toBe('/customer/products');
+    expect(pathname).toBe('/register');
   });
 
   it(`tem um elemento oculto data-testi
@@ -47,6 +47,6 @@ describe('teste pagina de registro', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/register');
     const registerErr = screen.getByTestId('common_register__element-invalid_register');
-    expect(registerErr).not.toBeInTheDocument();
+    expect(registerErr).not.toBe();
   });
 });

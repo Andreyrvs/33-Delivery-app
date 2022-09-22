@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import validateEmail from '../util/validateEmail';
-import '../css/Cadastro.css';
+import '../css/Register.css';
 
-export default function Cadastro() {
+export default function Register() {
   const [nameUser, setName] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
   const [msgErro, setMsgError] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const history = useHistory();
 
   const handleInputName = ({ target }) => {
     if (target.name === 'cadastroName') {
@@ -41,23 +43,26 @@ export default function Cadastro() {
       passwordUser,
     };
     console.log(newUser);
+    history.push('/login');
     return newUser;
   };
 
   useEffect(() => {
     const SIX = 6;
+    const TWELVE = 12;
     const validate = validateEmail(emailUser);
     const psw = passwordUser.length >= SIX;
+    const vertifyNameLength = nameUser.length >= TWELVE;
 
     if (validateDb) {
       setMsgError('Usuário ja cadastrado');
     } else {
       setMsgError('');
     }
-    if (validate && psw && !validateDb) {
+    if (validate && psw && !validateDb && vertifyNameLength) {
       setIsDisabled(false);
     }
-  }, [emailUser, passwordUser, msgErro, validateDb]);
+  }, [emailUser, passwordUser, msgErro, validateDb, nameUser]);
 
   return (
     <div className="cadastroContainer">
