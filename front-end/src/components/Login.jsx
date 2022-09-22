@@ -79,7 +79,7 @@ export default function Login() {
               id="loginPassword"
               type="password"
               className="loginInput"
-              dataestid="common_login__input-password"
+              data-testid="common_login__input-password"
               placeholder="********"
               name="loginPassword"
               value={ loginPassword }
@@ -91,7 +91,7 @@ export default function Login() {
         <button
           type="submit"
           className="loginButton"
-          dataestid="common_login__button-login"
+          data-testid="common_login__button-login"
           onClick={ clickbutton }
           disabled={ isDisabled }
         >
@@ -100,13 +100,13 @@ export default function Login() {
         <button
           type="button"
           className="loginButAdd"
-          dataestid="common_login__button-register"
+          data-testid="common_login__button-register"
         >
           Ainda não tenho cadastro
         </button>
         <p
           className="loginMsgErro"
-          dataestid="common_login__element-invalid-email"
+          data-testid="common_login__element-invalid-email"
         >
           {
             msgError.length > 1 ? msgError : ''

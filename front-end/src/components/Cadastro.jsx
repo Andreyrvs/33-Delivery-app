@@ -99,7 +99,7 @@ export default function Cadastro() {
               id="cadastroPassword"
               type="password"
               className="loginInput"
-              dataestid="common_register__input-password"
+              data-testid="common_register__input-password"
               placeholder="********"
               name="cadastroPassword"
               minLength="6"
@@ -111,7 +111,7 @@ export default function Cadastro() {
         <button
           type="submit"
           className="cadastroButton"
-          dataestid="common_register__button-register"
+          data-testid="common_register__button-register"
           disabled={ isDisabled }
           onClick={ addUser }
         >
@@ -119,7 +119,7 @@ export default function Cadastro() {
         </button>
         <p
           className="cadastroMsgErro"
-          dataestid="common_register__element-invalid_register"
+          data-testid="common_register__element-invalid_register"
         >
           {
             msgErro.length > 0 ? msgErro : ''
