@@ -1,0 +1,21 @@
+.clientPageContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.clientContainer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  width: 70%;
+}
+
+.card {
+  margin-right: 20px;
+  margin-top: 20px;
+}

@@ -1,0 +1,89 @@
+.cardContainer {
+  align-items: center;
+  background-color: #eaf1ef;
+  border: 1px solid #eaf1ef;
+  display: flex;
+  flex-direction: column;
+  height: 486px;
+  justify-content: space-between;
+  width: 378px;
+}
+
+.cardImageContainer {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 357px;
+  justify-content: center;
+  width: 376px;
+}
+
+.cardImage {
+  align-items: center;
+  display: flex;
+  height: 276px;
+  justify-content: center;
+  width: 376px;
+}
+
+.cardImage img {
+  height: 90%;
+}
+
+.cardImageContainer span {
+  background-color: #f2fffc;
+  border-radius: 10px;
+  font-size: 36px;
+  font-weight: 900;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+.cardNameContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+
+.cardNameContainer span {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.cardQtdContqiner {
+  align-items: center;
+  background-color: #036b52;
+  border: solid 1px #036b52;
+  border-radius: 5px;
+  display: flex;
+  height: 52px;
+  justify-content: center;
+  width: 161px;
+}
+
+.cardQtdContqiner p {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  font-size: 24px;
+  height: 52px;
+  justify-content: center;
+  width: 62px;
+}
+
+.cardQtdContqiner button {
+  background-color: #036b52;
+  border: none;
+  color: white;
+  font-size: 48px;
+  height: 52px;
+  width: 74px;
+}
+

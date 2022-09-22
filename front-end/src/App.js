@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Cadastro from './components/Cadastro';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Register from './components/Register';
+import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 
@@ -8,10 +9,11 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={ LoginPage } />
-        <Route exact path="/login" component={ LoginPage } />
-        <Route exact path="/register" component={ Cadastro } />
-        <Route exact path="*" component={ NotFound } />
+        <Redirect exact from="/" to="/login" />
+        <Route path="/login" component={ LoginPage } />
+        <Route path="/register" component={ Register } />
+        <Route path="/customer/products" component={ ClientPage } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     </div>
   );
