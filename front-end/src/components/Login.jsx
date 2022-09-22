@@ -8,17 +8,20 @@ export default function Login() {
   const [loginEmail, setloginEmail] = useState('');
   const [loginPassword, setloginPassword] = useState('');
   const [msgError, setmsgError] = useState('');
-  // const [loginStatus, setLoginStatus] = useState(false);
   const [isDisabled, setisDisabled] = useState(true);
+  const SIX = 6;
+  let user = {};
 
   const dataUserArrayTest = [
-    { userEmail: 'zebirita@email.com', senha: '123456' },
+    { userEmail: 'zebirita@email.com', senha: '123456', userName: 'Robervaldo' },
   ];
 
-  const validateDb = dataUserArrayTest.find((item) => {
+  const validateDb = dataUserArrayTest.map((item) => {
     let result = '';
     if (loginEmail === item.userEmail && loginPassword === item.senha) {
       result = true;
+      user = item;
+      console.log(user);
     } else {
       result = false;
     }
@@ -36,17 +39,18 @@ export default function Login() {
   const clickbutton = (event) => {
     event.preventDefault();
     if (validateDb) {
-      // setLoginStatus(true);
-      history.push('/register');
+      localStorage.setItem('user', user.userName);
+      history.push('/customer/products');
     } else if (!validateDb) {
-      // setLoginStatus(false);
       setmsgError('Usuário ou senha inválidos');
-      // console.log(loginStatus, 'carai', msgError);
     }
   };
 
+  const adNewUser = () => {
+    history.push('/register');
+  };
+
   useEffect(() => {
-    const SIX = 6;
     const validate = validateEmail(loginEmail);
     const psw = loginPassword.length >= SIX;
     if (validate && psw) {
@@ -79,7 +83,7 @@ export default function Login() {
               id="loginPassword"
               type="password"
               className="loginInput"
-              dataestid="common_login__input-password"
+              data-testid="common_login__input-password"
               placeholder="********"
               name="loginPassword"
               value={ loginPassword }
@@ -91,7 +95,7 @@ export default function Login() {
         <button
           type="submit"
           className="loginButton"
-          dataestid="common_login__button-login"
+          data-testid="common_login__button-login"
           onClick={ clickbutton }
           disabled={ isDisabled }
         >
@@ -100,13 +104,14 @@ export default function Login() {
         <button
           type="button"
           className="loginButAdd"
-          dataestid="common_login__button-register"
+          data-testid="common_login__button-register"
+          onClick={ adNewUser }
         >
           Ainda não tenho cadastro
         </button>
         <p
           className="loginMsgErro"
-          dataestid="common_login__element-invalid-email"
+          data-testid="common_login__element-invalid-email"
         >
           {
             msgError.length > 1 ? msgError : ''

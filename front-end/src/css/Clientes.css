@@ -1,0 +1,15 @@
+.clienteContainer {
+  align-items: center;
+  background-color: rgb(216, 255, 242);
+  display: flex;
+  height: 950px;
+  justify-content: center;
+}
+
+.clientContainer {
+  align-items: center;
+  border: solid 4px black;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
