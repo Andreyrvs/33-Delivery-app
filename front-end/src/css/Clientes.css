@@ -1,15 +1,21 @@
-.clienteContainer {
+.clientPageContainer {
   align-items: center;
-  background-color: rgb(216, 255, 242);
   display: flex;
-  height: 950px;
+  flex-direction: column;
   justify-content: center;
 }
 
 .clientContainer {
   align-items: center;
-  border: solid 4px black;
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
   padding: 20px;
+  width: 70%;
+}
+
+.card {
+  margin-right: 20px;
+  margin-top: 20px;
 }

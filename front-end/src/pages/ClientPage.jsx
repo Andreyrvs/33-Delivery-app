@@ -13,8 +13,44 @@ function ClientPage() {
       img: skol,
     },
     {
-      id: 1,
+      id: 2,
       name: 'Antartica Pilsen 300ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Antartica300ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Pilsen 300ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Anta300ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Antart00ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Antarti0ml',
+      price: '2.20',
+      img: ant300,
+    },
+    {
+      id: 2,
+      name: 'Antar0ml',
       price: '2.20',
       img: ant300,
     },
@@ -24,16 +60,15 @@ function ClientPage() {
       <Header />
       <div className="clientContainer">
         { product.map((item) => (
-          <Card
-            key={ item.id }
-            name={ item.name }
-            price={ `R$ ${item.price}` }
-            img={ item.img }
-          />
+          <div key={ item.id } className="card">
+            <Card
+              name={ item.name }
+              price={ `R$ ${item.price}` }
+              img={ item.img }
+              className="card"
+            />
+          </div>
         ))}
-      </div>
-      <div className="clienteContainer">
-        <img src="../telaProdutos.png" alt="telaProdutos" />
       </div>
     </div>
   );
