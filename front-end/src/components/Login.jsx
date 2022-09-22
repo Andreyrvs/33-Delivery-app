@@ -1,32 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateEmail from '../util/validateEmail';
+import { fetchPost } from '../services/connectApi';
 import '../css/Login.css';
 
 export default function Login() {
   const history = useHistory();
   const [loginEmail, setloginEmail] = useState('');
   const [loginPassword, setloginPassword] = useState('');
-  const [msgError, setmsgError] = useState('');
+  const [msgError, setmsgError] = useState();
   const [isDisabled, setisDisabled] = useState(true);
   const SIX = 6;
-  let user = {};
-
-  const dataUserArrayTest = [
-    { userEmail: 'zebirita@email.com', senha: '123456', userName: 'Robervaldo' },
-  ];
-
-  const validateDb = dataUserArrayTest.map((item) => {
-    let result = '';
-    if (loginEmail === item.userEmail && loginPassword === item.senha) {
-      result = true;
-      user = item;
-      console.log(user);
-    } else {
-      result = false;
-    }
-    return result;
-  });
+  const STATUSOK = 200;
+  const NOTFOUND = 404;
+  const UNAUTHORIZED = 401;
 
   const handleInputEmail = ({ target }) => {
     setloginEmail(target.value);
@@ -36,13 +23,23 @@ export default function Login() {
     setloginPassword(target.value);
   };
 
-  const clickbutton = (event) => {
+  const clickbutton = async (event) => {
     event.preventDefault();
-    if (validateDb) {
-      localStorage.setItem('user', user.userName);
-      history.push('/customer/products');
-    } else if (!validateDb) {
-      setmsgError('Usuário ou senha inválidos');
+
+    const data = { email: loginEmail, password: loginPassword };
+    const url = 'http://localhost:3001/login';
+    localStorage.setItem('user', user.userName);
+
+    const result = await fetchPost(url, data);
+
+    console.log('result', result.status, result);
+
+    if (result.status === STATUSOK) {
+      history.push('/customer');
+    } else if (result.status === UNAUTHORIZED) {
+      setmsgError('Senha incorreta');
+    } else if (result.status === NOTFOUND) {
+      setmsgError('Usuário não cadastrado');
     }
   };
 
@@ -56,7 +53,7 @@ export default function Login() {
     if (validate && psw) {
       setisDisabled(false);
     }
-  }, [loginEmail, loginPassword, msgError, validateDb]);
+  }, [loginEmail, loginPassword, msgError]);
 
   return (
     <div className="loginContainer">
@@ -109,14 +106,12 @@ export default function Login() {
         >
           Ainda não tenho cadastro
         </button>
-        <p
-          className="loginMsgErro"
-          data-testid="common_login__element-invalid-email"
-        >
-          {
-            msgError.length > 1 ? msgError : ''
-          }
-        </p>
+        {
+          msgError ? (
+            <p data-testid="common_login__element-invalid-email">
+              { msgError }
+            </p>) : null
+        }
       </form>
     </div>
   );
