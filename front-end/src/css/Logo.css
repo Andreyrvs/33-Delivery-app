@@ -1,0 +1,61 @@
+.pageContainer {
+  align-items: center;
+  display: flex;
+  height: 312px;
+  justify-content: center;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.logoContainer {
+  align-items: center;
+  background-color: #b1c2be;
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px 3px grey;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 249px;
+  justify-content: center;
+  width: 249px;
+}
+
+.rocksGlassLogo {
+  animation: shake 1s infinite ease;
+  max-height: 80vh;
+  width: 164px;
+}
+
+.logo {
+  color: #036b52;
+  font-size: 1em;
+}
+
+@keyframes shake {
+
+  0% {
+    transform: rotate(5deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes clink {
+
+  0% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(20deg);
+  }
+
+  100% {
+    transform: rotate(-10deg);
+  }
+}
