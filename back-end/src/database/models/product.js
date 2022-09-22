@@ -1,21 +1,21 @@
-module.exports = (Sequelize, _DataTypes) => {
+module.exports = (Sequelize, DataTypes) => {
   const Product = Sequelize.define('Product', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
     },
     name: {
-      type: Sequelize.STRING(100),
+      type: DataTypes.STRING(100),
       allowNull: true,
     },
     price: {
-      type: Sequelize.DECIMAL(4, 2),
+      type: DataTypes.DECIMAL(4, 2),
       allowNull: true,
     },
     urlImage: {
-      type: Sequelize.STRING(200),
+      type: DataTypes.STRING(200),
       allowNull: false,
       field: 'url_image',
     },
