@@ -6,33 +6,33 @@ export default function Header() {
   return (
     <nav className="headerContainer">
       <div className="headerProdutos data">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-link-products"
         >
           PRODUTOS
-        </spam>
+        </span>
       </div>
       <div className="headerPedidos">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-link-products"
         >
           MEUS PEDIDOS
-        </spam>
+        </span>
       </div>
       <div className="headerNome">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-user-full-name"
         >
           { userName }
-        </spam>
+        </span>
       </div>
       <div className="headerSair">
         <Link to="/login">
-          <spam
+          <span
             data-testid="customer_products__element-navbar-link-logout"
           >
             Sair
-          </spam>
+          </span>
         </Link>
       </div>
     </nav>

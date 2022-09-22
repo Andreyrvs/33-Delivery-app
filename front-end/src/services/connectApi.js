@@ -29,19 +29,32 @@ export default function axiosPostLogin({ email, password }) {
   return result;
 }
 
-export async function fetchPost(url, { email, password }) {
+export async function fetchPost(url, payLoad) {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     mode: 'cors',
-    body: JSON.stringify({
-      email,
-      password,
-    }),
+    body: JSON.stringify(payLoad),
   });
   const { status } = response;
   const data = await response.json();
   return { data, status };
 }
+
+/*
+export async function fetchPostCreateUser(url, { email, password, password }) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: 'cors',
+    body: JSON.stringify(data),
+  });
+  const { status } = response;
+  const data = await response.json();
+  return { data, status };
+}
+*/

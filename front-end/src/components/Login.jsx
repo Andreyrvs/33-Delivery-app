@@ -10,6 +10,8 @@ export default function Login() {
   const [loginPassword, setloginPassword] = useState('');
   const [msgError, setmsgError] = useState();
   const [isDisabled, setisDisabled] = useState(true);
+  const data = { email: loginEmail, password: loginPassword };
+  const url = 'http://localhost:3001/login';
   const SIX = 6;
   const STATUSOK = 200;
   const NOTFOUND = 404;
@@ -26,16 +28,14 @@ export default function Login() {
   const clickbutton = async (event) => {
     event.preventDefault();
 
-    const data = { email: loginEmail, password: loginPassword };
-    const url = 'http://localhost:3001/login';
     localStorage.setItem('user', user.userName);
 
     const result = await fetchPost(url, data);
 
-    console.log('result', result.status, result);
+    // console.log('result', result.status, result);
 
     if (result.status === STATUSOK) {
-      history.push('/customer');
+      history.push('/customer/products');
     } else if (result.status === UNAUTHORIZED) {
       setmsgError('Senha incorreta');
     } else if (result.status === NOTFOUND) {

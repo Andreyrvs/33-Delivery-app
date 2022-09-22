@@ -2,7 +2,7 @@ import '../css/Card.css';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export default function Card({ price, img, name }) {
+export default function Card({ price, img, name, id }) {
   const [qtd, setQtd] = useState(0);
 
   const increment = () => {
@@ -18,13 +18,25 @@ export default function Card({ price, img, name }) {
     <section>
       <div className="cardContainer">
         <div className="cardImageContainer">
-          <span>{ price }</span>
+          <span
+            data-testid={ `customer_products__element-card-price-${id}` }
+          >
+            { price }
+          </span>
           <div className="cardImage">
-            <img src={ img } alt="cerveja" />
+            <img
+              src={ img }
+              alt="cerveja"
+              data-testid={ `customer_products__img-card-bg-image-${id}` }
+            />
           </div>
         </div>
         <div className="cardNameContainer">
-          <span>{name}</span>
+          <span
+            data-testid={ `customer_products__element-card-title-${id}` }
+          >
+            {name}
+          </span>
           <div className="cardQtdContqiner">
             <button type="button" name="less" onClick={ decrement }> - </button>
             <p>{ qtd }</p>

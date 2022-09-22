@@ -66,9 +66,13 @@ function ClientPage() {
               price={ `R$ ${item.price}` }
               img={ item.img }
               className="card"
+              id={ item.id }
             />
           </div>
         ))}
+      </div>
+      <div data-testid="customer_products__checkout-bottom-value">
+        Carrinho
       </div>
     </div>
   );

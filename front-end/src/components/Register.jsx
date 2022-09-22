@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateEmail from '../util/validateEmail';
+import { fetchPost } from '../services/connectApi';
 import '../css/Register.css';
 
 export default function Register() {
   const [nameUser, setName] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
-  const [msgErro, setMsgError] = useState('');
+  const [msgErro, setMsgError] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
   const history = useHistory();
+  const url = 'http://localhost:3001/register';
+  const newUser = {
+    name: nameUser,
+    email: emailUser,
+    password: passwordUser,
+  };
+  const CREATED = 201;
+  const CONFLICT = 409;
 
   const handleInputName = ({ target }) => {
     if (target.name === 'cadastroName') {
@@ -21,30 +30,16 @@ export default function Register() {
     }
   };
 
-  const dataUserArrayTest = [
-    { userEmail: 'zebirita@email.com', senha: '123456' },
-  ];
-
-  const validateDb = dataUserArrayTest.find((item) => {
-    let result = '';
-    if (emailUser === item.userEmail) {
-      result = true;
-    } else {
-      result = false;
-    }
-    return result;
-  });
-
-  const addUser = (event) => {
+  const addUser = async (event) => {
     event.preventDefault();
-    const newUser = {
-      nameUser,
-      emailUser,
-      passwordUser,
-    };
     console.log(newUser);
-    history.push('/login');
-    return newUser;
+    const result = await fetchPost(url, newUser);
+
+    if (result.status === CREATED) {
+      history.push('/customer/products');
+    } if (result.status === CONFLICT) {
+      setMsgError('Usuário já existe');
+    }
   };
 
   useEffect(() => {
@@ -54,15 +49,10 @@ export default function Register() {
     const psw = passwordUser.length >= SIX;
     const vertifyNameLength = nameUser.length >= TWELVE;
 
-    if (validateDb) {
-      setMsgError('Usuário ja cadastrado');
-    } else {
-      setMsgError('');
-    }
-    if (validate && psw && !validateDb && vertifyNameLength) {
+    if (validate && psw && vertifyNameLength) {
       setIsDisabled(false);
     }
-  }, [emailUser, passwordUser, msgErro, validateDb, nameUser]);
+  }, [emailUser, passwordUser, msgErro, nameUser]);
 
   return (
     <div className="cadastroContainer">
@@ -122,14 +112,16 @@ export default function Register() {
         >
           CADASTRAR
         </button>
-        <p
-          className="cadastroMsgErro"
-          data-testid="common_register__element-invalid_register"
-        >
-          {
-            msgErro.length > 0 ? msgErro : ''
-          }
-        </p>
+        {
+          msgErro && (
+            <p
+              className="cadastroMsgErro"
+              data-testid="common_register__element-invalid_register"
+            >
+              { msgErro }
+            </p>
+          )
+        }
       </form>
     </div>
   );
