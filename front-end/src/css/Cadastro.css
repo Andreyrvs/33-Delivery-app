@@ -1,0 +1,89 @@
+.cadastroContainer {
+  align-items: center;
+  display: flex;
+  height: 944px;
+  justify-content: center;
+  width: 100%;
+}
+
+.cadastroBox {
+  align-items: center;
+  background-color: #b1c2be;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 508px;
+  justify-content: center;
+  width: 425px;
+}
+
+.cadastroButton {
+  background-color: #036b52;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 28px;
+  height: 59px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  width: 370px;
+}
+
+.cadastroInputContainer {
+  height: 110px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 371px;
+}
+
+.cadastroInputContainer label {
+  font-size: 28px;
+  margin: 10px;
+}
+
+
+.cadastroInput {
+  border-radius: 10px;
+  height: 70px;
+  margin-top: 5px;
+  padding-left: 10px;
+  width: 361px;
+}
+
+::placeholder {
+  color: '#878787';
+  padding-left: 10px;
+}
+
+.cadastroMsgErro {
+  font-size: 12px;
+}
+
+@media only screen and ( max-width : 460px ) {
+
+  .cadastroBox {
+    height: 400px;
+    width: 90%;
+  }
+
+  .cadastroInputContainer {
+    height: 90px;
+    margin-left: 15px;
+    width: 90%;
+  }
+
+  .cadastroInput {
+    height: 50px;
+    width: 90%;
+  }
+
+  .cadastroButton {
+    font-size: 20px;
+    height: 50px;
+    width: 85%;
+  }
+
+  .cadastroInputContainer label {
+    font-size: 20px;
+  }
+}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Cadastro from './components/Cadastro';
 import LoginPage from './pages/LoginPage';
-import Trybe from './pages/Trybe';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={ LoginPage } />
         <Route exact path="/login" component={ LoginPage } />
-        <Route exact path="/trybe" component={ Trybe } />
+        <Route exact path="/register" component={ Cadastro } />
+        <Route exact path="*" component={ NotFound } />
       </Switch>
     </div>
   );
