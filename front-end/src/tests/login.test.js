@@ -48,4 +48,18 @@ describe('teste rota /login', () => {
     const { location: { pathname } } = history;
     expect(pathname).toBe('/register');
   });
+
+  it('verifica email e password', () => {
+    renderWithRouter(<App />);
+    const validEmail = 'email@example.com';
+    const validPassword = '1234567';
+
+    const inputEmail = screen.getByTestId('common_login__input-email');
+    const inputPassword = screen.getByTestId('common_login__input-password');
+    const button = screen.getByRole('button', { name: /LOGIN/i });
+
+    userEvent.type(inputEmail, validEmail);
+    userEvent.type(inputPassword, validPassword);
+    expect(button).toBeEnabled();
+  });
 });
