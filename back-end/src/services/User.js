@@ -11,8 +11,9 @@ class LoginService extends BaseService {
     if (!isValid) handleThrowError('Incorrect email or password', 401);
 
     const { passwordm, ...userInfo } = user.get();
+    
     const token = generateToken({ ...userInfo });
-    return { token };
+    return { token, ...userInfo };
   }
 
   async create(body) {
