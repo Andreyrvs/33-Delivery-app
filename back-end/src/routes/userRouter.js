@@ -9,6 +9,6 @@ const UserController = Factory.user();
 const userRouter = express.Router();
 
 userRouter.post('/login', UserController.login);
-userRouter.post('/user/create', UserController.create);
+userRouter.post('/register', UserController.create);
 
 module.exports = userRouter;
