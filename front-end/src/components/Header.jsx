@@ -1,8 +1,21 @@
 import '../css/Header.css';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import MyContext from '../context/MyContext';
 
 export default function Header() {
-  const userName = localStorage.getItem('user');
+  const history = useHistory();
+
+  const userString = localStorage.getItem('data');
+  const user = JSON.parse(userString);
+  const { name } = user;
+  const { totalValue } = useContext(MyContext);
+
+  const logOut = () => {
+    localStorage.clear();
+    history.push('/login');
+  };
+
   return (
     <nav className="headerContainer">
       <div className="headerProdutos data">
@@ -13,27 +26,35 @@ export default function Header() {
         </span>
       </div>
       <div className="headerPedidos">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-link-products"
         >
           MEUS PEDIDOS
-        </spam>
+        </span>
+      </div>
+      <div className="headerCarrinho">
+        <span
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          Carrinho: R$
+          { Number(totalValue).toFixed(2) }
+        </span>
       </div>
       <div className="headerNome">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          { userName }
-        </spam>
+          { name }
+        </span>
       </div>
       <div className="headerSair">
-        <Link to="/login">
-          <spam
-            data-testid="customer_products__element-navbar-link-logout"
-          >
-            Sair
-          </spam>
-        </Link>
+        <button
+          data-testid="customer_products__element-navbar-link-logout"
+          type="button"
+          onClick={ logOut }
+        >
+          Sair
+        </button>
       </div>
     </nav>
   );
