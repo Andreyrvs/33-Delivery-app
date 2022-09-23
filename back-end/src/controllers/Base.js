@@ -1,5 +1,3 @@
-require('express-async-errors');
-
 class BaseController {
   constructor(service) {
     this.service = service;
