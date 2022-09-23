@@ -16,6 +16,7 @@ export default function Register() {
     name: nameUser,
     email: emailUser,
     password: passwordUser,
+    role: 'customer',
   };
   const CREATED = 201;
   const CONFLICT = 409;

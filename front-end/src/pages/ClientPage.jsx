@@ -9,49 +9,49 @@ function ClientPage() {
     {
       id: 1,
       name: 'Skol Lata 250ml',
-      price: '2.20',
+      price: 2.20,
       img: skol,
     },
     {
       id: 2,
       name: 'Antartica Pilsen 300ml',
-      price: '2.20',
+      price: 2.70,
       img: ant300,
     },
     {
       id: 3,
       name: 'Antartica300ml',
-      price: '2.20',
+      price: 2.80,
       img: ant300,
     },
     {
       id: 4,
       name: 'Pilsen 300ml',
-      price: '2.20',
+      price: 2.90,
       img: ant300,
     },
     {
       id: 5,
       name: 'Anta300ml',
-      price: '2.20',
+      price: 2.20,
       img: ant300,
     },
     {
       id: 6,
       name: 'Antart00ml',
-      price: '2.20',
+      price: 2.20,
       img: ant300,
     },
     {
       id: 7,
       name: 'Antarti0ml',
-      price: '2.20',
+      price: 2.20,
       img: ant300,
     },
     {
       id: 8,
       name: 'Antar0ml',
-      price: '2.20',
+      price: 2.20,
       img: ant300,
     },
   ];
@@ -63,7 +63,7 @@ function ClientPage() {
           <div key={ item.id } className="card">
             <Card
               name={ item.name }
-              price={ `R$ ${item.price}` }
+              price={ Number(item.price).toFixed(2) }
               img={ item.img }
               className="card"
               id={ item.id }

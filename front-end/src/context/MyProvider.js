@@ -1,15 +1,20 @@
-/*
-import React, { useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 export default function MyProvider({ children }) {
-  const [nameUser, setNameUser] = useState('');
+  const [cart, setCart] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
 
-  const contextValue = {
-    nameUser,
-    setNameUser,
-  };
+  useEffect(() => {
+  }, [cart]);
+
+  const contextValue = useMemo(() => ({
+    cart,
+    setCart,
+    totalValue,
+    setTotalValue,
+  }), [cart, totalValue]);
 
   return (
     <MyContext.Provider value={ contextValue }>
@@ -21,4 +26,3 @@ export default function MyProvider({ children }) {
 MyProvider.propTypes = {
   children: PropTypes.object,
 }.isRequired;
-*/

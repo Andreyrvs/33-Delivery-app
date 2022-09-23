@@ -28,13 +28,17 @@ export default function Login() {
   const clickbutton = async (event) => {
     event.preventDefault();
 
-    localStorage.setItem('user', user.userName);
-
     const result = await fetchPost(url, data);
-
-    // console.log('result', result.status, result);
+    const dataLocal = {
+      id: result.data.id,
+      name: result.data.name,
+      email: result.data.email,
+      role: result.data.role,
+      token: result.data.token,
+    };
 
     if (result.status === STATUSOK) {
+      localStorage.setItem('data', JSON.stringify(dataLocal));
       history.push('/customer/products');
     } else if (result.status === UNAUTHORIZED) {
       setmsgError('Senha incorreta');
