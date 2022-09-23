@@ -18,7 +18,7 @@ class LoginService extends BaseService {
   async create(body) {
     const encryptedPsw = md5(body.password);
     const data = await this.repository.create({ ...body, password: encryptedPsw });
-    if (!data.created) handleThrowError('User allready exists', 500);
+    if (!data.created) handleThrowError('User already exists', 409);
     return data.user;
   }
 }

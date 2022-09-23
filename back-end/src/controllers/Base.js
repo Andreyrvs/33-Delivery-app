@@ -12,7 +12,7 @@ class BaseController {
 
   async create(req, res) {
     const data = await this.service.create(req.body);
-    return res.status(200).json(data);
+    return res.status(201).json(data);
   }
 
   async read(_req, res) {
