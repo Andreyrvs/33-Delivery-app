@@ -1,5 +1,4 @@
 const { joi } = require('../helpers');
-require('express-async-errors');
 
 class ValidationsMiddleware {
   static user(req, _res, next) {
