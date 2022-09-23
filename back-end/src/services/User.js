@@ -2,7 +2,7 @@ const md5 = require('md5');
 const { handleThrowError, generateToken, joi } = require('../helpers');
 const BaseService = require('./Base');
 
-class LoginService extends BaseService {
+class UserService extends BaseService {
   async login(login) {
     joi.validateLoginJoi(login, 401);
     const user = await this.repository.getOneUser(login.email);
@@ -23,4 +23,4 @@ class LoginService extends BaseService {
   }
 }
 
-module.exports = LoginService;
+module.exports = UserService;
