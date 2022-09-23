@@ -14,6 +14,13 @@ class LoginService extends BaseService {
     const token = generateToken({ ...userInfo });
     return { token };
   }
+
+  async create(body) {
+    const encryptedPsw = md5(body.password);
+    const data = await this.repository.create({ ...body, password: encryptedPsw });
+    if (!data.created) handleThrowError('User allready exists', 500);
+    return data.user;
+  }
 }
 
 module.exports = LoginService;

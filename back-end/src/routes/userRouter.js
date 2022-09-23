@@ -5,7 +5,7 @@ const Validations = require('../middlewares/ValidationsMiddleware');
 // import Auth from '../middlewares/TokenAunth';
 // import Validations from '../middlewares/Validations';
 
-const UserController = Factory.user();
+const UserController = Factory.user().userController;
 
 const userRouter = express.Router();
 
