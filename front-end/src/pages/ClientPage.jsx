@@ -71,9 +71,6 @@ function ClientPage() {
           </div>
         ))}
       </div>
-      <div data-testid="customer_products__checkout-bottom-value">
-        Carrinho
-      </div>
     </div>
   );
 }
