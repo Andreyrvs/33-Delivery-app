@@ -16,9 +16,9 @@ const password = joi.string().min(6).required().messages({
   'string.min': 'Password must be at least 6 characters',
 });
 
-const name = joi.string().max(12).required().messages({
+const name = joi.string().min(12).required().messages({
   'string.base': 'Name must be an string',
-  'string.max': 'Name must be less than 12 characters',
+  'string.min': 'Name must be at least 12 characters',
 });
 
 const UserJoiSchema = joi.object({
