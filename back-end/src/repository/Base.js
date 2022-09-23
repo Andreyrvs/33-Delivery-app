@@ -8,11 +8,11 @@ class BaseRepository {
   }
 
   read() {
-    return this.model.getAll();
+    return this.model.findAll();
   }
 
   readOne(id) {
-    return this.service.getOne(id);
+    return this.service.findOne(id);
   }
 
   update(id, obj) {
