@@ -6,11 +6,11 @@ export default function Header() {
   return (
     <nav className="headerContainer">
       <div className="headerProdutos data">
-        <spam
+        <span
           data-testid="customer_products__element-navbar-link-products"
         >
           PRODUTOS
-        </spam>
+        </span>
       </div>
       <div className="headerPedidos">
         <spam
