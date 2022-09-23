@@ -16,23 +16,23 @@ class BaseController {
   }
 
   async read(_req, res) {
-    const request = await this.service.getAll();
-    return res.status(200).json(request);
+    const data = await this.service.getAll();
+    return res.status(200).json(data);
   }
 
   async readOne(req, res) {
-    const request = await this.service.getOne(req.params.id);
-    return res.status(200).json(request);
+    const data = await this.service.getOne(req.params.id);
+    return res.status(200).json(data);
   }
 
   async update(req, res) {
-    const request = await this.service.update(req.params.id, req.body);
-    return res.status(200).json(request);
+    const data = await this.service.update(req.params.id, req.body);
+    return res.status(200).json(data);
   }
 
   async delete(req, res) {
-    const request = await this.service.delete(req.params.id);
-    return res.status(200).json(request);
+    const data = await this.service.delete(req.params.id);
+    return res.status(200).json(data);
   }
 }
 

@@ -1,7 +1,7 @@
 /**
-   * @param {import('sequelize').Sequelize } Sequelize 
-   * @param {import('sequelize').DataTypes} DataTypes 
-   */
+ * @param {import('sequelize').Sequelize } Sequelize 
+ * @param {import('sequelize').DataTypes} DataTypes 
+ */
 
 module.exports = (Sequelize, DataTypes) => {
   const Sale = Sequelize.define('Sale', {

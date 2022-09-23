@@ -36,7 +36,6 @@
   cursor: pointer;
   font-size: 28px;
   height: 59px;
-  margin-bottom: 5px;
   width: 370px;
 }
 
@@ -66,7 +65,7 @@
 }
 
 .loginMsgErro {
-  font-size: 12px;
+  font-size: 16px;
 }
 
 @media only screen and ( max-width : 460px ) {

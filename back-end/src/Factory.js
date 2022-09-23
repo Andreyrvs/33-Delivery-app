@@ -1,14 +1,14 @@
 const model = require('./database/models');
-const LoginRepository = require('./repository/User');
-const LoginService = require('./services/User');
-const LoginController = require('./controllers/User');
+const UserRepository = require('./repository/User');
+const UserService = require('./services/User');
+const UserController = require('./controllers/User');
 
 class Factory {
   static user() {
-    const loginRepository = new LoginRepository(model.User);
-    const loginService = new LoginService(loginRepository);
-    const loginController = new LoginController(loginService);
-    return loginController;
+    const userRepository = new UserRepository(model.User);
+    const userService = new UserService(userRepository);
+    const userController = new UserController(userService);
+    return { userController, userService, userRepository };
   }
 }
 
