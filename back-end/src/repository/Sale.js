@@ -1,9 +1,9 @@
 const BaseRepository = require('./Base');
 
 class SaleRepository extends BaseRepository {
-  async createMany(products) {
-    const created = await this.model.bulkCreate(products);
-    return created;
+  async create(sale) { // Array<produtos>
+    const createdSale = await this.model.create(sale);
+    return createdSale;
   }
 }
 

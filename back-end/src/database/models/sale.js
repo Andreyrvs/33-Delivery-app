@@ -60,6 +60,8 @@ module.exports = (Sequelize, DataTypes) => {
     },
   }, {
     tableName: 'sales',
+    createdAt: 'saleDate',
+    updatedAt: false
   });
 
   Sale.associate = (models) => {
