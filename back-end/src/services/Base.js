@@ -11,12 +11,12 @@ class BaseService {
   }
 
   async read() {
-    const data = await this.repository.findAll();
+    const data = await this.repository.read();
     return data;
   }
 
   async readOne(where) {
-    const data = await this.repository.findOne(where);
+    const data = await this.repository.readOne(where);
     if (!data) {
       handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
     }
@@ -32,7 +32,7 @@ class BaseService {
   }
 
   async delete(id) {
-    const data = await this.repository.findOne({ where: { id } });
+    const data = await this.repository.delete({ where: { id } });
     if (!data) {
       handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
     }

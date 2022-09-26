@@ -12,7 +12,7 @@ class UserService extends BaseService {
 
     const { password, ...userInfo } = user.get();
     const token = generateToken({ ...userInfo });
-    return { token };
+    return { token, ...userInfo };
   }
 
   async create(body) {
