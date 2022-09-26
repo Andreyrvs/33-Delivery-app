@@ -13,11 +13,11 @@ export default function MyProvider({ children }) {
     setCartCheckout(teste);
   };
 
+  /*
   useEffect(() => {
-    // updateCart();
-    // console.log('c', cart);
-  }, [cart]);
 
+  }, [cart]);
+*/
   const contextValue = useMemo(() => ({
     cart,
     setCart,
