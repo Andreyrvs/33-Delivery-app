@@ -16,8 +16,15 @@ export default function Register() {
     name: nameUser,
     email: emailUser,
     password: passwordUser,
+  };
+
+  const userLocal = {
+    name: nameUser,
+    email: emailUser,
+    password: passwordUser,
     role: 'customer',
   };
+
   const CREATED = 201;
   const CONFLICT = 409;
 
@@ -33,9 +40,14 @@ export default function Register() {
 
   const addUser = async (event) => {
     event.preventDefault();
-    console.log(newUser);
+    // console.log(newUser);
     const result = await fetchPost(url, newUser);
+<<<<<<< HEAD
+=======
+    // console.log(result);
+>>>>>>> main-group-20
     if (result.status === CREATED) {
+      localStorage.setItem('user', JSON.stringify(userLocal));
       history.push('/customer/products');
     } if (result.status === CONFLICT) {
       setMsgError('Usuário já existe');

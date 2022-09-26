@@ -68,13 +68,15 @@
   width: 161px;
 }
 
-.cardQtdContqiner p {
+.cardQtdContqiner input {
   align-items: center;
   background-color: white;
+  border: none;
   display: flex;
   font-size: 24px;
-  height: 52px;
+  height: 51px;
   justify-content: center;
+  text-align: center;
   width: 62px;
 }
 

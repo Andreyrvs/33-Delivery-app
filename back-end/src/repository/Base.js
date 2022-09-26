@@ -8,19 +8,19 @@ class BaseRepository {
   }
 
   read() {
-    return this.model.getAll();
+    return this.model.findAll();
   }
 
   readOne(id) {
-    return this.service.getOne(id);
+    return this.model.findByPk(id);
   }
 
   update(id, obj) {
-    return this.service.update(id, obj);
+    return this.model.update(id, obj);
   }
 
   delete(id) {
-    return this.service.delete(id);
+    return this.model.delete(id);
   }
 }
 

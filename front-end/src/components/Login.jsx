@@ -38,7 +38,7 @@ export default function Login() {
     };
 
     if (result.status === STATUSOK) {
-      localStorage.setItem('data', JSON.stringify(dataLocal));
+      localStorage.setItem('user', JSON.stringify(dataLocal));
       history.push('/customer/products');
     } else if (result.status === UNAUTHORIZED) {
       setmsgError('Senha incorreta');

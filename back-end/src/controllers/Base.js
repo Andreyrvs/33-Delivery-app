@@ -1,5 +1,3 @@
-require('express-async-errors');
-
 class BaseController {
   constructor(service) {
     this.service = service;
@@ -11,8 +9,8 @@ class BaseController {
   }
 
   async create(req, res) {
-    const data = await this.service.create(req.body);
-    return res.status(201).json(data);
+    const request = await this.service.create(req.body);
+    return res.status(201).json(request);
   }
 
   async read(_req, res) {
