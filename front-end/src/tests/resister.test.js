@@ -1,13 +1,20 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+// import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/dom';
+// import userEvent from '@testing-library/user-event';
+import axios from 'axios';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
+// import { fetchPost } from '../services/connectApi';
+jest.mock('axios');
+
 describe('teste pagina de registro', () => {
   it('tem data-testid "common_register__input-name"', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history, debug } = renderWithRouter(<App />);
     history.push('/register');
+    debug();
     const inpuName = screen.getByTestId('common_register__input-name');
     expect(inpuName).toBeInTheDocument();
   });
@@ -42,11 +49,26 @@ describe('teste pagina de registro', () => {
     expect(pathname).toBe('/register');
   });
 
-  it(`tem um elemento oculto data-testi
-  "common_register__element-invalid_register"`, () => {
-    const { history } = renderWithRouter(<App />);
+  it('tem cadastro', () => {
+    const { history, debug } = renderWithRouter(<App />);
     history.push('/register');
-    const registerErr = screen.getByTestId('common_register__element-invalid_register');
-    expect(registerErr).not.toBe();
+    debug();
+    const button = screen.getByRole('button', { name: /cadastrar/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  describe('registerErr', () => {
+    it(`tem um elemento oculto data-testi
+    "common_register__element-invalid_register"`, () => {
+      const { history, debug } = renderWithRouter(<App />);
+      history.push('/register');
+      debug('register')
+      const fake = {
+        name: 'marcilio',
+        email: 'email@example.com',
+        password: '1234567',
+      };
+      });
+    });
   });
 });

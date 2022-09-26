@@ -10,6 +10,7 @@ describe('teste rota /login', () => {
     history.push('/login');
     const getEmail = screen.getByTestId('common_login__input-email');
     expect(getEmail).toBeInTheDocument();
+    expect(getEmail.type).toBe('email');
   });
 
   it('tem password', () => {
@@ -17,13 +18,16 @@ describe('teste rota /login', () => {
     history.push('/login');
     const getPassword = screen.getByTestId('common_login__input-password');
     expect(getPassword).toBeInTheDocument();
+    expect(getPassword.type).toBe('password');
   });
 
   it('tem button login', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/login');
     const getLogin = screen.getByTestId('common_login__button-login');
+    const button = screen.getAllByRole('button');
     expect(getLogin).toBeInTheDocument();
+    expect(button).toHaveLength(2);
   });
 
   it('tem button register', () => {
@@ -36,8 +40,9 @@ describe('teste rota /login', () => {
   it('button register tem texto, "Ainda não tenho cadastro"', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/login');
-    const buttonCadastro = screen.getByText('Ainda não tenho cadastro');
-    expect(buttonCadastro).toBeDefined();
+    const click1 = jest.fn();
+    userEvent.click(screen.getByText('Ainda não tenho cadastro'));
+    expect(click1).toHaveBeenCalledTimes(0);
   });
 
   it('tem button register, redireciona', () => {
@@ -56,7 +61,7 @@ describe('teste rota /login', () => {
 
     const inputEmail = screen.getByTestId('common_login__input-email');
     const inputPassword = screen.getByTestId('common_login__input-password');
-    const button = screen.getByRole('button', { name: /LOGIN/i });
+    const button = screen.getByRole('button', { name: /login/i });
 
     userEvent.type(inputEmail, validEmail);
     userEvent.type(inputPassword, validPassword);

@@ -35,7 +35,6 @@ export default function Register() {
     event.preventDefault();
     console.log(newUser);
     const result = await fetchPost(url, newUser);
-
     if (result.status === CREATED) {
       history.push('/customer/products');
     } if (result.status === CONFLICT) {
