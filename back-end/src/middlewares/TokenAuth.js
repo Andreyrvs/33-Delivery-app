@@ -10,7 +10,7 @@ class Auth {
       req.body.user = data;
       next();
     } catch (error) {
-      console.log(error);
+      console.log('JWT Auth ===>', error);
       handleThrowError('Expired or invalid token', 401);
     }
   }

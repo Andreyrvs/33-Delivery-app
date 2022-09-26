@@ -56,10 +56,12 @@ module.exports = (Sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: 'Pendente',
     },
   }, {
     tableName: 'sales',
-    timestamps: false,
+    createdAt: 'saleDate',
+    updatedAt: false
   });
 
   Sale.associate = (models) => {
