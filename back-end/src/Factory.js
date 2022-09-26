@@ -1,6 +1,6 @@
 const model = require('./database/models');
 
-const UserRepo = require('./repository/User');
+const UserRepository = require('./repository/User');
 const UserService = require('./services/User');
 const UserController = require('./controllers/User');
 
@@ -12,17 +12,20 @@ const ProductRepository = require('./repository/Product');
 
 class Factory {
   static user() {
-    const userRepo = new UserRepo(model.User);
-    const userService = new UserService(userRepo);
+    const userRepository = new UserRepository(model.User);
+    const userService = new UserService(userRepository);
     const userController = new UserController(userService);
-    return { userController, userService, userRepo };
+    return { userController, userService, userRepository };
   }
 
   static sale() {
     const saleRepository = new SaleRepository(model.Sale);
     const saleProductRepository = new SaleProductRepository(model.SaleProduct);
     const productRepository = new ProductRepository(model.Product);
-    const saleService = new SaleService(saleRepository, saleProductRepository, productRepository);
+    const userRepository = new UserRepository(model.User);
+    const saleService = new SaleService(
+      saleRepository, saleProductRepository, productRepository, userRepository,
+    );
     const saleController = new SaleController(saleService);
     return {
       saleController, saleService, saleRepository, saleProductRepository, productRepository,
