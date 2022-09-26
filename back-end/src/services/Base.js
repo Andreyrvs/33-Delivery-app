@@ -32,12 +32,14 @@ class BaseService {
   }
 
   async delete(id) {
-    const data = await this.repository.delete({ where: { id } });
-    if (!data) {
-      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+    const isDeleted = await this.repository.delete(id);
+    console.log('DELETE', isDeleted);
+    if (!isDeleted) {
+      handleThrowError(
+        'Element doesn\'t exist in database to be deleted', httpStatusCode.NOT_FOUND,
+      );
     }
-    data.destroy();
-    return ({ ...data.dataValues, status: 'Deleted Sucessfully' });
+    return ({ ...isDeleted.dataValues, status: 'Deleted Sucessfully' });
   }
 }
 

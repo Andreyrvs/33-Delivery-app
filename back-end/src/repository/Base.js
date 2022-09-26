@@ -20,7 +20,7 @@ class BaseRepository {
   }
 
   delete(id) {
-    return this.model.delete(id);
+    return this.model.destroy({ where: { id } });
   }
 }
 
