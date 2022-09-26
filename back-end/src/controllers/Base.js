@@ -14,12 +14,12 @@ class BaseController {
   }
 
   async read(_req, res) {
-    const data = await this.service.getAll();
+    const data = await this.service.read();
     return res.status(200).json(data);
   }
 
   async readOne(req, res) {
-    const data = await this.service.getOne(req.params.id);
+    const data = await this.service.readOne(req.params.id);
     return res.status(200).json(data);
   }
 
