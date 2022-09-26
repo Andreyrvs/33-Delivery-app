@@ -1,6 +1,5 @@
 const express = require('express');
 const Factory = require('../Factory');
-const SaleService = require('../services/Sale');
 
 const SaleController = Factory.sale().saleController;
 
