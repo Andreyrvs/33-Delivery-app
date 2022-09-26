@@ -1,4 +1,4 @@
-const { handleThrowError } = require('../helpers/errorHandler');
+const { handleThrowError, httpStatusCode } = require('../helpers');
 
 class BaseService {
   constructor(repository) {
@@ -17,19 +17,25 @@ class BaseService {
 
   async readOne(where) {
     const data = await this.repository.findOne(where);
-    if (!data) handleThrowError(`${this.repository.tableName} does not exist`);
+    if (!data) {
+      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+    }
     return data;
   }
 
   async update(id, body) {
     const updated = await this.repository.update(body, { where: { id } });
-    if (!updated) handleThrowError(`${this.repository.tableName} does not exist`);
+    if (!updated) {
+      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+    }
     return updated;
   }
 
   async delete(id) {
     const data = await this.repository.findOne({ where: { id } });
-    if (!data) handleThrowError(`${this.repository.tableName} does not exist`);
+    if (!data) {
+      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+    }
     data.destroy();
     return ({ ...data.dataValues, status: 'Deleted Sucessfully' });
   }

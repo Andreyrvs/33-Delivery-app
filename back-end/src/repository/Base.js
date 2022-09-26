@@ -12,15 +12,15 @@ class BaseRepository {
   }
 
   readOne(id) {
-    return this.service.findOne(id);
+    return this.model.findByPk(id);
   }
 
   update(id, obj) {
-    return this.service.update(id, obj);
+    return this.model.update(id, obj);
   }
 
   delete(id) {
-    return this.service.delete(id);
+    return this.model.delete(id);
   }
 }
 
