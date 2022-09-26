@@ -1,0 +1,76 @@
+.deliveryContainer {
+  display: flex;
+  flex-direction: column;
+  height: 284px;
+  margin: auto;
+  padding: 5px;
+  width: 1638px;
+}
+
+.deliveryContainer h2 {
+  margin-bottom: 5px;
+}
+
+.formDeliveryContainer {
+  border: solid 1px grey;
+  box-shadow: 1px 1px 2px 1px grey;
+  padding: 10px;
+}
+
+.deliveryFormAdress {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.inputAdressSelect {
+  margin-right: 30px;
+  width: 371px;
+}
+
+.inputAdressSelect select {
+  border-radius: 5px;
+  height: 70px;
+  margin-top: 5px;
+  padding-left: 10px;
+  width: 371px;
+}
+
+.inputAdressAdress input {
+  border-radius: 10px;
+  height: 70px;
+  margin-right: 30px;
+  margin-top: 5px;
+  padding-left: 10px;
+  width: 778px;
+}
+
+
+.inputAdressNumber input {
+  border-radius: 10px;
+  height: 70px;
+  margin-top: 5px;
+  padding-left: 10px;
+  width: 359px;
+}
+
+.deliveryButton {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.deliveryButton button {
+  background-color: #036b52;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  height: 100px;
+  margin-top: 10px;
+  width: 563px;
+}
+
