@@ -5,6 +5,8 @@ const SaleController = Factory.sale().saleController;
 
 const saleRouter = express.Router();
 
-saleRouter.post('/sale', SaleController.create);
+saleRouter.get('/customer/orders', SaleController.read);
+saleRouter.get('/customer/orders/:id', SaleController.readOne);
+saleRouter.post('/customer/checkout', SaleController.create);
 
 module.exports = saleRouter;
