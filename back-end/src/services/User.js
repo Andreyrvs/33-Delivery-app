@@ -10,7 +10,7 @@ class UserService extends BaseService {
     const isValid = user.password === md5(login.password);
     if (!isValid) handleThrowError('Incorrect email or password', 401);
 
-    const { passwordm, ...userInfo } = user.get();
+    const { password, ...userInfo } = user.get();
     const token = generateToken({ ...userInfo });
     return { token };
   }

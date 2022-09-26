@@ -15,7 +15,6 @@ class SaleValidations {
   static async checkUser(userId, repository) {
     const user = await repository.readOne(userId);
     if (!user) handleThrowError('User doesn\'t exist', httpStatusCode.NOT_FOUND);
-    console.log('>>>>>>>>', user.get());
     if (user.role !== 'customer') {
       handleThrowError('User\'s role isn\'t customer', httpStatusCode.BAD_REQUEST);
     }
