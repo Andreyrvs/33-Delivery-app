@@ -11,10 +11,12 @@ export default function Header({ pageName }) {
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { name } = user;
-  const { totalValue } = useContext(MyContext);
+  const { totalValue, cart, setTotalValue } = useContext(MyContext);
 
   const [emptyCar, setEmptyCar] = useState(true);
   const [page, setPage] = useState('');
+
+  const totalTeste = cart.reduce((tot, cur) => tot + cur.totalPrice, 0);
 
   const handleStatusButton = () => {
     if (totalValue === 0) {
@@ -24,7 +26,10 @@ export default function Header({ pageName }) {
     }
   };
 
-  useEffect(() => { setPage(pageName); }, []);
+  useEffect(() => {
+    setPage(pageName);
+    setTotalValue(totalTeste);
+  });
 
   useEffect(() => {
     handleStatusButton();
@@ -57,18 +62,14 @@ export default function Header({ pageName }) {
       </div>
       <div className="headerCarrinho">
         <button
-          type="submit"
-          data-testid="customer_products__checkout-bottom-value"
-        >
-          { changeString(Number(totalValue).toFixed(2)) }
-        </button>
-        <button
           type="button"
           onClick={ checkout }
           disabled={ emptyCar }
-          data-testeid="customer_products__checkout-buttom-cart"
+          data-testid="customer_products__button-cart"
         >
-          carrinho
+          <p data-testid="customer_products__checkout-bottom-value">
+            { changeString(Number(totalValue).toFixed(2)) }
+          </p>
         </button>
       </div>
       <div className="headerNome">

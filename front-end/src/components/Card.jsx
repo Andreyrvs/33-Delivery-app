@@ -38,7 +38,6 @@ export default function Card({ price, img, name, id }) {
   };
 
   const findElementUpdate = (arr) => {
-    console.log('arr', arr);
     const findElement = arr.filter((ele) => {
       if (ele.id === item.id) {
         ele.qtd = item.qtd;
@@ -55,7 +54,6 @@ export default function Card({ price, img, name, id }) {
       const findElement = cart.find((element) => element.id === item.id);
       if (!findElement) {
         setCart(() => [...cart, item]);
-        setTotalValue(() => [...totalValue, totalPrice]);
       }
     }
   }, [qtd]);

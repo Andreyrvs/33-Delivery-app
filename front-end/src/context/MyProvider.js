@@ -4,7 +4,7 @@ import MyContext from './MyContext';
 
 export default function MyProvider({ children }) {
   const [cart, setCart] = useState([]);
-  const [totalValue, setTotalValue] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
   const [cartCheckout, setCartCheckout] = useState();
 
   const updateCart = () => {

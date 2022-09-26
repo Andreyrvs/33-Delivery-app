@@ -5,7 +5,7 @@ import MyContext from '../context/MyContext';
 import '../css/Checkout.css';
 
 export default function CheckoutPage() {
-  const { cart } = useContext(MyContext);
+  const { cart, totalValue } = useContext(MyContext);
   // const [newCart, setNewCart] = useState([cart]);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function CheckoutPage() {
       <Link to="/customer/products">
         <p>Voltar</p>
       </Link>
+      <p>{ totalValue }</p>
     </div>
   );
 }
