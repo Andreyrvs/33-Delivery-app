@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 .headerContainer {
   border: solid 1px black;
   display: flex;
@@ -49,6 +53,7 @@
 .headerSair {
   align-items: center;
   background-color: #056cf9;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   width: 10%;

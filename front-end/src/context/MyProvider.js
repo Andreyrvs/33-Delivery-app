@@ -4,9 +4,18 @@ import MyContext from './MyContext';
 
 export default function MyProvider({ children }) {
   const [cart, setCart] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+  const [totalValue, setTotalValue] = useState([]);
+  const [cartCheckout, setCartCheckout] = useState();
+
+  const updateCart = () => {
+    const teste = cart
+      .filter((itemId, index, arr) => arr.indexOf(itemId) === index);
+    setCartCheckout(teste);
+  };
 
   useEffect(() => {
+    // updateCart();
+    // console.log('c', cart);
   }, [cart]);
 
   const contextValue = useMemo(() => ({
@@ -14,6 +23,9 @@ export default function MyProvider({ children }) {
     setCart,
     totalValue,
     setTotalValue,
+    setCartCheckout,
+    updateCart,
+    cartCheckout,
   }), [cart, totalValue]);
 
   return (

@@ -3,36 +3,62 @@ import '../css/Card.css';
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext } from 'react';
 import MyContext from '../context/MyContext';
+import { changeNum } from '../util/changeNumber';
 
 export default function Card({ price, img, name, id }) {
   const [qtd, setQtd] = useState(0);
-  const value = Number(parseFloat(price).toFixed(2));
+  const value = Number(parseFloat(changeNum(price)).toFixed(2));
   const [totalPrice, setTotalPrice] = useState(0);
-  const { setCart, totalValue, setTotalValue,
+  const { setCart, totalValue, setTotalValue, cart, setCartCheckout,
   } = useContext(MyContext);
   const item = {
     id,
-    name,
     qtd,
+    name,
     price,
-    totalPrice: totalPrice.toFixed(2),
+    totalPrice,
   };
   const increment = () => {
-    setQtd(qtd + 1);
+    setQtd(() => qtd + 1);
     setTotalPrice(totalPrice + value);
-    setTotalValue(totalValue + value);
-    setCart([item]);
   };
 
   const decrement = () => {
-    setQtd(qtd - 1);
-    if (qtd === 0) setQtd(0);
-    setTotalPrice(totalPrice - value);
-    setTotalValue(totalValue - value);
+    if (qtd <= 0) {
+      setQtd(0);
+    } else {
+      setQtd(qtd - 1);
+      setTotalPrice(totalPrice - value);
+    }
+  };
+
+  const handleQtd = ({ target }) => {
+    setQtd(Number(target.value));
+    setTotalPrice(target.value * value);
+  };
+
+  const findElementUpdate = (arr) => {
+    console.log('arr', arr);
+    const findElement = arr.filter((ele) => {
+      if (ele.id === item.id) {
+        ele.qtd = item.qtd;
+        ele.totalPrice = item.totalPrice;
+      }
+      return ele;
+    });
+    return findElement;
   };
 
   useEffect(() => {
-  }, [qtd, totalPrice]);
+    if (qtd) {
+      findElementUpdate(cart);
+      const findElement = cart.find((element) => element.id === item.id);
+      if (!findElement) {
+        setCart(() => [...cart, item]);
+        setTotalValue(() => [...totalValue, totalPrice]);
+      }
+    }
+  }, [qtd]);
 
   return (
     <section>
@@ -58,9 +84,29 @@ export default function Card({ price, img, name, id }) {
             {name}
           </span>
           <div className="cardQtdContqiner">
-            <button type="button" name="less" onClick={ decrement }> - </button>
-            <p>{ qtd }</p>
-            <button type="button" name="add" onClick={ increment }> + </button>
+            <button
+              type="button"
+              name="less"
+              onClick={ decrement }
+              data-testid={ `customer_products__button-card-rm-item-${id}` }
+            >
+              -
+            </button>
+            <input
+              name="quantity"
+              value={ qtd }
+              type="text"
+              data-testid={ `customer_products__input-card-quantity-${id}` }
+              onChange={ handleQtd }
+            />
+            <button
+              type="button"
+              name="add"
+              onClick={ increment }
+              data-testid={ `customer_products__button-card-add-item-${id}` }
+            >
+              +
+            </button>
           </div>
         </div>
       </div>

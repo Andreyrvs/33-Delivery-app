@@ -1,76 +1,43 @@
+import { useEffect, useState } from 'react';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import '../css/Clientes.css';
-import skol from '../assets/skol_lata_350ml.jpg';
-import ant300 from '../assets/antarctica_pilsen_300ml.jpg';
+import { fecthProducts } from '../services/connectApi';
+import { changeString } from '../util/changeNumber';
 
 function ClientPage() {
-  const product = [
-    {
-      id: 1,
-      name: 'Skol Lata 250ml',
-      price: 2.20,
-      img: skol,
-    },
-    {
-      id: 2,
-      name: 'Antartica Pilsen 300ml',
-      price: 2.70,
-      img: ant300,
-    },
-    {
-      id: 3,
-      name: 'Antartica300ml',
-      price: 2.80,
-      img: ant300,
-    },
-    {
-      id: 4,
-      name: 'Pilsen 300ml',
-      price: 2.90,
-      img: ant300,
-    },
-    {
-      id: 5,
-      name: 'Anta300ml',
-      price: 2.20,
-      img: ant300,
-    },
-    {
-      id: 6,
-      name: 'Antart00ml',
-      price: 2.20,
-      img: ant300,
-    },
-    {
-      id: 7,
-      name: 'Antarti0ml',
-      price: 2.20,
-      img: ant300,
-    },
-    {
-      id: 8,
-      name: 'Antar0ml',
-      price: 2.20,
-      img: ant300,
-    },
-  ];
+  const [products, setProducts] = useState();
+
+  const getProducts = async () => {
+    const items = await fecthProducts();
+    setProducts(items);
+  };
+
+  useEffect(() => {
+    getProducts();
+    // console.log(products[0].urlImage);
+  }, [products]);
+
   return (
     <div className="clientPageContainer">
-      <Header />
-      <div className="clientContainer">
-        { product.map((item) => (
-          <div key={ item.id } className="card">
-            <Card
-              name={ item.name }
-              price={ Number(item.price).toFixed(2) }
-              img={ item.img }
-              className="card"
-              id={ item.id }
-            />
+      <Header pageName="Produtos" />
+      {
+        products && (
+          <div className="clientContainer">
+            { products.map((item) => (
+              <div key={ item.id } className="card">
+                <Card
+                  name={ item.name }
+                  price={ changeString(item.price) }
+                  img={ item.urlImage }
+                  className="card"
+                  id={ item.id }
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )
+      }
     </div>
   );
 }
