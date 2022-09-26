@@ -9,6 +9,10 @@ class SaleService extends BaseService {
     this.userRepo = userRepo;
   }
 
+  async read() {
+    return await this.repository.read();
+  }
+
   async create(fullSale) {
     const { products, ...sale } = fullSale;
     await SaleValidations.checkProducts(products, this.productRepo);
