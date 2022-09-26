@@ -42,9 +42,9 @@ export default function Register() {
     event.preventDefault();
     // console.log(newUser);
     const result = await fetchPost(url, newUser);
-    console.log(result);
+    // console.log(result);
     if (result.status === CREATED) {
-      localStorage.setItem('data', JSON.stringify(userLocal));
+      localStorage.setItem('user', JSON.stringify(userLocal));
       history.push('/customer/products');
     } if (result.status === CONFLICT) {
       setMsgError('Usuário já existe');
