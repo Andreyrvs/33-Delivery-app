@@ -6,7 +6,7 @@ import { fetchAllUsers } from '../services/connectApi';
 
 export default function DeliveryDetails() {
   const { cart, totalValue } = useContext(MyContext);
-  const [seller, setSeller] = useState(1);
+  const [seller, setSeller] = useState(0);
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
   const [users, setUsers] = useState([]);
@@ -36,8 +36,9 @@ export default function DeliveryDetails() {
 
   const handleSellers = async () => {
     const result = await fetchAllUsers();
-    setUsers(result);
-    return result;
+    const usersSeller = result.filter((item) => item.role === 'seller');
+    setUsers(usersSeller);
+    return usersSeller;
   };
 
   const cleanForm = () => {
@@ -48,6 +49,7 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
+    console.log(users);
     checkout();
     cleanForm();
   };
