@@ -12,7 +12,7 @@ export default function DeliveryDetails() {
   const URL = 'http://localhost:3001/customer/checkout';
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
-  const { id } = user;
+  const { id, token } = user;
   const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
   const CREATESUCCESS = 201;
   const TIMER = 1000;
@@ -23,6 +23,7 @@ export default function DeliveryDetails() {
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
+    token,
     products: cart.map((item) => ({
       productId: item.id,
       quantity: item.qtd,
@@ -49,6 +50,7 @@ export default function DeliveryDetails() {
     cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
+    // console.log('t', PAYLOAD.token);
     if (result.status === CREATESUCCESS) {
       setSale([result.data]);
       setTimeout(() => {

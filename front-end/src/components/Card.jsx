@@ -9,7 +9,7 @@ export default function Card({ price, img, name, id }) {
   const [qtd, setQtd] = useState(0);
   const value = Number(parseFloat(changeNum(price)).toFixed(2));
   const [totalPrice, setTotalPrice] = useState(0);
-  const { setCart, cart } = useContext(MyContext);
+  const { setCart, cart, setTotalValue, totalValue } = useContext(MyContext);
 
   const item = {
     id,
@@ -22,6 +22,7 @@ export default function Card({ price, img, name, id }) {
   const increment = () => {
     setQtd(() => qtd + 1);
     setTotalPrice(totalPrice + value);
+    setTotalValue(totalValue + value);
   };
 
   const decrement = () => {
@@ -30,6 +31,7 @@ export default function Card({ price, img, name, id }) {
     } else {
       setQtd(qtd - 1);
       setTotalPrice(totalPrice - value);
+      setTotalValue(totalValue - value);
     }
   };
 
