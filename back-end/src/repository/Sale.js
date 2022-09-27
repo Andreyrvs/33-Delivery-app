@@ -5,6 +5,16 @@ class SaleRepository extends BaseRepository {
     const createdSale = await this.model.create(sale);
     return createdSale;
   }
+
+  async listByCustomerId(id) {
+    const orders = await this.model.findAll({ where: { userId: id } });
+    return orders;
+  }
+
+  async listBySellerId(id) {
+    const orders = await this.model.findAll({ where: { sellerId: id } });
+    return orders;
+  }
 }
 
 module.exports = SaleRepository;
