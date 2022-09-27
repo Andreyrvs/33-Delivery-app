@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
-import { formattedNumber } from '../util/changeNumber';
+import { changeString } from '../util/changeNumber';
 
 export default function Header({ pageName }) {
   const history = useHistory();
@@ -77,7 +77,7 @@ export default function Header({ pageName }) {
           <p data-testid="customer_products__checkout-bottom-value">
             Ver Carrinho:
             { ' ' }
-            { formattedNumber(totalValue)}
+            { changeString(Number(totalValue).toFixed(2))}
           </p>
         </button>
       </div>
