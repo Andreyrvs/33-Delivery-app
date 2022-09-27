@@ -39,7 +39,7 @@ export default function DeliveryDetails() {
   const sellers = ['joao', 'maria', 'josefina'];
 
   const cleanForm = () => {
-    setSeller('');
+    setSellerForm('');
     setAdress('');
     setNumber('');
   };
