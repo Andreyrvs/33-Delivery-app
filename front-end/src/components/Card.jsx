@@ -91,6 +91,7 @@ export default function Card({ price, img, name, id }) {
             </button>
             <input
               name="quantity"
+              aria-label="cost-input"
               value={ qtd }
               type="text"
               data-testid={ `customer_products__input-card-quantity-${id}` }

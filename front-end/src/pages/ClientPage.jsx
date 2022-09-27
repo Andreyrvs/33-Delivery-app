@@ -16,7 +16,7 @@ function ClientPage() {
   useEffect(() => {
     getProducts();
     // console.log(products[0].urlImage);
-  }, [products]);
+  }, []);
 
   return (
     <div className="clientPageContainer">
