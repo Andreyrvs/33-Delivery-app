@@ -19,7 +19,7 @@ function ClientPage() {
 
   return (
     <div className="clientPageContainer">
-      <Header pageName="Produtos" />
+      <Header pageName="PRODUTOS" />
       {
         products && (
           <div className="clientContainer">
