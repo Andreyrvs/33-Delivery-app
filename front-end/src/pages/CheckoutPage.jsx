@@ -9,6 +9,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
   }, [cart]);
+
   return (
     <div>
       <Header pageName="Checkout" />

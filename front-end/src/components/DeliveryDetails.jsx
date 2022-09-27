@@ -1,9 +1,11 @@
 import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { fetchPost } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
+  const history = useHistory();
   const [seller, setSeller] = useState('');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
@@ -11,7 +13,8 @@ export default function DeliveryDetails() {
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { id } = user;
-  const { cart, totalValue } = useContext(MyContext);
+  const { cart, totalValue, setSale } = useContext(MyContext);
+  const CREATESUCCESS = 201;
 
   /*
   req.body:
@@ -52,11 +55,16 @@ export default function DeliveryDetails() {
   const sendOrder = async (event) => {
     event.preventDefault();
     alert('PEDIDO FINALIZADO COM SUCESSO! OU NÃO');
-    console.log(PAYLOAD);
-    cleanForm();
+    // console.log(PAYLOAD);
+    // cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
-    console.log(result);
+    // console.log(result);
+    if (result.status === CREATESUCCESS) {
+      setSale([result.data]);
+      history.push(`/customer/orders/${result.data.id}`);
+      // setCart([]);
+    }
   };
 
   return (
