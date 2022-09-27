@@ -14,6 +14,16 @@ class SaleService extends BaseService {
     return allOrders;
   }
 
+  async readByCustomerId(id) {
+    const orders = await this.repository.listByCustomerId(id);
+    return orders;
+  }
+
+  async readBySellerId(id) {
+    const orders = await this.repository.listBySellerId(id);
+    return orders;
+  }
+
   async readOne(id) {
     const order = await this.repository.readOne(id);
     return order;
@@ -26,7 +36,12 @@ class SaleService extends BaseService {
     await SaleValidations.checkSeller(fullSale.sellerId, this.userRepo);
     const createdSale = await this.repository.create(sale);
     const addedProducts = await this.saleProductRepo.createMany(products, createdSale.id);
-    return { ...createdSale.get(), products: addedProducts };
+    const formatedProducts = addedProducts.map(async (e) => {
+      const { productId, ...rest } = e.get();
+      const product = await this.productRepo.readOne(productId);
+      return { ...rest, name: product.get().name, price: product.get().price };
+    });
+    return { ...createdSale.get(), products: await Promise.all(formatedProducts) };
   }
 }
 
