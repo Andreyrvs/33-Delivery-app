@@ -6,7 +6,7 @@ import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
   const history = useHistory();
-  const [seller, setSeller] = useState('');
+  const [sellerForm, setSellerForm] = useState('');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
   const URL = 'http://localhost:3001/customer/checkout';
@@ -31,7 +31,7 @@ export default function DeliveryDetails() {
   };
 
   const handleForm = ({ target }) => {
-    if (target.name === 'nameSeller') setSeller(target.value);
+    if (target.name === 'nameSeller') setSellerForm(target.value);
     if (target.name === 'adress') setAdress(target.value);
     if (target.name === 'numberAdress') setNumber(target.value);
   };
@@ -39,7 +39,7 @@ export default function DeliveryDetails() {
   const sellers = ['joao', 'maria', 'josefina'];
 
   const cleanForm = () => {
-    setSeller('');
+    setSellerForm('');
     setAdress('');
     setNumber('');
   };
@@ -73,19 +73,19 @@ export default function DeliveryDetails() {
               type="text"
               data-testid="customer_checkout__select-seller"
               name="nameSeller"
-              value={ seller }
+              value={ sellerForm }
               onChange={ handleForm }
             >
-              {
+              { sellers && (
                 sellers.map((item) => (
                   <option
-                    key={ item }
-                    value={ item }
+                    key={ item.email }
+                    value={ item.name }
                   >
                     {item}
                   </option>
                 ))
-              }
+              )}
             </select>
           </label>
 
