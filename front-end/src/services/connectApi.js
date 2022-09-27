@@ -38,3 +38,10 @@ export const fecthProducts = async () => {
   const data = await response.json();
   return data;
 };
+
+export const fetchAllUsers = async () => {
+  const URL = 'http://localhost:3001/user/get-all';
+  const response = await fetch(URL);
+  const data = await response.json();
+  return data;
+};
