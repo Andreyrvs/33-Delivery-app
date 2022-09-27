@@ -6,6 +6,7 @@ const SaleController = Factory.sale().saleController;
 const saleRouter = express.Router();
 
 saleRouter.get('/orders', SaleController.read);
+saleRouter.get('/orders/:id', SaleController.readOne);
 saleRouter.get('/customer/orders/:id', SaleController.readByCustomerId);
 saleRouter.get('/seller/orders/:id', SaleController.readBySellerId);
 saleRouter.post('/customer/checkout', SaleController.create);
