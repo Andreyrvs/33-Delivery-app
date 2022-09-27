@@ -2,9 +2,11 @@ import React from 'react';
 // import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/dom';
 // import { act } from 'react-dom/test-utils';
+import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../helpers/renderWithRouter';
 // import * as xablau from '../services/connectApi';
 // import { fetchPost } from '../services/connectApi';
+// import Card from '../components/Card';
 import App from '../App';
 
 const customerPproducts = '/customer/products';
@@ -56,42 +58,52 @@ describe('teste pagina de registro', () => {
       const spanitem = screen.getByTestId(
         'customer_products__button-card-rm-item-1',
       );
+      fireEvent.click(spanitem);
 
       expect(spanitem).toBeInTheDocument();
     });
   });
 
   // it('tem data-testid "customer_products__input-card-quantity-{id}"', async () => {
-  //   const { history, debug } = renderWithRouter(<App />);
-  //   history.push(customerPproducts);
+  //   const setup = () => {
+  //     const { utils } = renderWithRouter(<App />);
+  //     const input = utils.getByTestId('customer_products__input-card-quantity-1');
+  //     return {
+  //       input,
+  //       ...utils,
+  //     };
+  //   };
   //   debug();
-  //   await waitFor(() => {
-  //     const spanquantity = screen.getByTestId(
-  //       'customer_products__input-card-quantity-1',
-  //     );
-
-  //     expect(spanquantity).toBeInTheDocument();
-  //   });
+  //   const { input } = setup();
+  //   // history.push(customerPproducts);
+  //   fireEvent.change(input, { target: { value: '1' } });
+  //   expect(input.value).toBe('2,20');
   // });
 
-  // it('tem data-testid "customer_products__button-card-add-item-{id}"', async () => {
-  //   const { history, debug } = renderWithRouter(<App />);
-  //   history.push(customerPproducts);
-  //   debug();
-  //   await waitFor(() => {
-  //     const spanquantity = screen.getByTestId(
-  //       'customer_products__button-card-add-item-1',
-  //     );
+  it('tem data-testid "customer_products__button-card-add-item-{id}"', async () => {
+    const { history, debug } = renderWithRouter(<App />);
+    history.push(customerPproducts);
+    debug();
+    await waitFor(() => {
+      const spanquantity = screen.getByTestId(
+        'customer_products__button-card-add-item-1',
+      );
+      fireEvent.click(spanquantity);
+      expect(spanquantity).toBeInTheDocument();
+    });
+  });
 
-  //     expect(spanquantity).toBeInTheDocument();
-  //   });
-  // });
+  it('tem button', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push(customerPproducts);
+    const button = screen.getAllByRole('button');
+    await waitFor(() => {
+      const spanquantity = screen.getByTestId(
+        'customer_products__button-card-add-item-1',
+      );
 
-  // it('tem button', () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   history.push(customerPproducts);
-  //   const button = screen.getAllByRole('button');
-
-  //   expect(button).toHaveLength(2);
-  // });
+      expect(spanquantity).toBeInTheDocument();
+    });
+    expect(button).toHaveLength(2);
+  });
 });
