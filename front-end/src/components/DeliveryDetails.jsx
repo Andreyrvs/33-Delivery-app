@@ -1,10 +1,34 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import MyContext from '../context/MyContext';
+import { fetchPost } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
+  const history = useHistory();
   const [seller, setSeller] = useState('');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
+  const URL = 'http://localhost:3001/customer/checkout';
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { id, token } = user;
+  const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
+  const CREATESUCCESS = 201;
+  const TIMER = 1000;
+
+  const PAYLOAD = {
+    userId: id,
+    sellerId: 2, // get push sellers
+    totalPrice: Number(parseFloat(totalValue).toFixed(2)),
+    deliveryAddress: adress,
+    deliveryNumber: numberAdress,
+    token,
+    products: cart.map((item) => ({
+      productId: item.id,
+      quantity: item.qtd,
+    })),
+  };
 
   const handleForm = ({ target }) => {
     if (target.name === 'nameSeller') setSeller(target.value);
@@ -20,10 +44,19 @@ export default function DeliveryDetails() {
     setNumber('');
   };
 
-  const sendOrder = (event) => {
+  const sendOrder = async (event) => {
     event.preventDefault();
-    alert('Enviado');
+    setOpenModal(true);
     cleanForm();
+
+    const result = await fetchPost(URL, PAYLOAD);
+    // console.log('t', PAYLOAD.token);
+    if (result.status === CREATESUCCESS) {
+      setSale([result.data]);
+      setTimeout(() => {
+        history.push(`/customer/orders/${result.data.id}`);
+      }, TIMER);
+    }
   };
 
   return (

@@ -6,11 +6,11 @@ import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import CheckoutPage from './pages/CheckoutPage';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   return (
     <div>
-
       <MyProvider>
         <Switch>
           <Redirect exact from="/" to="/login" />
@@ -18,10 +18,10 @@ function App() {
           <Route path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ClientPage } />
           <Route exact path="/customer/checkout" component={ CheckoutPage } />
+           <Route exact path="/customer/orders/:id" component={ OrderDetails } />
           <Route path="*" component={ NotFound } />
         </Switch>
       </MyProvider>
-
     </div>
   );
 }
