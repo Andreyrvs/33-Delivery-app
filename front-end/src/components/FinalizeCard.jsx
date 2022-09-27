@@ -4,7 +4,13 @@ import '../css/FinalizeCard.css';
 import { formattedNumber } from '../util/changeNumber';
 
 export default function FinalizeCard() {
-  const { cart, totalValue } = useContext(MyContext);
+  const { cart, setCart, totalValue } = useContext(MyContext);
+
+  const handleCheckout = (id) => {
+    const removedItem = cart.filter((item) => item.id !== id);
+    setCart(removedItem);
+    return removedItem;
+  };
 
   return (
     <section className="checkout">
@@ -91,6 +97,7 @@ export default function FinalizeCard() {
                     }
                     className="button-remove"
                     type="button"
+                    onClick={ () => handleCheckout(item.id) }
                   >
                     Remover
                   </button>
