@@ -5,6 +5,11 @@ class ProductService extends BaseService {
     const allProducts = await this.repository.read();
     return allProducts;
   }
+
+  async readOne(id) {
+    const product = await this.repository.readOne(id);
+    return product;
+  }
 }
 
 module.exports = ProductService;
