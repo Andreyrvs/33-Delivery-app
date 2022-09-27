@@ -5,13 +5,15 @@ import MyContext from './MyContext';
 export default function MyProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
-
+  const [products, setProducts] = useState();
   const contextValue = useMemo(() => ({
     cart,
     setCart,
     totalValue,
     setTotalValue,
-  }), [cart, totalValue]);
+    products,
+    setProducts,
+  }), [cart, totalValue, products]);
 
   return (
     <MyContext.Provider value={ contextValue }>
