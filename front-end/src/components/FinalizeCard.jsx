@@ -42,7 +42,7 @@ export default function FinalizeCard() {
                       `customer_checkout__element-order-table-item-number-${index}`
                     }
                   >
-                    {item.id}
+                    {index + 1}
 
                   </p>
                 </section>
