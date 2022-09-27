@@ -20,8 +20,6 @@ class SaleService extends BaseService {
   }
 
   async readBySellerId(id) {
-    console.log('>>>>>>>>>>>>>>>>', id);
-
     const orders = await this.repository.listBySellerId(id);
     return orders;
   }
