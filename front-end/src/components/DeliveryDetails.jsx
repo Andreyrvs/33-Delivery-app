@@ -13,18 +13,9 @@ export default function DeliveryDetails() {
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { id } = user;
-  const { cart, totalValue, setSale } = useContext(MyContext);
+  const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
   const CREATESUCCESS = 201;
-
-  /*
-  req.body:
-    userId: number,
-    sellerId: number,
-    totalPrice: number,
-    deliveryAddress: string,
-    deliveryNumber: string,
-    products: Array<{ productId: number, quantity: number }>
-  */
+  const TIMER = 1000;
 
   const PAYLOAD = {
     userId: id,
@@ -54,16 +45,15 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    alert('PEDIDO FINALIZADO COM SUCESSO! OU NÃO');
-    // console.log(PAYLOAD);
-    // cleanForm();
+    setOpenModal(true);
+    cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
-    // console.log(result);
     if (result.status === CREATESUCCESS) {
       setSale([result.data]);
-      history.push(`/customer/orders/${result.data.id}`);
-      // setCart([]);
+      setTimeout(() => {
+        history.push(`/customer/orders/${result.data.id}`);
+      }, TIMER);
     }
   };
 

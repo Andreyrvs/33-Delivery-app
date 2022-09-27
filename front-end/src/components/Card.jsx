@@ -10,6 +10,7 @@ export default function Card({ price, img, name, id }) {
   const value = Number(parseFloat(changeNum(price)).toFixed(2));
   const [totalPrice, setTotalPrice] = useState(0);
   const { setCart, cart } = useContext(MyContext);
+
   const item = {
     id,
     qtd,
@@ -17,6 +18,7 @@ export default function Card({ price, img, name, id }) {
     price,
     totalPrice,
   };
+
   const increment = () => {
     setQtd(() => qtd + 1);
     setTotalPrice(totalPrice + value);
