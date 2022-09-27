@@ -24,7 +24,7 @@ export default function DeliveryDetails() {
   // console.log('🔥 🔥 🔥', vendedora);
   const PAYLOAD = {
     userId: id,
-    sellerId, // get push sellers
+    sellerId: 2, // get push sellers
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
