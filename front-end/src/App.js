@@ -4,8 +4,8 @@ import Register from './components/Register';
 import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
-import CheckoutPage from './pages/CheckoutPage';
-import ClientOrders from './pages/ClientOrders';
+import CheckoutPage from './pages/Checkout';
+import ClientOrders from './pages/Orders';
 
 function App() {
   return (
