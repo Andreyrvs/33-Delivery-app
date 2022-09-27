@@ -16,7 +16,7 @@ export default function Header({ pageName }) {
   const [emptyCar, setEmptyCar] = useState(true);
   const [page, setPage] = useState('');
 
-  const totalTeste = cart.reduce((tot, cur) => tot + cur.totalPrice, 0);
+  const cartTotalPrice = cart.reduce((tot, cur) => tot + cur.totalPrice, 0);
 
   const handleStatusButton = () => {
     if (totalValue === 0) {
@@ -28,7 +28,7 @@ export default function Header({ pageName }) {
 
   useEffect(() => {
     setPage(pageName);
-    setTotalValue(totalTeste);
+    setTotalValue(cartTotalPrice);
   });
 
   useEffect(() => {
@@ -47,25 +47,32 @@ export default function Header({ pageName }) {
   return (
     <nav className="headerContainer">
       <div className="headerProdutos data">
-        <span
+        <button
           data-testid="customer_products__element-navbar-link-products"
+          className="button-header"
+          type="submit"
+          onClick={ () => history.push('/customer/products') }
         >
-          { page }
-        </span>
+          {page}
+        </button>
       </div>
       <div className="headerPedidos">
-        <span
-          data-testid="customer_products__element-navbar-link-orders"
+        <button
+          data-testid="customer_products__element-navbar-link-products"
+          className="button-header"
+          type="submit"
+          onClick={ () => history.push('/customer/orders') }
         >
           MEUS PEDIDOS
-        </span>
+        </button>
       </div>
       <div className="headerCarrinho">
         <button
-          type="button"
-          onClick={ checkout }
-          disabled={ emptyCar }
           data-testid="customer_products__button-cart"
+          className="button-header"
+          type="button"
+          disabled={ emptyCar }
+          onClick={ checkout }
         >
           <p data-testid="customer_products__checkout-bottom-value">
             { changeString(Number(totalValue).toFixed(2)) }
@@ -82,6 +89,7 @@ export default function Header({ pageName }) {
       <div className="headerSair">
         <button
           data-testid="customer_products__element-navbar-link-logout"
+          className="button-header"
           type="button"
           onClick={ logOut }
         >
