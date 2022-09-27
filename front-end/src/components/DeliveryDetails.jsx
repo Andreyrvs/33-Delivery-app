@@ -6,10 +6,13 @@ import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
   const history = useHistory();
-  const [seller, setSeller] = useState('');
+  const [sellerForm, setSellerForm] = useState('Fulana Pereira');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
+
+  // const [sellerId, setSellerId] = useState();
   const [users, setUsers] = useState([]);
+
   const URL = 'http://localhost:3001/customer/checkout';
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -18,9 +21,10 @@ export default function DeliveryDetails() {
   const CREATESUCCESS = 201;
   const TIMER = 1000;
 
+  // console.log('🔥 🔥 🔥', vendedora);
   const PAYLOAD = {
     userId: id,
-    sellerId: 2, // get push sellers
+    sellerId, // get push sellers
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
@@ -32,20 +36,23 @@ export default function DeliveryDetails() {
   };
 
   const handleForm = ({ target }) => {
-    if (target.name === 'nameSeller') setSeller(target.value);
+    if (target.name === 'nameSeller') setSellerForm(target.value);
     if (target.name === 'adress') setAdress(target.value);
     if (target.name === 'numberAdress') setNumber(target.value);
   };
 
   const handleSellers = async () => {
     const result = await fetchAllUsers();
-    const usersSeller = result.filter((item) => item.role === 'seller');
+    const usersSeller = result.filter(
+      (item) => item.role === 'seller',
+    );
+
     setUsers(usersSeller);
     return usersSeller;
   };
 
   const cleanForm = () => {
-    setSeller('');
+    setSellerForm('');
     setAdress('');
     setNumber('');
   };
@@ -66,10 +73,9 @@ export default function DeliveryDetails() {
   };
 
   useEffect(() => {
-    if (users) {
-      handleSellers();
-    }
-  }, [users]);
+    handleSellers();
+  }, []);
+
   return (
     <section className="deliveryContainer">
       <div>
@@ -84,19 +90,18 @@ export default function DeliveryDetails() {
               id="nameSeller"
               type="text"
               name="nameSeller"
-              value={ seller }
+              value={ sellerForm }
               onChange={ handleForm }
             >
-              {
-                users.map((item) => (
+              { users
+                && users.map((item) => (
                   <option
                     key={ item.id }
-                    value={ item.id }
+                    value={ item.name }
                   >
                     {item.name}
                   </option>
-                ))
-              }
+                ))}
             </select>
           </label>
 

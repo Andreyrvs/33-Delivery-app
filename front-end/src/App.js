@@ -5,8 +5,8 @@ import Register from './components/Register';
 import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
-import Checkout from './pages/CheckoutPage';
 import OrderDetails from './pages/OrderDetails';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
   return (
@@ -16,9 +16,8 @@ function App() {
           <Redirect exact from="/" to="/login" />
           <Route path="/login" component={ LoginPage } />
           <Route path="/register" component={ Register } />
-          {/* <Route exact path="/customer/orders" component={ OrderDetails } /> */}
           <Route exact path="/customer/products" component={ ClientPage } />
-          <Route exact path="/customer/checkout" component={ Checkout } />
+          <Route exact path="/customer/checkout" component={ CheckoutPage } />
           <Route exact path="/customer/orders/:id" component={ OrderDetails } />
           <Route path="*" component={ NotFound } />
         </Switch>

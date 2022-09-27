@@ -27,7 +27,7 @@ module.exports = (Sequelize, DataTypes) => {
       field: 'product_id'
     }
   }, {
-    tableName: 'salesProducts',
+    tableName: 'sales_products',
     timestamps: false,
   });
 
