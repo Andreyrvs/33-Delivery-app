@@ -1,40 +1,32 @@
-import { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
+// import MyContext from '../context/MyContext';
 import '../css/DeliveryDetails.css';
-import { fetchPost } from '../services/connectApi';
+import { fetchAllUsers } from '../services/connectApi';
 
 export default function DeliveryDetails() {
-  const { cart, totalValue, userLogin } = useContext(MyContext);
-  const URL = 'http://localhost:3001/customer/checkout';
-  const STATUSOK = 200;
-  const NOTFOUND = 404;
-  const history = useHistory();
+  const { cart, totalValue } = useContext(MyContext);
+  const [seller, setSeller] = useState(1);
+  const [adress, setAdress] = useState('');
+  const [numberAdress, setNumber] = useState('');
+  const [users, setUsers] = useState([]);
+  // const URL = 'http://localhost:3001/customer/checkout';
 
-  const checkout = async () => {
+  const checkout = () => {
     const datas = {
       userId: 3,
-      sellerId: 2,
+      sellerId: seller,
       totalPrice: totalValue,
-      deliveryAddress: 'Rua dos Lagartos',
-      deliveryNumber: '1000',
+      deliveryAddress: adress,
+      deliveryNumber: numberAdress,
       products: cart,
     };
 
-    console.log(userLogin);
-    console.log(cart);
-    const createdSale = await fetchPost(URL, datas);
+    // const createdSale = await fetchPost(URL, datas);
+    console.log(datas);
 
-    if (createdSale.status === STATUSOK) {
-      history.push('/customer/orders');
-    } else if (createdSale.status === NOTFOUND) {
-      setmsgError('Algo deu errado');
-    }
+    // return createdSale;
   };
-
-  const [seller, setSeller] = useState('');
-  const [adress, setAdress] = useState('');
-  const [numberAdress, setNumber] = useState('');
 
   const handleForm = ({ target }) => {
     if (target.name === 'nameSeller') setSeller(target.value);
@@ -42,7 +34,11 @@ export default function DeliveryDetails() {
     if (target.name === 'numberAdress') setNumber(target.value);
   };
 
-  const sellers = ['joao', 'maria', 'josefina'];
+  const handleSellers = async () => {
+    const result = await fetchAllUsers();
+    setUsers(result);
+    return result;
+  };
 
   const cleanForm = () => {
     setSeller('');
@@ -52,11 +48,15 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    await checkout();
-    console.log('Enviado');
+    checkout();
     cleanForm();
   };
 
+  useEffect(() => {
+    if (users) {
+      handleSellers();
+    }
+  }, [users]);
   return (
     <section className="deliveryContainer">
       <div>
@@ -75,12 +75,12 @@ export default function DeliveryDetails() {
               onChange={ handleForm }
             >
               {
-                sellers.map((item) => (
+                users.map((item) => (
                   <option
-                    key={ item }
-                    value={ item }
+                    key={ item.id }
+                    value={ item.id }
                   >
-                    {item}
+                    {item.name}
                   </option>
                 ))
               }
