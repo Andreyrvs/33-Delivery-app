@@ -48,12 +48,13 @@ export default function Header({ pageName }) {
     <nav className="headerContainer">
       <div className="headerProdutos data">
         <button
-          data-testid="customer_products__element-navbar-link-products"
           className="button-header"
           type="submit"
           onClick={ () => history.push('/customer/products') }
+          data-testid="customer_products__element-navbar-link-products"
         >
           {page}
+
         </button>
       </div>
       <div className="headerPedidos">
