@@ -55,7 +55,7 @@ export default function Card({ price, img, name, id }) {
         setCart(() => [...cart, item]);
       }
     }
-  }, [qtd]);
+  }, [qtd, cart]);
 
   return (
     <section>
