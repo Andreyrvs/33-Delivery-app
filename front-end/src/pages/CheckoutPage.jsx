@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import DeliveryDetails from '../components/DeliveryDetails';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
@@ -7,7 +6,6 @@ import '../css/Checkout.css';
 
 export default function CheckoutPage() {
   const { cart } = useContext(MyContext);
-  // const [newCart, setNewCart] = useState([cart]);
 
   useEffect(() => {
   }, [cart]);
@@ -26,9 +24,6 @@ export default function CheckoutPage() {
           ))
         ) }
       </div>
-      <Link to="/customer/products">
-        <p>Voltar</p>
-      </Link>
       <DeliveryDetails />
     </div>
   );

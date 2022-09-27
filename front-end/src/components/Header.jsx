@@ -44,14 +44,20 @@ export default function Header({ pageName }) {
     history.push('/customer/checkout');
   };
 
+  const products = () => {
+    history.push('/customer/products');
+  };
+
   return (
     <nav className="headerContainer">
-      <div className="headerProdutos data">
-        <span
+      <div className="headerProdutos">
+        <button
+          type="button"
+          onClick={ products }
           data-testid="customer_products__element-navbar-link-products"
         >
           { page }
-        </span>
+        </button>
       </div>
       <div className="headerPedidos">
         <span
