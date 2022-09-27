@@ -1,3 +1,5 @@
+const { httpStatusCode } = require('../helpers');
+
 const BaseController = require('./Base');
 
 class ProductController extends BaseController {
@@ -8,7 +10,12 @@ class ProductController extends BaseController {
   
   async read(_req, res) {
     const allProducts = await this.service.read();
-    return res.status(200).json(allProducts);
+    return res.status(httpStatusCode.OK).json(allProducts);
+  }
+
+  async readOne(req, res) {
+    const product = await this.service.readOne(req.params.id);
+    return res.status(httpStatusCode.OK).json(product);
   }
 }
 

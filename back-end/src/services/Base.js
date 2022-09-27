@@ -33,7 +33,6 @@ class BaseService {
 
   async delete(id) {
     const isDeleted = await this.repository.delete(id);
-    console.log('DELETE', isDeleted);
     if (!isDeleted) {
       handleThrowError(
         'Element doesn\'t exist in database to be deleted', httpStatusCode.NOT_FOUND,

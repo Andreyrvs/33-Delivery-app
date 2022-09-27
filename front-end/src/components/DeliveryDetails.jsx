@@ -1,31 +1,34 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
-// import MyContext from '../context/MyContext';
+import { fetchPost, fetchAllUsers } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
-import { fetchAllUsers } from '../services/connectApi';
 
 export default function DeliveryDetails() {
-  const { cart, totalValue } = useContext(MyContext);
-  const [seller, setSeller] = useState(0);
+  const history = useHistory();
+  const [seller, setSeller] = useState('');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
   const [users, setUsers] = useState([]);
-  // const URL = 'http://localhost:3001/customer/checkout';
+  const URL = 'http://localhost:3001/customer/checkout';
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { id, token } = user;
+  const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
+  const CREATESUCCESS = 201;
+  const TIMER = 1000;
 
-  const checkout = () => {
-    const datas = {
-      userId: 3,
-      sellerId: seller,
-      totalPrice: totalValue,
-      deliveryAddress: adress,
-      deliveryNumber: numberAdress,
-      products: cart,
-    };
-
-    // const createdSale = await fetchPost(URL, datas);
-    console.log(datas);
-
-    // return createdSale;
+  const PAYLOAD = {
+    userId: id,
+    sellerId: 2, // get push sellers
+    totalPrice: Number(parseFloat(totalValue).toFixed(2)),
+    deliveryAddress: adress,
+    deliveryNumber: numberAdress,
+    token,
+    products: cart.map((item) => ({
+      productId: item.id,
+      quantity: item.qtd,
+    })),
   };
 
   const handleForm = ({ target }) => {
@@ -49,9 +52,17 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    console.log(users);
-    checkout();
+    setOpenModal(true);
     cleanForm();
+
+    const result = await fetchPost(URL, PAYLOAD);
+    // console.log('t', PAYLOAD.token);
+    if (result.status === CREATESUCCESS) {
+      setSale([result.data]);
+      setTimeout(() => {
+        history.push(`/customer/orders/${result.data.id}`);
+      }, TIMER);
+    }
   };
 
   useEffect(() => {

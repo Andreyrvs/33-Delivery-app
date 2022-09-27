@@ -9,7 +9,8 @@ export default function Card({ price, img, name, id }) {
   const [qtd, setQtd] = useState(0);
   const value = Number(parseFloat(changeNum(price)).toFixed(2));
   const [totalPrice, setTotalPrice] = useState(0);
-  const { setCart, cart } = useContext(MyContext);
+  const { setCart, cart, setTotalValue, totalValue } = useContext(MyContext);
+
   const item = {
     id,
     qtd,
@@ -17,9 +18,11 @@ export default function Card({ price, img, name, id }) {
     price,
     totalPrice,
   };
+
   const increment = () => {
     setQtd(() => qtd + 1);
     setTotalPrice(totalPrice + value);
+    setTotalValue(totalValue + value);
   };
 
   const decrement = () => {
@@ -28,6 +31,7 @@ export default function Card({ price, img, name, id }) {
     } else {
       setQtd(qtd - 1);
       setTotalPrice(totalPrice - value);
+      setTotalValue(totalValue - value);
     }
   };
 
@@ -91,6 +95,7 @@ export default function Card({ price, img, name, id }) {
             </button>
             <input
               name="quantity"
+              aria-label="cost-input"
               value={ qtd }
               type="text"
               data-testid={ `customer_products__input-card-quantity-${id}` }
