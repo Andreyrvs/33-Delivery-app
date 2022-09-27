@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Card from '../components/Card';
 import Header from '../components/Header';
+import MyContext from '../context/MyContext';
 import '../css/Clientes.css';
 import { fecthProducts } from '../services/connectApi';
-import { changeString } from '../util/changeNumber';
+import { formattedNumber } from '../util/changeNumber';
 
 function ClientPage() {
-  const [products, setProducts] = useState();
+  const { products, setProducts } = useContext(MyContext);
 
   const getProducts = async () => {
     const items = await fecthProducts();
@@ -14,9 +15,10 @@ function ClientPage() {
   };
 
   useEffect(() => {
-    getProducts();
-  }, [products]);
-
+    if (!products) {
+      getProducts();
+    }
+  });
   return (
     <div className="clientPageContainer">
       <Header pageName="PRODUTOS" />
@@ -27,11 +29,12 @@ function ClientPage() {
               <div key={ item.id } className="card">
                 <Card
                   name={ item.name }
-                  price={ changeString(item.price) }
+                  price={ formattedNumber(item.price) }
                   img={ item.urlImage }
                   className="card"
                   id={ item.id }
                 />
+
               </div>
             ))}
           </div>
