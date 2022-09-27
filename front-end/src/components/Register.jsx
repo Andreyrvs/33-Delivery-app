@@ -42,10 +42,7 @@ export default function Register() {
     event.preventDefault();
     // console.log(newUser);
     const result = await fetchPost(url, newUser);
-<<<<<<< HEAD
-=======
     // console.log(result);
->>>>>>> main-group-20
     if (result.status === CREATED) {
       localStorage.setItem('user', JSON.stringify(userLocal));
       history.push('/customer/products');

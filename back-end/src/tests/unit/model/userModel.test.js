@@ -1,23 +1,43 @@
-const Factory = require('../../../Factory');
-
 const sinon = require('sinon');
-const { expect } = require('chai');
+const chai = require('chai');
+const chaiHTTP = require('chai-http');
 
-const { mock } = require('../../mocks/allMocks')
-const models = require('../../../database/models');
+chai.use(chaiHTTP)
 
-describe('Testa a função  da camada models', () => {
+const Factory = require("../../../Factory");
 
+const { expect } = require("chai");
+
+const models = require("../../../database/models");
+
+describe("Testa a função  da camada models", () => {
+  afterEach(sinon.restore);
   const userRepo = Factory.user().userRepository;
 
-  afterEach(sinon.restore);
+  const mockLoginIncorrect = {
+    name: "Admin",
+    email: "adm@deliveryapp.com",
+    password: "senhaerrada",
+  };
+  
+  const mockLoginCorrect = {
+    name: "Admin",
+    email: "adm@deliveryapp.com",
+    password: "--adm2@22!!--",
+  };
+  
+  const mockLogin = {
+    name: "Admin",
+    email: "adm@deliveryapp.com",
+    password: "a4c86edecc5aee06eff8fdeda69e0d04",
+    role: "admin",
+  };
 
-  describe('quando o retorno é bem sucedido', () => {
-    
-    it('retorna um obj', async () => {
-      sinon.stub(models.User, 'findOne').resolves(mock);
-      
-      const response = await userRepo.getOneUser(mock.email);
+  describe("quando o retorno é bem sucedido", () => {
+    it("retorna um obj", async () => {
+      sinon.stub(models.User, "findOne").resolves(mockLogin);
+
+      const response = await userRepo.getOneUser(mockLogin.email);
 
       expect(response).to.be.an('object');
     });

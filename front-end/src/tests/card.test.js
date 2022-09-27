@@ -1,48 +1,97 @@
 import React from 'react';
 // import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/dom';
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor } from '@testing-library/dom';
+// import { act } from 'react-dom/test-utils';
 import renderWithRouter from '../helpers/renderWithRouter';
+// import * as xablau from '../services/connectApi';
 // import { fetchPost } from '../services/connectApi';
 import App from '../App';
 
 const customerPproducts = '/customer/products';
 
 describe('teste pagina de registro', () => {
-  window.localStorage.setItem('data', JSON.stringify({ name: 'xablau' }));
-  it('tem data-testid "customer_products__element-card-price-{id}"', () => {
-    const { history, debug } = renderWithRouter(<App />);
-    act(() => {
-      history.push(customerPproducts);
-    });
-    debug();
-    const spanId = screen
-      .getByTestId('customer_products__element-card-price-6');
+  window.localStorage.setItem('user', JSON.stringify({ name: 'xablau' }));
 
-    expect(spanId).toBeInTheDocument();
+  it('tem data-testid "customer_products__element-card-price-{id}"', async () => {
+    const { history, debug } = renderWithRouter(<App />);
+    history.push(customerPproducts);
+    debug();
+    await waitFor(() => {
+      expect(screen.getByTestId(
+        'customer_products__element-card-price-1',
+      )).toBeInTheDocument();
+    });
   });
 
-  it('tem data-testid "customer_products__img-card-bg-image-{id}"', () => {
+  it('tem data-testid "customer_products__img-card-bg-image-{id}"', async () => {
     const { history, debug } = renderWithRouter(<App />);
-    act(() => {
-      history.push(customerPproducts);
-    });
+    history.push(customerPproducts);
     debug();
-    const spanImg = screen
-      .getByTestId('customer_products__img-card-bg-image-6');
-
-    expect(spanImg).toBeInTheDocument();
+    await waitFor(() => {
+      const spanImg = screen.getByTestId(
+        'customer_products__img-card-bg-image-1',
+      );
+      expect(spanImg).toBeInTheDocument();
+    });
   });
 
-  it('tem data-testid "customer_products__element-card-title-{id}"', () => {
+  it('tem data-testid "customer_products__element-card-title-{id}"', async () => {
     const { history, debug } = renderWithRouter(<App />);
-    act(() => {
-      history.push(customerPproducts);
-    });
+    history.push(customerPproducts);
     debug();
-    const spanTitle = screen
-      .getByTestId('customer_products__element-card-title-6');
+    await waitFor(() => {
+      const spanTitle = screen.getByTestId(
+        'customer_products__element-card-title-1',
+      );
 
-    expect(spanTitle).toBeInTheDocument();
+      expect(spanTitle).toBeInTheDocument();
+    });
   });
+
+  it('tem data-testid "customer_products__button-card-rm-item-{id}"', async () => {
+    const { history, debug } = renderWithRouter(<App />);
+    history.push(customerPproducts);
+    debug();
+    await waitFor(() => {
+      const spanitem = screen.getByTestId(
+        'customer_products__button-card-rm-item-1',
+      );
+
+      expect(spanitem).toBeInTheDocument();
+    });
+  });
+
+  // it('tem data-testid "customer_products__input-card-quantity-{id}"', async () => {
+  //   const { history, debug } = renderWithRouter(<App />);
+  //   history.push(customerPproducts);
+  //   debug();
+  //   await waitFor(() => {
+  //     const spanquantity = screen.getByTestId(
+  //       'customer_products__input-card-quantity-1',
+  //     );
+
+  //     expect(spanquantity).toBeInTheDocument();
+  //   });
+  // });
+
+  // it('tem data-testid "customer_products__button-card-add-item-{id}"', async () => {
+  //   const { history, debug } = renderWithRouter(<App />);
+  //   history.push(customerPproducts);
+  //   debug();
+  //   await waitFor(() => {
+  //     const spanquantity = screen.getByTestId(
+  //       'customer_products__button-card-add-item-1',
+  //     );
+
+  //     expect(spanquantity).toBeInTheDocument();
+  //   });
+  // });
+
+  // it('tem button', () => {
+  //   const { history } = renderWithRouter(<App />);
+  //   history.push(customerPproducts);
+  //   const button = screen.getAllByRole('button');
+
+  //   expect(button).toHaveLength(2);
+  // });
 });

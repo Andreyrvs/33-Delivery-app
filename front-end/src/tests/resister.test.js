@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 // import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/dom';
 // import userEvent from '@testing-library/user-event';
-import axios from 'axios';
+// import axios from 'axios';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
@@ -55,20 +55,5 @@ describe('teste pagina de registro', () => {
     debug();
     const button = screen.getByRole('button', { name: /cadastrar/i });
     expect(button).toBeInTheDocument();
-  });
-
-  describe('registerErr', () => {
-    it(`tem um elemento oculto data-testi
-    "common_register__element-invalid_register"`, () => {
-      const { history, debug } = renderWithRouter(<App />);
-      history.push('/register');
-      debug('register')
-      const fake = {
-        name: 'marcilio',
-        email: 'email@example.com',
-        password: '1234567',
-      };
-      });
-    });
   });
 });
