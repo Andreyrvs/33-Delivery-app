@@ -62,7 +62,7 @@ export default function Header({ pageName }) {
       </div>
       <div className="headerPedidos">
         <button
-          data-testid="customer_products__element-navbar-link-products"
+          data-testid="customer_products__element-navbar-link-orders"
           className="button-header"
           type="submit"
           onClick={ () => history.push('/customer/orders') }

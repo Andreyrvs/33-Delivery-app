@@ -16,7 +16,7 @@ export default function CheckoutPage() {
       { openModal && (
         <Modal closeModal={ setOpenModal } />
       )}
-      <Header pageName="PRODUTOS" />
+      <Header pageName="Produtos" />
       <section className="finalize-card">
         <FinalizeCard />
       </section>
