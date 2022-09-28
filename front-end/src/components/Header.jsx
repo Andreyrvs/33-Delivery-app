@@ -10,7 +10,7 @@ export default function Header({ pageName }) {
   const history = useHistory();
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
-  const { name } = user;
+  const { name, role } = user;
   const { totalValue, cart, setTotalValue } = useContext(MyContext);
 
   const [emptyCar, setEmptyCar] = useState(true);
@@ -45,7 +45,11 @@ export default function Header({ pageName }) {
   };
 
   const products = () => {
-    history.push('/customer/products');
+    if (role === 'customer') {
+      history.push('/customer/products');
+    } else if (role === 'seller') {
+      history.push('/seller/orders/');
+    }
   };
 
   return (

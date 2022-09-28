@@ -1,9 +1,12 @@
 .container-sellerOrders {
+  align-items: center;
   display: flex;
-  height: 100%;
+  flex-wrap: wrap;
+  height: 90vh;
   justify-content: space-around;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
+  width: 95%;
 }
 
 .order-sellerOrders {
