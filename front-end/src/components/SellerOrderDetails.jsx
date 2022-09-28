@@ -1,18 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import '../css/OrderDetailsPage.css';
+import { fetchAll } from '../services/connectApi';
 import { formattedNumber } from '../util/changeNumber';
-import CustomerDetails from './CustomerDetails';
+// import CustomerDetails from './CustomerDetails';
 
 export default function SellerOrderDetails() {
-  const { cart, totalValue } = useContext(MyContext);
+  const { orderSelected } = useContext(MyContext);
+  const [order, setOrder] = useState();
+
+  const MOCK = [{
+    id: 1,
+    name: 'Algo pra teste',
+    qtd: 2,
+    price: 1.20,
+    totalPrice: 2.40,
+  }];
+
+  const getOrderSelected = async () => {
+    console.log('id', orderSelected);
+    const URL = `http://localhost:3001/orders/${orderSelected}`;
+    const result = await fetchAll(URL);
+    setOrder([result]);
+    console.log('teste', result);
+    setOrder(result);
+    console.log('0', order);
+  };
+
+  useEffect(() => {
+    getOrderSelected();
+  }, []);
 
   return (
     <section className="checkout">
       <section className="finalize-order">
         <p className="finalize-order-text">Detalhe do Pedido</p>
       </section>
-      <CustomerDetails />
+      {
+        // <CustomerDetails />
+      }
       <section className="checkout-container">
         <section className="checkout-titulo">
           <section className="titulo-left-container">
@@ -26,8 +52,8 @@ export default function SellerOrderDetails() {
             <p className="titulo-remover">Remover Item</p>
           </section>
         </section>
-        { cart && (
-          cart.map((item, index) => (
+        { MOCK && (
+          MOCK.map((item, index) => (
             <section key={ item.id } className="item-container">
               <section className="left-container">
                 <section
@@ -100,7 +126,7 @@ export default function SellerOrderDetails() {
             >
               Total:
               {' '}
-              {formattedNumber(totalValue)}
+
             </p>
           </section>
         </section>

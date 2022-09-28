@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchAll } from '../services/connectApi';
 import '../css/SellerOrders.css';
 import dateConfig from '../util/editDate';
+import MyContext from '../context/MyContext';
 
 export default function SellerOrders() {
   const history = useHistory();
   const FOUR = 4;
   const [orders, setOrders] = useState();
   const [statusClass, setStatusClass] = useState();
+  const { setOrderSelected } = useContext(MyContext);
 
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -38,6 +40,7 @@ export default function SellerOrders() {
   };
 
   const viewOrderDetails = (orderID) => {
+    setOrderSelected(orderID);
     history.push(`/seller/orders/${orderID}`);
   };
 
