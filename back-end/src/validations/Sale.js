@@ -15,12 +15,6 @@ class SaleValidations {
     }
   }
 
-  static async create(userId, sellerId, products, repository) {
-    SaleValidations.checkUser(userId, repository);
-    SaleValidations.checkSeller(sellerId, repository);
-    SaleValidations.checkProducts(products, repository);
-  }
-
   static async checkProducts(products, repository) {
     const productIds = products.map(({ productId }) => productId);
     const counted = await repository.coutByIds(productIds);
@@ -34,6 +28,7 @@ class SaleValidations {
 
   static async checkUser(userId, repository) {
     const user = await repository.readOne(userId);
+    console.log('DDDDDDDDDDDDDDDDDD', user.get());
     if (!user) handleThrowError('User doesn\'t exist', httpStatusCode.NOT_FOUND);
     if (user.role !== 'customer') {
       handleThrowError('User\'s role isn\'t customer', httpStatusCode.BAD_REQUEST);
