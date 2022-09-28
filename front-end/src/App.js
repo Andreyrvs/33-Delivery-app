@@ -18,7 +18,7 @@ function App() {
           <Route path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ClientPage } />
           <Route exact path="/customer/checkout" component={ CheckoutPage } />
-           <Route exact path="/customer/orders/:id" component={ OrderDetails } />
+          <Route exact path="/customer/orders/:id" component={ OrderDetails } />
           <Route path="*" component={ NotFound } />
         </Switch>
       </MyProvider>

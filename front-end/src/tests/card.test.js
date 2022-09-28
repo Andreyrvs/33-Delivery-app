@@ -10,7 +10,7 @@ import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
 const customerPproducts = '/customer/products';
-
+const three = 3;
 describe('teste pagina de registro', () => {
   window.localStorage.setItem('user', JSON.stringify({ name: 'xablau' }));
 
@@ -64,21 +64,15 @@ describe('teste pagina de registro', () => {
     });
   });
 
-  // it('tem data-testid "customer_products__input-card-quantity-{id}"', async () => {
-  //   const setup = () => {
-  //     const { utils } = renderWithRouter(<App />);
-  //     const input = utils.getByTestId('customer_products__input-card-quantity-1');
-  //     return {
-  //       input,
-  //       ...utils,
-  //     };
-  //   };
-  //   debug();
-  //   const { input } = setup();
-  //   // history.push(customerPproducts);
-  //   fireEvent.change(input, { target: { value: '1' } });
-  //   expect(input.value).toBe('2,20');
-  // });
+  it('tem data-testid "customer_products__input-card-quantity-{id}"', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push(customerPproducts);
+    const input = await screen.findByTestId('customer_products__input-card-quantity-1');
+    fireEvent.change(input, { target: { value: '1' } });
+
+    expect(input).toBeInTheDocument();
+    expect(input.value).toBe('1');
+  });
 
   it('tem data-testid "customer_products__button-card-add-item-{id}"', async () => {
     const { history, debug } = renderWithRouter(<App />);
@@ -104,6 +98,6 @@ describe('teste pagina de registro', () => {
 
       expect(spanquantity).toBeInTheDocument();
     });
-    expect(button).toHaveLength(2);
+    expect(button).toHaveLength(three);
   });
 });
