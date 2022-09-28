@@ -49,6 +49,8 @@ export default function Header({ pageName }) {
       history.push('/customer/products');
     } else if (role === 'seller') {
       history.push('/seller/orders/');
+    } else {
+      console.log('fazer a rota');
     }
   };
 
