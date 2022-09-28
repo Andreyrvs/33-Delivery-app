@@ -7,7 +7,7 @@ class UserService extends BaseService {
   async login(login) {
     UserValidations.reqLogin(login);
     const user = await this.repository.getOneUser(login.email);
-    UserValidations.login(login, user);
+    UserValidations.checkLogin(login, user);
     const { password, ...userInfo } = user.get();
     const token = generateToken({ ...userInfo });
     return { token, ...userInfo };
