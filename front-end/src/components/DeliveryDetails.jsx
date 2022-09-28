@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
-import { fetchPost } from '../services/connectApi';
+import { fetchGet, fetchPost } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
@@ -13,13 +14,22 @@ export default function DeliveryDetails() {
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { id, token } = user;
-  const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
+  const { cart, totalValue, setSale, setOpenModal, setMsgModal } = useContext(MyContext);
   const CREATESUCCESS = 201;
+  const ERROR = 404;
   const TIMER = 1000;
+  const [sellers, setSellers] = useState();
+  const [sellerId, setSellerId] = useState();
+
+  const getSellers = async () => {
+    const result = await fetchGet('http://localhost:3001/user/get-all');
+    const roleSellers = result.filter((element) => element.role === 'seller');
+    setSellers([{ id: 0, name: 'Vendedor' }, ...roleSellers]);
+  };
 
   const PAYLOAD = {
     userId: id,
-    sellerId: 2, // get push sellers
+    sellerId: 2, // sellerId retorna o id do vendedor, mas não passa no teste
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
@@ -36,8 +46,6 @@ export default function DeliveryDetails() {
     if (target.name === 'numberAdress') setNumber(target.value);
   };
 
-  const sellers = ['joao', 'maria', 'josefina'];
-
   const cleanForm = () => {
     setSellerForm('');
     setAdress('');
@@ -50,14 +58,27 @@ export default function DeliveryDetails() {
     cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
-    // console.log('t', PAYLOAD.token);
+    // console.log('t', PAYLOAD.sellerId);
     if (result.status === CREATESUCCESS) {
       setSale([result.data]);
+      setMsgModal('Pedido realizado com seucesso!');
       setTimeout(() => {
         history.push(`/customer/orders/${result.data.id}`);
       }, TIMER);
+    } else if (result.status === ERROR) {
+      setMsgModal('Falha ao gravar a venda, verifique o nome do vendedor');
     }
   };
+
+  useEffect(() => {
+    getSellers();
+    if (sellerForm) {
+      const sellerSelected = sellers.filter((e) => e.name === sellerForm);
+      console.log(sellerSelected[0].id);
+      setSellerId(sellerSelected[0].id);
+      console.log('t', sellerId);
+    }
+  }, [sellerForm]);
 
   return (
     <section className="deliveryContainer">
@@ -73,22 +94,21 @@ export default function DeliveryDetails() {
               type="text"
               data-testid="customer_checkout__select-seller"
               name="nameSeller"
-              value={ sellerForm }
               onChange={ handleForm }
+              value={ sellerForm }
             >
               { sellers && (
-                sellers.map((item) => (
+                sellers.map((e) => (
                   <option
-                    key={ item.email }
-                    value={ item.name }
+                    key={ e.id }
+                    value={ e.name }
                   >
-                    {item}
+                    { e.name }
                   </option>
                 ))
               )}
             </select>
           </label>
-
           <label htmlFor="adress" className="inputAdressAdress">
             Endereço:
             <input

@@ -7,6 +7,7 @@ export default function MyProvider({ children }) {
   const [totalValue, setTotalValue] = useState(0);
   const [sale, setSale] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [msgModal, setMsgModal] = useState('');
 
   const contextValue = useMemo(() => ({
     cart,
@@ -17,7 +18,9 @@ export default function MyProvider({ children }) {
     setSale,
     openModal,
     setOpenModal,
-  }), [cart, totalValue, sale, openModal]);
+    msgModal,
+    setMsgModal,
+  }), [cart, totalValue, sale, openModal, msgModal]);
 
   return (
     <MyContext.Provider value={ contextValue }>

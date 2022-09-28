@@ -6,7 +6,7 @@ import MyContext from '../context/MyContext';
 import '../css/Checkout.css';
 
 export default function CheckoutPage() {
-  const { cart, openModal, setOpenModal } = useContext(MyContext);
+  const { cart, openModal, setOpenModal, msgModal } = useContext(MyContext);
 
   useEffect(() => {
   }, [cart]);
@@ -14,7 +14,7 @@ export default function CheckoutPage() {
   return (
     <div>
       { openModal && (
-        <Modal closeModal={ setOpenModal } />
+        <Modal closeModal={ setOpenModal } msgModal={ msgModal } />
       )}
       <Header pageName="Checkout" />
       <div className="checkoutContainer">

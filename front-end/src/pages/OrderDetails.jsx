@@ -5,13 +5,14 @@ import MyContext from '../context/MyContext';
 import Header from '../components/Header';
 
 export default function OrderDetails() {
-  const { sale, cart } = useContext(MyContext);
+  const { sale, cart, setOpenModal } = useContext(MyContext);
   const history = useHistory();
   const [sales, setSales] = useState([]);
 
   useEffect(() => {
     setSales(sale);
-    console.log(cart);
+    setOpenModal(false);
+    // console.log(cart);
   }, []);
 
   return (
