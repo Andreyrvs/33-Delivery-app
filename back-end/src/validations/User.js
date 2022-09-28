@@ -9,11 +9,11 @@ class UserValidations {
   }
 
   static reqLogin(login) {
-    joi.validateLoginJoi(login, httpStatusCode.UNAUTHORIZED);
+    joi.user.validateLoginJoi(login, httpStatusCode.UNAUTHORIZED);
   }
 
   static reqUser(user) {
-    joi.validateUserJoi(user, httpStatusCode.UNAUTHORIZED);
+    joi.user.validateUserJoi(user, httpStatusCode.UNAUTHORIZED);
   }
 
   static checkIfCreated(data) {

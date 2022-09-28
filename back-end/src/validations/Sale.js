@@ -1,6 +1,15 @@
-const { handleThrowError, httpStatusCode } = require('../helpers');
+const { handleThrowError, httpStatusCode, joi } = require('../helpers');
 
 class SaleValidations {
+  static reqId(id) {
+    if (!id) handleThrowError('Id can\'t be empty', httpStatusCode.UNAUTHORIZED);
+    if (id !== String) handleThrowError('Id must me an simple string', httpStatusCode.UNAUTHORIZED);
+  }
+
+  static reqSale(fullSale) {
+    joi.sale.validateSale(fullSale);
+  }
+
   static async checkProducts(products, repository) {
     const productIds = products.map(({ productId }) => productId);
     const counted = await repository.coutByIds(productIds);
