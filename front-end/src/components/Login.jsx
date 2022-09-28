@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateEmail from '../util/validateEmail';
@@ -9,6 +10,7 @@ export default function Login() {
   const history = useHistory();
   const {
     setUserLogin,
+    // sale,
   } = useContext(MyContext);
   const [loginEmail, setloginEmail] = useState('');
   const [loginPassword, setloginPassword] = useState('');
@@ -20,6 +22,12 @@ export default function Login() {
   const STATUSOK = 200;
   const NOTFOUND = 404;
   const UNAUTHORIZED = 401;
+
+  /*
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { token } = user;
+  */
 
   const handleInputEmail = ({ target }) => {
     setloginEmail(target.value);
@@ -40,7 +48,7 @@ export default function Login() {
       role: result.data.role,
       token: result.data.token,
     };
-    console.log('☎ ☎ ☎', result);
+    // console.log('☎ ☎ ☎', result);
     if (result.status === STATUSOK) {
       setUserLogin(result.data);
       localStorage.setItem('user', JSON.stringify(dataLocal));
@@ -62,6 +70,12 @@ export default function Login() {
     if (validate && psw) {
       setisDisabled(false);
     }
+    /*
+    if (token && sale) {
+      console.log('ta logado');
+      // history.push('/customer/products');
+    }
+    */
   }, [loginEmail, loginPassword, msgError]);
 
   return (

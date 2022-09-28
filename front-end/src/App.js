@@ -5,7 +5,7 @@ import Register from './components/Register';
 import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
-import OrderDetails from './pages/OrderDetails';
+import OrderDetailsPage from './pages/OrderDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Route path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ClientPage } />
           <Route exact path="/customer/checkout" component={ CheckoutPage } />
-          <Route exact path="/customer/orders/:id" component={ OrderDetails } />
+          <Route exact path="/customer/orders/:id" component={ OrderDetailsPage } />
           <Route path="*" component={ NotFound } />
         </Switch>
       </MyProvider>

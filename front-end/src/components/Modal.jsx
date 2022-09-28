@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/Modal.css';
 import PropTypes from 'prop-types';
 
-function Modal({ closeModal }) {
+function Modal({ closeModal, msgModal }) {
   const closeM = () => {
     closeModal(false);
   };
@@ -24,7 +24,7 @@ function Modal({ closeModal }) {
         </div>
         */}
         <div className="body">
-          <p>Compra realizada com sucesso!</p>
+          <p>{msgModal}</p>
         </div>
         {/*
         <div className="footer">

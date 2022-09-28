@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
@@ -17,8 +18,9 @@ export default function DeliveryDetails() {
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { id, token } = user;
-  const { cart, totalValue, setSale, setOpenModal } = useContext(MyContext);
+  const { cart, totalValue, setSale, setOpenModal, setMsgModal } = useContext(MyContext);
   const CREATESUCCESS = 201;
+  const ERROR = 404;
   const TIMER = 1000;
 
   // console.log('🔥 🔥 🔥', vendedora);
@@ -29,6 +31,7 @@ export default function DeliveryDetails() {
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
     token,
+    sellerName: sellerForm,
     products: cart.map((item) => ({
       productId: item.id,
       quantity: item.qtd,
@@ -59,16 +62,19 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    setOpenModal(true);
+    setOpenModal(false);
     cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
-    // console.log('t', PAYLOAD.token);
+    // console.log('t', PAYLOAD.sellerId);
     if (result.status === CREATESUCCESS) {
       setSale([result.data]);
+      setMsgModal('Pedido realizado com seucesso!');
       setTimeout(() => {
         history.push(`/customer/orders/${result.data.id}`);
       }, TIMER);
+    } else if (result.status === ERROR) {
+      setMsgModal('Falha ao gravar a venda, verifique o nome do vendedor');
     }
   };
 
