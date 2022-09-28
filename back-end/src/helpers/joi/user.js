@@ -1,5 +1,5 @@
 const joi = require('joi');
-const { handleThrowError } = require('./errorHandler');
+const { handleThrowError } = require('../errorHandler');
 
 const email = joi.string().email().required().messages({
   'string.base': 'Email must be an string',
