@@ -15,7 +15,7 @@ function ClientPage() {
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [products]);
 
   return (
     <div className="clientPageContainer">

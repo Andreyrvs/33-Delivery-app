@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateEmail from '../util/validateEmail';
 import { fetchPost } from '../services/connectApi';
 import '../css/Login.css';
+import MyContext from '../context/MyContext';
 
 export default function Login() {
   const history = useHistory();
+  const {
+    setUserLogin,
+  } = useContext(MyContext);
   const [loginEmail, setloginEmail] = useState('');
   const [loginPassword, setloginPassword] = useState('');
   const [msgError, setmsgError] = useState();
@@ -36,8 +40,9 @@ export default function Login() {
       role: result.data.role,
       token: result.data.token,
     };
-
+    console.log('☎ ☎ ☎', result);
     if (result.status === STATUSOK) {
+      setUserLogin(result.data);
       localStorage.setItem('user', JSON.stringify(dataLocal));
       history.push('/customer/products');
     } else if (result.status === UNAUTHORIZED) {

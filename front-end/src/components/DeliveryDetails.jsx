@@ -1,14 +1,18 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
-import { fetchPost } from '../services/connectApi';
+import { fetchPost, fetchAllUsers } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
   const history = useHistory();
-  const [sellerForm, setSellerForm] = useState('');
+  const [sellerForm, setSellerForm] = useState('Fulana Pereira');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
+
+  // const [sellerId, setSellerId] = useState();
+  const [users, setUsers] = useState([]);
+
   const URL = 'http://localhost:3001/customer/checkout';
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -17,6 +21,7 @@ export default function DeliveryDetails() {
   const CREATESUCCESS = 201;
   const TIMER = 1000;
 
+  // console.log('🔥 🔥 🔥', vendedora);
   const PAYLOAD = {
     userId: id,
     sellerId: 2, // get push sellers
@@ -36,7 +41,15 @@ export default function DeliveryDetails() {
     if (target.name === 'numberAdress') setNumber(target.value);
   };
 
-  const sellers = ['joao', 'maria', 'josefina'];
+  const handleSellers = async () => {
+    const result = await fetchAllUsers();
+    const usersSeller = result.filter(
+      (item) => item.role === 'seller',
+    );
+
+    setUsers(usersSeller);
+    return usersSeller;
+  };
 
   const cleanForm = () => {
     setSellerForm('');
@@ -59,6 +72,10 @@ export default function DeliveryDetails() {
     }
   };
 
+  useEffect(() => {
+    handleSellers();
+  }, []);
+
   return (
     <section className="deliveryContainer">
       <div>
@@ -69,32 +86,31 @@ export default function DeliveryDetails() {
           <label htmlFor="nameSeller" className="inputAdressSelect">
             P. Vendedora responsável:
             <select
+              data-testid="customer_checkout__select-seller"
               id="nameSeller"
               type="text"
-              data-testid="customer_checkout__select-seller"
               name="nameSeller"
               value={ sellerForm }
               onChange={ handleForm }
             >
-              { sellers && (
-                sellers.map((item) => (
+              { users
+                && users.map((item) => (
                   <option
-                    key={ item.email }
+                    key={ item.id }
                     value={ item.name }
                   >
-                    {item}
+                    {item.name}
                   </option>
-                ))
-              )}
+                ))}
             </select>
           </label>
 
           <label htmlFor="adress" className="inputAdressAdress">
             Endereço:
             <input
+              data-testid="customer_checkout__input-address"
               id="adress"
               type="text"
-              data-testid="customer_checkout__input-address"
               placeholder="Endereço"
               name="adress"
               value={ adress }
@@ -105,9 +121,9 @@ export default function DeliveryDetails() {
           <label htmlFor="numberAdress" className="inputAdressNumber">
             Número:
             <input
+              data-testid="customer_checkout__input-address-number"
               id="numberAdress"
               type="number"
-              data-testid="customer_checkout__input-address-number"
               placeholder="222"
               name="numberAdress"
               value={ numberAdress }

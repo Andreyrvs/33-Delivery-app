@@ -5,8 +5,8 @@ import Register from './components/Register';
 import ClientPage from './pages/ClientPage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
-import CheckoutPage from './pages/CheckoutPage';
 import OrderDetails from './pages/OrderDetails';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
   return (
