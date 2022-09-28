@@ -17,6 +17,7 @@ export default function OrderDetails() {
   return (
     <div>
       <Header pageName="Orders" />
+      <OrderDetails />
       <p>Pagina de compras do cliente</p>
       <p>Venda Criada om sucesso</p>
       <div>

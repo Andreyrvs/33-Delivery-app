@@ -89,6 +89,8 @@ export default function Header({ pageName }) {
         <span
           data-testid="customer_products__element-navbar-user-full-name"
         >
+          Cliente:
+          {' '}
           { name }
         </span>
       </div>

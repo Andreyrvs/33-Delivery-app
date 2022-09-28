@@ -19,7 +19,7 @@ export function axiosPostLogin({ email, password }) {
 }
 
 export async function fetchPost(url, payLoad) {
-  console.log('s', payLoad.token);
+  // console.log('s', payLoad.token);
   const response = await fetch(url, {
     method: 'POST',
     headers: {

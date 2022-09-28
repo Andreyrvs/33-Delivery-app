@@ -40,7 +40,7 @@ export default function Login() {
       role: result.data.role,
       token: result.data.token,
     };
-    console.log('☎ ☎ ☎', result);
+    // console.log('☎ ☎ ☎', result);
     if (result.status === STATUSOK) {
       setUserLogin(result.data);
       localStorage.setItem('user', JSON.stringify(dataLocal));
