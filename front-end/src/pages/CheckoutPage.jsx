@@ -1,34 +1,25 @@
 import { useContext, useEffect } from 'react';
+import MyContext from '../context/MyContext';
+import FinalizeCard from '../components/FinalizeCard';
 import DeliveryDetails from '../components/DeliveryDetails';
 import Header from '../components/Header';
-import Modal from '../components/Modal';
-import MyContext from '../context/MyContext';
 import '../css/Checkout.css';
+import Modal from '../components/Modal';
 
 export default function CheckoutPage() {
-  const { cart, openModal, setOpenModal } = useContext(MyContext);
+  const { cart, openModal, setOpenModal, msgModal } = useContext(MyContext);
 
   useEffect(() => {
   }, [cart]);
-
   return (
     <div>
       { openModal && (
-        <Modal closeModal={ setOpenModal } />
+        <Modal closeModal={ setOpenModal } msgModal={ msgModal } />
       )}
-      <Header pageName="Checkout" />
-      <div className="checkoutContainer">
-        { cart && (
-          cart.map((item) => (
-            <div key={ item.id } className="itemContainer">
-              <p>{item.id}</p>
-              <p>{item.name}</p>
-              <p>{item.qtd}</p>
-              <p>{item.price}</p>
-            </div>
-          ))
-        ) }
-      </div>
+      <Header pageName="Produtos" />
+      <section className="finalize-card">
+        <FinalizeCard />
+      </section>
       <DeliveryDetails />
     </div>
   );

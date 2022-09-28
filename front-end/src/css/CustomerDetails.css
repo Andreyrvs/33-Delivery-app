@@ -1,0 +1,45 @@
+.customerDetailsContainer {
+  align-items: center;
+  background-color: #eaf1ef;
+  border: none;
+  display: flex;
+  font-size: 1.2rem;
+  height: 75px;
+  justify-content: space-around;
+}
+
+.pedidoDetailsContainer {
+  align-items: center;
+  display: flex;
+  font-weight: 900;
+}
+
+.customerDetailsContainer p {
+  margin-left: 5px;
+}
+
+.pedidoDetailsData {
+  font-weight: 900;
+}
+
+.pedidoDetailsStatus {
+  align-items: center;
+  background-color: #00cc9b;
+  border-radius: 10px;
+  display: flex;
+  font-weight: 900;
+  height: 53px;
+  justify-content: center;
+  width: 295px;
+}
+
+.pedidoDetailsButton {
+  background-color: #036b52;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  height: 52px;
+  width: 332px;
+}

@@ -2,7 +2,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 36px;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
@@ -13,14 +13,25 @@
   width: 100%;
 }
 
+/*
+.button-header {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  height: 105px;
+  outline: inherit;
+}
+*/
+
 .headerProdutos {
   align-items: center;
   background-color: #2fc18c;
   display: flex;
-  font-size: 28px;
+  font-size: 1.5rem;
   font-weight: 700;
   justify-content: center;
-  width: 20%;
+  width: 15%;
 }
 
 .headerPedidos {
@@ -41,7 +52,7 @@
   font-size: 28px;
   font-weight: 700;
   justify-content: center;
-  width: 15%;
+  width: 20%;
 }
 
 .headerNome {
@@ -49,7 +60,7 @@
   background-color: #421981;
   color: white;
   display: flex;
-  font-size: 36px;
+  font-size: 1.5rem;
   justify-content: center;
   width: 20%;
 }

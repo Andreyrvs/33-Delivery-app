@@ -1,3 +1,32 @@
+:root {
+
+  --main-bg-primary: #2fc18c;
+
+  --main-bg-secondary: #036b52;
+
+  --main-bg-tertiary: #421981;
+
+  --main-bg-quaternary: #056cf9;
+
+  --main-text-ligth: white;
+
+  --main-text-dark: black;
+
+  --main-bg-card-primary: #eaf1ef;
+
+  --main-bg-card-secondary: #b1c2be;
+
+  --main-bg-card-chekout: #fbfffe;
+
+  --card-font-size: 36px;
+
+  --card-font-weight: 500px;
+
+  --main-box-shadow: rgba(0, 0, 0, 0.25);
+
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
