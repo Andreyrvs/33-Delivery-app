@@ -10,6 +10,18 @@ class SaleValidations {
     joi.sale.validateSale(fullSale);
   }
 
+  static emptyOrder(orders) {
+    if (!orders || orders.length === 0) {
+      handleThrowError('Has no order in batabase', httpStatusCode.NOT_FOUND);
+    }
+  }
+
+  static async create(userId, sellerId, products, repository) {
+    SaleValidations.checkUser(userId, repository);
+    SaleValidations.checkSeller(sellerId, repository);
+    SaleValidations.checkProducts(products, repository);
+  }
+
   static async checkProducts(products, repository) {
     const productIds = products.map(({ productId }) => productId);
     const counted = await repository.coutByIds(productIds);
@@ -34,12 +46,6 @@ class SaleValidations {
     if (!user) handleThrowError('User doesn\'t exist', httpStatusCode.NOT_FOUND);
     if (user.role !== 'seller') {
       handleThrowError('User\'s role isn\'t seller', httpStatusCode.BAD_REQUEST);
-    }
-  }
-
-  static emptyOrder(orders) {
-    if (!orders || orders.length === 0) {
-      handleThrowError('Has no order in batabase', httpStatusCode.NOT_FOUND);
     }
   }
 }
