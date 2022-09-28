@@ -27,6 +27,12 @@ class SaleValidations {
       handleThrowError('User\'s role isn\'t seller', httpStatusCode.BAD_REQUEST);
     }
   }
+
+  static emptyOrder(orders) {
+    if (!orders || orders.length === 0) {
+      handleThrowError('Has no order in batabase', httpStatusCode.NOT_FOUND);
+    }
+  }
 }
 
 module.exports = SaleValidations;

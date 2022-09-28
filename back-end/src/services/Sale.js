@@ -11,21 +11,25 @@ class SaleService extends BaseService {
 
   async read() {
     const allOrders = await this.repository.read();
+    SaleValidations.emptyOrder(allOrders);
     return allOrders;
   }
 
   async readByCustomerId(id) {
     const orders = await this.repository.listByCustomerId(id);
+    SaleValidations.emptyOrder(orders);
     return orders;
   }
 
   async readBySellerId(id) {
     const orders = await this.repository.listBySellerId(id);
+    SaleValidations.emptyOrder(orders);
     return orders;
   }
 
   async readOne(id) {
     const order = await this.repository.readOne(id);
+    SaleValidations.emptyOrder(order);
     return order;
   }
 
