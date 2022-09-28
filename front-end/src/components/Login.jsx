@@ -52,7 +52,15 @@ export default function Login() {
     if (result.status === STATUSOK) {
       setUserLogin(result.data);
       localStorage.setItem('user', JSON.stringify(dataLocal));
-      history.push('/customer/products');
+      // console.log(result.data);
+      if (result.data.role === 'customer') {
+        history.push('/customer/products');
+      } else if (result.data.role === 'seller') {
+        history.push('/seller/orders');
+      } else if (result.data.role === 'administrator') {
+        console.log('Faça a rota filhote');
+        // history.push('/seller/orders');
+      }
     } else if (result.status === UNAUTHORIZED) {
       setmsgError('Senha incorreta');
     } else if (result.status === NOTFOUND) {

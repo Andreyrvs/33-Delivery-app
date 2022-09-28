@@ -62,7 +62,7 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    setOpenModal(false);
+    setOpenModal(true);
     cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
