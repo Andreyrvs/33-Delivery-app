@@ -2,14 +2,18 @@
 import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
-import { fetchGet, fetchPost } from '../services/connectApi';
+import { fetchPost, fetchAllUsers } from '../services/connectApi';
 import '../css/DeliveryDetails.css';
 
 export default function DeliveryDetails() {
   const history = useHistory();
-  const [sellerForm, setSellerForm] = useState('');
+  const [sellerForm, setSellerForm] = useState('Fulana Pereira');
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
+
+  // const [sellerId, setSellerId] = useState();
+  const [users, setUsers] = useState([]);
+
   const URL = 'http://localhost:3001/customer/checkout';
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -18,22 +22,16 @@ export default function DeliveryDetails() {
   const CREATESUCCESS = 201;
   const ERROR = 404;
   const TIMER = 1000;
-  const [sellers, setSellers] = useState();
-  const [sellerId, setSellerId] = useState();
 
-  const getSellers = async () => {
-    const result = await fetchGet('http://localhost:3001/user/get-all');
-    const roleSellers = result.filter((element) => element.role === 'seller');
-    setSellers([{ id: 0, name: 'Vendedor' }, ...roleSellers]);
-  };
-
+  // console.log('🔥 🔥 🔥', vendedora);
   const PAYLOAD = {
     userId: id,
-    sellerId: 2, // sellerId retorna o id do vendedor, mas não passa no teste
+    sellerId: 2, // get push sellers
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
     token,
+    sellerName: sellerForm,
     products: cart.map((item) => ({
       productId: item.id,
       quantity: item.qtd,
@@ -46,6 +44,16 @@ export default function DeliveryDetails() {
     if (target.name === 'numberAdress') setNumber(target.value);
   };
 
+  const handleSellers = async () => {
+    const result = await fetchAllUsers();
+    const usersSeller = result.filter(
+      (item) => item.role === 'seller',
+    );
+
+    setUsers(usersSeller);
+    return usersSeller;
+  };
+
   const cleanForm = () => {
     setSellerForm('');
     setAdress('');
@@ -54,7 +62,7 @@ export default function DeliveryDetails() {
 
   const sendOrder = async (event) => {
     event.preventDefault();
-    setOpenModal(true);
+    setOpenModal(false);
     cleanForm();
 
     const result = await fetchPost(URL, PAYLOAD);
@@ -71,14 +79,8 @@ export default function DeliveryDetails() {
   };
 
   useEffect(() => {
-    getSellers();
-    if (sellerForm) {
-      const sellerSelected = sellers.filter((e) => e.name === sellerForm);
-      console.log(sellerSelected[0].id);
-      setSellerId(sellerSelected[0].id);
-      console.log('t', sellerId);
-    }
-  }, [sellerForm]);
+    handleSellers();
+  }, []);
 
   return (
     <section className="deliveryContainer">
@@ -90,31 +92,31 @@ export default function DeliveryDetails() {
           <label htmlFor="nameSeller" className="inputAdressSelect">
             P. Vendedora responsável:
             <select
+              data-testid="customer_checkout__select-seller"
               id="nameSeller"
               type="text"
-              data-testid="customer_checkout__select-seller"
               name="nameSeller"
-              onChange={ handleForm }
               value={ sellerForm }
+              onChange={ handleForm }
             >
-              { sellers && (
-                sellers.map((e) => (
+              { users
+                && users.map((item) => (
                   <option
-                    key={ e.id }
-                    value={ e.name }
+                    key={ item.id }
+                    value={ item.name }
                   >
-                    { e.name }
+                    {item.name}
                   </option>
-                ))
-              )}
+                ))}
             </select>
           </label>
+
           <label htmlFor="adress" className="inputAdressAdress">
             Endereço:
             <input
+              data-testid="customer_checkout__input-address"
               id="adress"
               type="text"
-              data-testid="customer_checkout__input-address"
               placeholder="Endereço"
               name="adress"
               value={ adress }
@@ -125,9 +127,9 @@ export default function DeliveryDetails() {
           <label htmlFor="numberAdress" className="inputAdressNumber">
             Número:
             <input
+              data-testid="customer_checkout__input-address-number"
               id="numberAdress"
               type="number"
-              data-testid="customer_checkout__input-address-number"
               placeholder="222"
               name="numberAdress"
               value={ numberAdress }

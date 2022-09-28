@@ -41,8 +41,9 @@ export const fecthProducts = async () => {
   return data;
 };
 
-export const fetchGet = async (url) => {
-  const response = await fetch(url);
+export const fetchAllUsers = async () => {
+  const URL = 'http://localhost:3001/user/get-all';
+  const response = await fetch(URL);
   const data = await response.json();
   return data;
 };
