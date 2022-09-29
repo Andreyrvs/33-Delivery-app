@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { fetchPost } from '../services/connectApi';
+import '../css/AdminPage.css';
 
 export default function AdminCreateUser() {
   const [nameUser, setNameUser] = useState('');
@@ -41,17 +42,16 @@ export default function AdminCreateUser() {
   }, [nameUser, emailUser, passwordUser, roleUser]);
 
   return (
-    <section>
-      <h1>Cadastrar Novo Usuário</h1>
-      <form className="">
-        <div className="">
+    <section className="pageAdminContainer">
+      <form className="formPageAdmin">
+        <div className="nameFormAdmin">
           <label htmlFor="cadastroName">
             Nome
             <input
               id="cadastroName"
               type="text"
               className=""
-              data-testid=""
+              data-testid="admin_manage__input-name"
               placeholder="Nome e sobrenome"
               name="cadastroName"
               onChange={ handleInputName }
@@ -59,14 +59,14 @@ export default function AdminCreateUser() {
             />
           </label>
         </div>
-        <div className="">
+        <div className="emailFormAdmin">
           <label htmlFor="cadastroEmail">
             Email
             <input
               id="cadastroEmail"
               type="email"
               className=""
-              data-testid="common_register__input-email"
+              data-testid="admin_manage__input-email"
               placeholder="seu-email@site.com.br"
               name="cadastroEmail"
               onChange={ handleInputName }
@@ -74,14 +74,14 @@ export default function AdminCreateUser() {
             />
           </label>
         </div>
-        <div className="">
+        <div className="passwordFormAdmin">
           <label htmlFor="cadastroPassword">
             Senha
             <input
               id="cadastroPassword"
               type="password"
               className=""
-              data-testid="common_register__input-password"
+              data-testid="admin_manage__input-password"
               placeholder="********"
               name="cadastroPassword"
               minLength="6"
@@ -90,12 +90,12 @@ export default function AdminCreateUser() {
             />
           </label>
         </div>
-        <label htmlFor="cadastroTipo" className="">
+        <label htmlFor="cadastroTipo" className="selectFormAdmin">
           Tipo
           <select
             id="cadastroTipo"
             className=""
-            data-testid=""
+            data-testid="admin_manage__select-role"
             name="cadastroTipo"
             value={ roleUser }
             onChange={ handleInputName }
@@ -107,8 +107,8 @@ export default function AdminCreateUser() {
         </label>
         <button
           type="submit"
-          className=""
-          data-testid="common_register__button-register"
+          className="buttonFormAdmin"
+          data-testid="admin_manage__button-register"
           disabled={ isDisabled }
           onClick={ addUser }
         >

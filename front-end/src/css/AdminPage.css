@@ -1,0 +1,194 @@
+.titleAdminPage {
+  margin: auto;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: 1640px;
+}
+
+.pageAdminContainer {
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 1px grey;
+  display: flex;
+  flex-direction: column;
+  height: 147px;
+  margin: auto;
+  padding: 20px;
+  width: 1640px;
+}
+
+.formPageAdmin {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.formPageAdmin input {
+  margin-top: 5px;
+}
+
+.formPageAdmin select {
+  margin-top: 5px;
+}
+
+.nameFormAdmin {
+  width: 325px;
+}
+
+
+.nameFormAdmin input {
+  border-radius: 5px;
+  height: 70px;
+  width: 325px;
+}
+
+.emailFormAdmin {
+  width: 325px;
+}
+
+.emailFormAdmin input {
+  border-radius: 5px;
+  height: 70px;
+  width: 325px;
+}
+
+.passwordFormAdmin {
+  width: 325px;
+}
+
+.passwordFormAdmin input {
+  border-radius: 5px;
+  height: 70px;
+  width: 325px;
+}
+
+.selectFormAdmin {
+  width: 325px;
+}
+
+.selectFormAdmin select {
+  border-radius: 5px;
+  height: 70px;
+  width: 325px;
+}
+
+.buttonFormAdmin {
+  background-color: #036b52;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  height: 59px;
+  margin-top: 20px;
+  width: 200px;
+}
+
+.adminListUsersContainer {
+  margin: auto;
+  padding: 20px;
+  width: 1640px;
+}
+
+.adminListUsersContainer h1 {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.tableAdminListUsers {
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 1px grey;
+  margin-left: -20px;
+  padding: 20px;
+  width: 1640px;
+}
+
+.headerTableAdminLisUsers {
+  display: flex;
+  font-size: 24px;
+  height: 62px;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.tableIndex {
+  width: 90px;
+}
+
+.tableName {
+  width: 418px;
+}
+
+.tableEmail {
+  width: 429px;
+}
+
+.tableType {
+  width: 430px;
+}
+
+.tableDelete {
+  width: 233px;
+}
+
+.infoTableAdminList {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  font-size: 36px;
+  font-weight: 500;
+  height: 63px;
+  width: 1640px;
+}
+
+.infoIndex {
+  align-items: center;
+  background-color: #2fc18c;
+  border-radius: 10px 1px 1px 10px;
+  display: flex;
+  height: 63px;
+  justify-content: center;
+  width: 90px;
+}
+
+.infoName {
+  align-items: center;
+  background-color: #eaf1ef;
+  display: flex;
+  height: 63px;
+  justify-content: center;
+  width: 433px;
+}
+
+.infoEmail {
+  align-items: center;
+  background-color: #036b52;
+  color: white;
+  display: flex;
+  height: 63px;
+  justify-content: center;
+  width: 433px;
+}
+
+.infoType {
+  align-items: center;
+  background-color: #421981;
+  color: white;
+  display: flex;
+  height: 63px;
+  justify-content: center;
+  width: 433px;
+}
+
+.infoButtonDel {
+  align-items: center;
+  background-color: #056cf9;
+  border: none;
+  border-radius: 1px 10px 10px 1px;
+  color: white;
+  display: flex;
+  font-size: 36px;
+  font-weight: 500;
+  height: 63px;
+  justify-content: center;
+  width: 250px;
+}
