@@ -33,6 +33,7 @@ export default function CustomerDetails() {
 
   useEffect(() => {
     if (sales) {
+      console.log(sales);
       setSaleId(sale[0].id);
       setStatus(sale[0].status);
       dateConfig(sale[0].saleDate);
@@ -44,7 +45,7 @@ export default function CustomerDetails() {
       <div className="pedidoDetailsContainer">
         PEDIDO:
         <p data-testid="customer_order_details__element-order-details-label-order-id">
-          { sale && saleId}
+          { sale && saleId }
         </p>
       </div>
       <div
