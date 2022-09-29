@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import '../css/OrderDetailsPage.css';
 import { fetchAll } from '../services/connectApi';
-import { formattedNumber } from '../util/changeNumber';
-// import CustomerDetails from './CustomerDetails';
+import { changeString, formattedNumber } from '../util/changeNumber';
+import SellerHeaderOrderDetails from './SellerHeaderOrderDetails';
 
 export default function SellerOrderDetails() {
   const { orderSelected } = useContext(MyContext);
@@ -18,13 +18,10 @@ export default function SellerOrderDetails() {
   }];
 
   const getOrderSelected = async () => {
-    console.log('id', orderSelected);
-    const URL = `http://localhost:3001/orders/${orderSelected}`;
+    // console.log('id', orderSelected);
+    const URL = `http://localhost:3001/orders/${orderSelected.id}`;
     const result = await fetchAll(URL);
-    setOrder([result]);
-    console.log('teste', result);
     setOrder(result);
-    console.log('0', order);
   };
 
   useEffect(() => {
@@ -36,9 +33,7 @@ export default function SellerOrderDetails() {
       <section className="finalize-order">
         <p className="finalize-order-text">Detalhe do Pedido</p>
       </section>
-      {
-        // <CustomerDetails />
-      }
+      <SellerHeaderOrderDetails />
       <section className="checkout-container">
         <section className="checkout-titulo">
           <section className="titulo-left-container">
@@ -52,16 +47,16 @@ export default function SellerOrderDetails() {
             <p className="titulo-remover">Remover Item</p>
           </section>
         </section>
-        { MOCK && (
+        { MOCK && order && (
           MOCK.map((item, index) => (
-            <section key={ item.id } className="item-container">
+            <section key={ order.id } className="item-container">
               <section className="left-container">
                 <section
                   className="item-number"
                 >
                   <p
                     data-testid={
-                      `customer_order_details__element-order-table-item-number-${index}`
+                      `seller_order_details__element-order-table-item-number-${index}`
                     }
                   >
                     {index + 1}
@@ -72,7 +67,7 @@ export default function SellerOrderDetails() {
                   className="item-description"
                 >
                   <p
-                    data-testid={ `customer_order_details__element-order-table-name
+                    data-testid={ `seller_order_details__element-order-table-name
                     -${index}` }
                   >
                     {item.name}
@@ -85,7 +80,7 @@ export default function SellerOrderDetails() {
                   <p
                     className="quantity-text"
                     data-testid={
-                      `customer_order_details__element-order-table-quantity-${index}`
+                      `seller_order_details__element-order-table-quantity-${index}`
                     }
                   >
                     {item.qtd}
@@ -96,7 +91,7 @@ export default function SellerOrderDetails() {
                   <p
                     className="price-text"
                     data-testid={
-                      `customer_order_details__element-order-table-unit-price-${index}`
+                      `seller_order_details__element-order-table-unit-price-${index}`
                     }
                   >
                     {formattedNumber(item.price)}
@@ -107,7 +102,7 @@ export default function SellerOrderDetails() {
                   <p
                     className="total-price-text"
                     data-testid={
-                      `customer_order_details__element-order-table-sub-total-${index}`
+                      `seller_order_details__element-order-table-sub-total-${index}`
                     }
                   >
                     {formattedNumber(item.totalPrice)}
@@ -122,11 +117,9 @@ export default function SellerOrderDetails() {
           <section className="checkout-total">
             <p
               className="checkout-total-text"
-              data-testid="customer_order_details__element-order-total-price"
+              data-testid="seller_order_details__element-order-total-price"
             >
-              Total:
-              {' '}
-
+              {order && changeString(order.totalPrice)}
             </p>
           </section>
         </section>
