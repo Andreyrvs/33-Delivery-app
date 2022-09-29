@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
-import { fetchPost, fetchAll } from '../services/connectApi';
+import { fetchPost } from '../services/connectApi';
 
 export default function AdminCreateUser() {
   const [nameUser, setNameUser] = useState('');

@@ -11,8 +11,8 @@ export default function SellerOrders() {
   const FOUR = 4;
   const [orders, setOrders] = useState();
   const [statusClass, setStatusClass] = useState();
-  const { setOrderSelected, statusOrderGlobal } = useContext(MyContext);
-  const [status, setStatus] = useState();
+  const { setOrderSelected } = useContext(MyContext);
+  // const [status, setStatus] = useState();
 
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -24,18 +24,21 @@ export default function SellerOrders() {
     setOrders(result);
   };
 
-  const getOrderStatus = () => {
+  const getOrderStatus = (status) => {
+    let result = '';
     if (status) {
       if (status === 'Pendente') {
-        setStatusClass('pending');
+        result = 'pending';
       } else if (status === 'Entregue') {
-        setStatusClass('delivered');
+        result = 'delivered';
       } else if (status === 'Preparando') {
-        setStatusClass('preparing');
+        result = 'preparing';
       } else if (status === 'Em Trânsito') {
-        setStatusClass('out');
+        result = 'out';
       }
     }
+    // console.log('ei', result);
+    return setStatusClass(result);
   };
 
   const viewOrderDetails = (order) => {
@@ -45,13 +48,13 @@ export default function SellerOrders() {
 
   useEffect(() => {
     getAllOrders();
-    setStatus(statusOrderGlobal);
   }, []);
 
   useEffect(() => {
-    getOrderStatus();
-    setStatus(statusOrderGlobal);
-  }, [orders, statusOrderGlobal]);
+    if (orders) {
+      orders.forEach((item) => getOrderStatus(item.status));
+    }
+  }, [orders]);
 
   return (
     <section
@@ -81,7 +84,7 @@ export default function SellerOrders() {
                   <p
                     data-testid={ `seller_orders__element-delivery-status-${item.id}` }
                   >
-                    {`${status}`.toUpperCase()}
+                    {`${item.status}`.toUpperCase()}
                   </p>
                 </div>
                 <div className="date-price-orderCard">

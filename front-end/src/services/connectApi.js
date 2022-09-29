@@ -33,6 +33,20 @@ export async function fetchPost(url, payLoad, token) {
   return { data, status };
 }
 
+export const fetchUpdate = async (url, payload, token) => {
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    mode: 'cors',
+    body: JSON.stringify(payload),
+  });
+  const { status } = response;
+  return status;
+};
+
 export const fecthProducts = async () => {
   const URL = 'http://localhost:3001/customer/products';
   const response = await fetch(URL);

@@ -1,0 +1,14 @@
+const getOrderStatus = (status) => {
+    let result = '';
+    if (status) {
+      if (status === 'Pendente') {
+        result = 'pending';
+      } else if (status === 'Entregue') {
+        result = 'delivered';
+      } else if (status === 'Preparando') {
+        result = 'preparing';
+      } else if (status === 'Em Trânsito') {
+        result = 'out';
+      }
+    }
+    return setStatusClass(result);

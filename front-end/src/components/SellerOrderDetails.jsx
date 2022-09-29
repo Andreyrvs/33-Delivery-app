@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import '../css/OrderDetailsPage.css';
 import { fetchAll } from '../services/connectApi';
-import { formattedNumber } from '../util/changeNumber';
+import { changeString, formattedNumber } from '../util/changeNumber';
 import SellerHeaderOrderDetails from './SellerHeaderOrderDetails';
 
 export default function SellerOrderDetails() {
@@ -18,7 +18,7 @@ export default function SellerOrderDetails() {
   }];
 
   const getOrderSelected = async () => {
-    console.log('id', orderSelected);
+    // console.log('id', orderSelected);
     const URL = `http://localhost:3001/orders/${orderSelected.id}`;
     const result = await fetchAll(URL);
     setOrder(result);
@@ -119,8 +119,7 @@ export default function SellerOrderDetails() {
               className="checkout-total-text"
               data-testid="seller_order_details__element-order-total-price"
             >
-              Total:
-              {order && formattedNumber(order.totalPrice)}
+              {order && changeString(order.totalPrice)}
             </p>
           </section>
         </section>

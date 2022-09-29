@@ -3,42 +3,49 @@
 import { useContext, useState, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 import '../css/CustomerDetails.css';
+import { fetchAll, fetchUpdate } from '../services/connectApi';
 
 export default function SellerHeaderOrderDetails() {
   const {
     sale,
     orderSelected,
-    setStatusOrderGlobal,
-    statusOrderGlobal } = useContext(MyContext);
+  } = useContext(MyContext);
   // const history = useHistory();
   const [saleId, setSaleId] = useState();
   const [status, setStatus] = useState();
   const [saleDate, setSaleDate] = useState();
   const [isDisabledPreparing, setIsDisabledPreparing] = useState();
   const [isDisabledDelivery, setIsDisabledDelivery] = useState();
-
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
-  const { role } = user;
-  const statusTrânsito = 'Em Trânsito';
+  const { role, token } = user;
+  const UPDATESUCCES = 204;
+  // const statusTrânsito = 'Em Trânsito';
 
-  const getOrderPreparingStatus = () => {
-    const statusVerify = ['Preparando', statusTrânsito, 'Entregue'];
-    const statusNow = statusVerify.some((item) => item.includes(status));
-    console.log(statusNow);
-    if (statusNow === true) {
-      setIsDisabledPreparing(true);
-      setIsDisabledDelivery(false);
-    } else {
-      setIsDisabledPreparing(false);
-      setIsDisabledDelivery(true);
-    }
+  const getOrderStatus = async () => {
+    const URL = `http://localhost:3001/orders/${saleId}`;
+    console.log(URL);
+    const result = await fetchAll(URL);
+    // console.log('getOrderStatus', result);
+    setStatus(result.status);
   };
 
-  const changeStatusGlobal = () => {
-    setStatusOrderGlobal('Preparando');
-    setStatus('Preparando');
-    setIsDisabledDelivery(false);
+  const changeOrderStatus = async (action) => {
+    const URL = `http://localhost:3001/status/update/${saleId}`;
+
+    const PAYLOAD = {
+      id: saleId,
+      status: action === 'prepare' ? 'Preparando' : 'Em Trânsito',
+      role: 'seller',
+    };
+
+    const result = await fetchUpdate(URL, PAYLOAD, token);
+    // console.log(result);
+
+    if (result === UPDATESUCCES) {
+      setIsDisabledDelivery(false);
+      getOrderStatus();
+    }
     // setIsDisabledPreparing(true);
   };
 
@@ -50,19 +57,28 @@ export default function SellerHeaderOrderDetails() {
   };
 
   useEffect(() => {
-    getOrderPreparingStatus();
-    if (orderSelected && role === 'seller' && statusOrderGlobal) {
+    if (orderSelected && role === 'seller') {
       setSaleId(orderSelected.id);
-      setStatus('Pendente');
+      setStatus(orderSelected.status);
       dateConfig(orderSelected.saleDate);
     }
   }, []);
 
-  const dataTestId = 'seller_order_details__element-order-details-label-delivery-status';
-
   useEffect(() => {
-    getOrderPreparingStatus();
-  }, [statusOrderGlobal, setStatusOrderGlobal, status]);
+    getOrderStatus();
+    if (status === 'Pendente') {
+      setIsDisabledDelivery(true);
+      setIsDisabledPreparing(false);
+    } else if (status === 'Preparando') {
+      setIsDisabledPreparing(true);
+      setIsDisabledDelivery(false);
+    } else if (status === 'Em Trânsito') {
+      setIsDisabledPreparing(true);
+      setIsDisabledDelivery(true);
+    }
+  }, [status]);
+
+  const dataTestId = 'seller_order_details__element-order-details-label-delivery-status';
 
   return (
     <section className="customerDetailsContainer">
@@ -91,7 +107,7 @@ export default function SellerHeaderOrderDetails() {
         className="pedidoDetailsButtonSecondary"
         data-testid="seller_order_details__button-preparing-check"
         type="button"
-        onClick={ changeStatusGlobal }
+        onClick={ () => changeOrderStatus('prepare') }
         disabled={ isDisabledPreparing }
       >
         PREPARAR PEDIDO
@@ -101,10 +117,7 @@ export default function SellerHeaderOrderDetails() {
         data-testid="seller_order_details__button-dispatch-check"
         type="button"
         disabled={ isDisabledDelivery }
-        onClick={ () => {
-          setStatusOrderGlobal(statusTrânsito);
-          setStatus(statusTrânsito);
-        } }
+        onClick={ changeOrderStatus }
       >
         SAIU PARA ENTREGA
       </button>
