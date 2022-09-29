@@ -3,6 +3,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../api/app');
 const { User }  = require('../database/models');
+const { jwt } = require('../helpers/generateToken');
 
 
 chai.use(chaiHttp);
@@ -16,10 +17,11 @@ describe('test rota POST/login', () => {
     sinon
       .stub(User, "findOne")
       .resolves({
-        id: 1,
-		    name: "Delivery App Admin",
-		    email: "adm@deliveryapp.com",
-		    password: "a4c86edecc5a",
+        "id": 1,
+        "name": "Delivery App Admin",
+        "email": "adm@deliveryapp.com",
+        "password": "a4c86edecc5aee06eff8fdeda69e0d04",
+        "role": "administrator"
     });
   });
 
@@ -27,16 +29,16 @@ describe('test rota POST/login', () => {
       sinon.restore();
     })
   
-    it('login success', async () => {
+    it('Login success', async () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send({
-          email: 'fulana@deliveryapp.com',
-          password: 'fulana@123'
+          email: 'zebirita@email.com',
+          password: '$#zebirita#$'
         });
       console.log('APAPAPAPAPAPAPAPAOAOAOAOAOAO', chaiHttpResponse)
-      expect(chaiHttpResponse).to.have.status(200);
+      expect(chaiHttpResponse.status).to.be.equal(200);
       expect(chaiHttpResponse.body).to.be.an('object');
       expect(chaiHttpResponse.body).to.be.have.property('token');
     });
