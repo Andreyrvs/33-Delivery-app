@@ -15,6 +15,14 @@ class SaleRepository extends BaseRepository {
     const orders = await this.model.findAll({ where: { sellerId: id } });
     return orders;
   }
+
+  async updateSaleStatus(id, status) {
+    const update = await this.model.update(
+      { status },
+      { where: { id } },
+    );
+    return update;
+  }
 }
 
 module.exports = SaleRepository;
