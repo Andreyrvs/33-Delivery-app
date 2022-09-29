@@ -14,6 +14,12 @@ class Auth {
     next();
   }
 
+  static getRole(req, _res, next) {
+    const user = Auth.jwtToken(req.headers.authorization);    
+    req.user = { ...user };
+    next();
+  }
+
   static jwtToken(authorization) {
     if (!authorization) {
       handleThrowError('Token not found', httpStatusCode.UNAUTHORIZED);
