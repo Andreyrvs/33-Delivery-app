@@ -33,7 +33,7 @@ const products = joi.array().items(joi.object({ productId, quantity }));
 
 const saleSchema = joi.object(
   { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products },
-).messages({ 'any.required': 'All fields are required' });
+);
 
 function joiHandler(value, statusCode, joiSchema) {
   const { error } = joiSchema.validate(value);

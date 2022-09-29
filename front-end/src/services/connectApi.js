@@ -18,13 +18,12 @@ export function axiosPostLogin({ email, password }) {
   return result;
 }
 
-export async function fetchPost(url, payLoad) {
-  // console.log('s', payLoad.token);
+export async function fetchPost(url, payLoad, token) {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${payLoad.token}`,
+      Authorization: token,
     },
     mode: 'cors',
     body: JSON.stringify(payLoad),
@@ -44,6 +43,12 @@ export const fecthProducts = async () => {
 export const fetchAllUsers = async () => {
   const URL = 'http://localhost:3001/user/get-all';
   const response = await fetch(URL);
+  const data = await response.json();
+  return data;
+};
+
+export const fetchAll = async (url) => {
+  const response = await fetch(url);
   const data = await response.json();
   return data;
 };

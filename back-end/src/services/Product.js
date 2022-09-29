@@ -4,7 +4,6 @@ const ProductValidations = require('../validations/Products');
 class ProductService extends BaseService {
   async read() {
     const allProducts = await this.repository.read();
-    ProductValidations.emptyProducts(allProducts);
     return allProducts;
   }
 

@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
+import SellerOrdersDetailPage from './pages/SellerOrdersDetailPage';
+import SellerOrdersPage from './pages/SellerOrdersPage';
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Route path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ClientPage } />
           <Route exact path="/customer/checkout" component={ CheckoutPage } />
+          <Route exact path="/seller/orders/" component={ SellerOrdersPage } />
           <Route exact path="/customer/orders/:id" component={ OrderDetailsPage } />
+          <Route exact path="/seller/orders/:id" component={ SellerOrdersDetailPage } />
           <Route path="*" component={ NotFound } />
         </Switch>
       </MyProvider>
