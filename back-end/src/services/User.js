@@ -1,24 +1,23 @@
 const md5 = require('md5');
-const { handleThrowError, generateToken, joi, httpStatusCode } = require('../helpers');
+const { generateToken } = require('../helpers');
 const BaseService = require('./Base');
+const UserValidations = require('../validations/User');
 
 class UserService extends BaseService {
   async login(login) {
-    joi.validateLoginJoi(login, httpStatusCode.UNAUTHORIZED);
+    UserValidations.reqLogin(login);
     const user = await this.repository.getOneUser(login.email);
-    if (!user) handleThrowError('User not found', httpStatusCode.NOT_FOUND);
-    const isValid = user.password === md5(login.password);
-    if (!isValid) handleThrowError('Incorrect email or password', httpStatusCode.UNAUTHORIZED);
-
-    const { password, ...userInfo } = user.get();
-    const token = generateToken({ ...userInfo });
-    return { token, ...userInfo };
+    UserValidations.checkLogin(login, user);
+    const { password, id, ...userInfo } = user.get();
+    const token = generateToken({ userId: id, ...userInfo });
+    return { token, id, ...userInfo };
   }
 
   async create(body) {
+    UserValidations.reqUser(body);
     const encryptedPsw = md5(body.password);
     const data = await this.repository.create({ ...body, password: encryptedPsw });
-    if (!data.created) handleThrowError('User already exists', httpStatusCode.CONFLICT);
+    UserValidations.checkIfCreated(data);
     return data.user;
   }
 }

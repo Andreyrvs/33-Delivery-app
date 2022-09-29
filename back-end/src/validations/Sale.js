@@ -1,6 +1,21 @@
-const { handleThrowError, httpStatusCode } = require('../helpers');
+const { handleThrowError, httpStatusCode, joi } = require('../helpers');
 
 class SaleValidations {
+  static reqId(id) {
+    if (!id) handleThrowError('Id can\'t be empty', httpStatusCode.UNAUTHORIZED);
+  }
+
+  static reqSale(fullSale) {
+    joi.sale.validateSale(fullSale);
+  }
+
+  static emptyOrder(orders) {
+    console.log(orders);
+    if (!orders || orders.length === 0) {
+      handleThrowError('Id not found in database', httpStatusCode.NOT_FOUND);
+    }
+  }
+
   static async checkProducts(products, repository) {
     const productIds = products.map(({ productId }) => productId);
     const counted = await repository.coutByIds(productIds);

@@ -1,5 +1,5 @@
 const joi = require('joi');
-const { handleThrowError } = require('./errorHandler');
+const { handleThrowError } = require('../errorHandler');
 
 const email = joi.string().email().required().messages({
   'string.base': 'Email must be an string',
@@ -23,11 +23,11 @@ const name = joi.string().min(12).required().messages({
 
 const UserJoiSchema = joi.object({
   name, email, password,
-}).messages({ 'any.required': 'All fields are required' });
+}).messages({ 'any.required': 'The fields name, email, password and role are required' });
 
 const UserLoginSchema = joi.object({
   email, password,
-}).messages({ 'any.required': 'All fields are required' });
+}).messages({ 'any.required': 'The fields email and password are required' });
 
 function joiHandler(value, statusCode, joiSchema) {
   const { error } = joiSchema.validate(value);

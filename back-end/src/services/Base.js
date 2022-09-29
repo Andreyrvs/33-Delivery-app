@@ -18,7 +18,7 @@ class BaseService {
   async readOne(where) {
     const data = await this.repository.readOne(where);
     if (!data) {
-      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+      handleThrowError('Element doesn\'t exist', httpStatusCode.NOT_FOUND);
     }
     return data;
   }
@@ -26,7 +26,7 @@ class BaseService {
   async update(id, body) {
     const updated = await this.repository.update(body, { where: { id } });
     if (!updated) {
-      handleThrowError(`${this.repository.tableName} does not exist`, httpStatusCode.NOT_FOUND);
+      handleThrowError('Element doesn\'t exist to be updated', httpStatusCode.NOT_FOUND);
     }
     return updated;
   }

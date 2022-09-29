@@ -11,7 +11,7 @@ export default function DeliveryDetails() {
   const [adress, setAdress] = useState('');
   const [numberAdress, setNumber] = useState('');
 
-  // const [sellerId, setSellerId] = useState();
+  // const [sellerId, setSellerId] = useState('Fulana de Tal');
   const [users, setUsers] = useState([]);
 
   const URL = 'http://localhost:3001/customer/checkout';
@@ -23,15 +23,12 @@ export default function DeliveryDetails() {
   const ERROR = 404;
   const TIMER = 1000;
 
-  // console.log('🔥 🔥 🔥', vendedora);
   const PAYLOAD = {
     userId: id,
     sellerId: 2, // get push sellers
     totalPrice: Number(parseFloat(totalValue).toFixed(2)),
     deliveryAddress: adress,
     deliveryNumber: numberAdress,
-    token,
-    sellerName: sellerForm,
     products: cart.map((item) => ({
       productId: item.id,
       quantity: item.qtd,
@@ -65,8 +62,7 @@ export default function DeliveryDetails() {
     setOpenModal(true);
     cleanForm();
 
-    const result = await fetchPost(URL, PAYLOAD);
-    // console.log('t', PAYLOAD.sellerId);
+    const result = await fetchPost(URL, PAYLOAD, token);
     if (result.status === CREATESUCCESS) {
       setSale([result.data]);
       setMsgModal('Pedido realizado com seucesso!');
