@@ -2,10 +2,7 @@ const sinon = require('sinon');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../api/app');
-const { User }  = require('../database/models');
-const { jwt } = require('../helpers/generateToken');
-const { sign } = require('jsonwebtoken');
-
+const models = require('../database/models');
 
 chai.use(chaiHttp);
 
@@ -14,15 +11,15 @@ const { expect } = chai;
 describe('test rota POST/login', () => {
   let chaiHttpResponse;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     sinon
-      .stub(User, "login")
+      .stub(models.User, "findOrCreate")
       .resolves({
-        "id": 2,
-        "name": "Fulana Pereira",
-        "email": "fulana@deliveryapp.com",
-        "password": "3c28d2b0881bf46457a853e0b07531c6",
-        "role": "seller"
+        "id": 1,
+        "name": "Delivery App Admin",
+        "email": "adm@deliveryapp.com",
+        "password": "a4c86edecc5aee06eff8fdeda69e0d04",
+        "role": "administrator"
     });
   });
 
@@ -31,14 +28,13 @@ describe('test rota POST/login', () => {
     })
   
     it('Login success', async () => {
-    // sinon.stub(jwt, sign).returns('any-tokes')
 
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send({
-          email: 'zebirita@email.com',
-          password: '$#zebirita#$'
+          email: "zebirita@email.com",
+          password: "$#zebirita#$"
         });
       console.log('APAPAPAPAPAPAPAPAOAOAOAOAOAO', chaiHttpResponse);
       expect(chaiHttpResponse.status).to.be.equal(200);
@@ -54,7 +50,7 @@ describe('test rota POST/login', () => {
           email: 'marcilio@gamil.com',
           password: '123456'
         });
-      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse).to.have.status(404);
       expect(chaiHttpResponse.body).to.be.an('object');
     });
 
