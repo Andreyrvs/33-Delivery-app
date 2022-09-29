@@ -13,14 +13,11 @@ export default function CustomerDetails() {
   const [saleDate, setSaleDate] = useState();
   const [sellerName, setSellerName] = useState();
 
-  const changeTimeZone = (date) => {
-    const newDate = new Date(date);
-    const dateObpj = newDate.toLocaleDateString(
-      'pt-BR',
-      { timeZone: 'America/Sao_Paulo' },
-    );
-
-    setSaleDate(dateObpj);
+  const dateConfig = (date) => {
+    const TEN = 10;
+    const dateSet = date.slice(0, TEN);
+    const formatedDate = dateSet.split('-').reverse().join('/');
+    setSaleDate(formatedDate);
   };
 
   const getSellerName = async () => {
@@ -38,7 +35,7 @@ export default function CustomerDetails() {
     if (sales) {
       setSaleId(sale[0].id);
       setStatus(sale[0].status);
-      changeTimeZone(sale[0].saleDate);
+      dateConfig(sale[0].saleDate);
     }
   }, [sales]);
 
@@ -59,11 +56,11 @@ export default function CustomerDetails() {
       </div>
       <div
         className="pedidoDetailsData"
+        data-testid="customer_order_details__element-order-details-label-order-date"
       >
-        <p data-testid="customer_order_details__element-order-details-label-order-date">
-          { sale && saleDate}
-
-        </p>
+        Data:
+        {' '}
+        { sale && saleDate}
       </div>
       <div
         className="pedidoDetailsStatus"
