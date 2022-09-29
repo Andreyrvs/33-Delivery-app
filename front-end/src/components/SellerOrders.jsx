@@ -11,7 +11,8 @@ export default function SellerOrders() {
   const FOUR = 4;
   const [orders, setOrders] = useState();
   const [statusClass, setStatusClass] = useState();
-  const { setOrderSelected } = useContext(MyContext);
+  const { setOrderSelected, statusOrderGlobal } = useContext(MyContext);
+  const [status, setStatus] = useState();
 
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -24,33 +25,34 @@ export default function SellerOrders() {
   };
 
   const getOrderStatus = () => {
-    if (orders) {
-      orders.map((item) => {
-        if (item.status === 'Pendente') {
-          setStatusClass('pending');
-        } else if (item.status === 'Entregue') {
-          setStatusClass('delivered');
-        } else if (item.status === 'Preparando') {
-          setStatusClass('preparing');
-        }
-        // console.log(item.status);
-        return item.status;
-      });
+    if (status) {
+      if (status === 'Pendente') {
+        setStatusClass('pending');
+      } else if (status === 'Entregue') {
+        setStatusClass('delivered');
+      } else if (status === 'Preparando') {
+        setStatusClass('preparing');
+      } else if (status === 'Em Trânsito') {
+        setStatusClass('out');
+      }
     }
   };
 
-  const viewOrderDetails = (orderID) => {
-    setOrderSelected(orderID);
-    history.push(`/seller/orders/${orderID}`);
+  const viewOrderDetails = (order) => {
+    setOrderSelected(order);
+    history.push(`/seller/orders/${order.id}`);
   };
 
   useEffect(() => {
     getAllOrders();
+    setStatus(statusOrderGlobal);
   }, []);
 
   useEffect(() => {
     getOrderStatus();
-  }, [orders]);
+    setStatus(statusOrderGlobal);
+  }, [orders, statusOrderGlobal]);
+
   return (
     <section
       className="container-sellerOrders"
@@ -61,7 +63,7 @@ export default function SellerOrders() {
             type="button"
             key={ item.id }
             className="order-sellerOrders"
-            onClick={ () => viewOrderDetails(item.id) }
+            onClick={ () => viewOrderDetails(item) }
           >
             <div className="order-Client-orderCard">
               <p data-testid={ `seller_orders__element-order-id-${item.id}` }>
@@ -79,7 +81,7 @@ export default function SellerOrders() {
                   <p
                     data-testid={ `seller_orders__element-delivery-status-${item.id}` }
                   >
-                    {`${item.status}`.toUpperCase()}
+                    {`${status}`.toUpperCase()}
                   </p>
                 </div>
                 <div className="date-price-orderCard">

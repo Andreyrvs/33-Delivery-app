@@ -59,7 +59,7 @@ export default function Login() {
         history.push('/seller/orders');
       } else if (result.data.role === 'administrator') {
         console.log('Faça a rota filhote');
-        // history.push('/seller/orders');
+        history.push('/admin/manage');
       }
     } else if (result.status === UNAUTHORIZED) {
       setmsgError('Senha incorreta');
