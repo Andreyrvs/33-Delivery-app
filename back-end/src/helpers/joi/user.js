@@ -6,10 +6,10 @@ const email = joi.string().email().required().messages({
   'string.email': 'Email must be a valid email',
 });
 
-const role = joi.string()
-  .valid('administrator', 'seller', 'customer')
-  .required()
-  .messages({ 'any.only': 'Role can be only administrator, seller or customer' });
+// const role = joi.string()
+//   .valid('administrator', 'seller', 'customer')
+//   .required()
+//   .messages({ 'any.only': 'Role can be only administrator, seller or customer' });
 
 const password = joi.string().min(6).required().messages({
   'string.base': 'Password must be an string',
@@ -22,7 +22,7 @@ const name = joi.string().min(12).required().messages({
 });
 
 const UserJoiSchema = joi.object({
-  name, email, password, role,
+  name, email, password,
 }).messages({ 'any.required': 'The fields name, email, password and role are required' });
 
 const UserLoginSchema = joi.object({

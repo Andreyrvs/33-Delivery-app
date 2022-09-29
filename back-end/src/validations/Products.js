@@ -6,7 +6,7 @@ class ProductValidations {
   }
 
   static emptyProducts(products) {
-    if (!products || products.length === 0) {
+    if (!products) {
       handleThrowError('Has no product in batabase', httpStatusCode.NOT_FOUND);
     }
   }

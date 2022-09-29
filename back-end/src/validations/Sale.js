@@ -10,15 +10,10 @@ class SaleValidations {
   }
 
   static emptyOrder(orders) {
+    console.log(orders);
     if (!orders || orders.length === 0) {
-      handleThrowError('Has no order in batabase', httpStatusCode.NOT_FOUND);
+      handleThrowError('Id not found in database', httpStatusCode.NOT_FOUND);
     }
-  }
-
-  static async create(userId, sellerId, products, repository) {
-    SaleValidations.checkUser(userId, repository);
-    SaleValidations.checkSeller(sellerId, repository);
-    SaleValidations.checkProducts(products, repository);
   }
 
   static async checkProducts(products, repository) {
