@@ -15,16 +15,6 @@ class UserRepository extends BaseRepository {
     delete payload.password;
     return { user: payload, created };
   }
-
-  async adminCreate(body) {
-    const [user, created] = await this.model.findOrCreate({
-      where: { email: body.email },
-      defaults: { ...body, password: body.password },
-    });
-    const payload = user.get();
-    delete payload.password;
-    return { user: payload, created };
-  }
 }
 
 module.exports = UserRepository;

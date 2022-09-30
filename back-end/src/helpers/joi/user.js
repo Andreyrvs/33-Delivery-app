@@ -39,10 +39,9 @@ const validateEmailJoi = (value, statusCode) => joiHandler(value, statusCode, em
 const validateLoginJoi = (value, statusCode) => joiHandler(value, statusCode, UserLoginSchema);
 const validateRoleJoi = (value, statusCode) => joiHandler(value, statusCode, role);
 
-
 module.exports = {
   validateUserJoi,
   validateEmailJoi,
   validateLoginJoi,
-  validateRoleJoi
+  validateRoleJoi,
 };
