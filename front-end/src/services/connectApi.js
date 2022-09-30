@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const Content = 'application/json';
+
 export function axiosPostLogin({ email, password }) {
   const result = axios({
     method: 'post',
@@ -22,7 +24,7 @@ export async function fetchPost(url, payLoad, token) {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': Content,
       Authorization: token,
     },
     mode: 'cors',
@@ -37,11 +39,24 @@ export const fetchUpdate = async (url, payload, token) => {
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': Content,
       Authorization: token,
     },
     mode: 'cors',
     body: JSON.stringify(payload),
+  });
+  const { status } = response;
+  return status;
+};
+
+export const fetchDelete = async (url, token) => {
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': Content,
+      Authorization: token,
+    },
+    mode: 'cors',
   });
   const { status } = response;
   return status;

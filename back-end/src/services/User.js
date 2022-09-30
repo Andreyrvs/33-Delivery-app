@@ -26,6 +26,7 @@ class UserService extends BaseService {
     if (body.role === 'administrator') handleThrowError('Invalid Role', httpStatusCode.BAD_REQUEST);
     const encryptedPsw = md5(body.password);
     const data = await this.repository.create({ ...body, password: encryptedPsw });
+    UserValidations.checkIfCreated(data);
     return data.user;
   }
 }

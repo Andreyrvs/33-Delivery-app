@@ -1,4 +1,4 @@
-// import { useHistory } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
@@ -8,7 +8,6 @@ import { fetchAll, fetchAllUsers, fetchUpdate } from '../services/connectApi';
 export default function CustomerDetails({ orderId, statusOrder,
   saleDateOrder, sellerOrderId }) {
   const { sale, orderSelected } = useContext(MyContext);
-  // const history = useHistory();
   const [sales, setSales] = useState([]);
   const [saleId, setSaleId] = useState();
   const [status, setStatus] = useState();

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
@@ -50,7 +51,7 @@ export default function CustomerOrdersPage() {
             <p
               data-testid={ `customer_orders__element-card-price-${item.id}` }
             >
-              {item.totalPrice}
+              {`${item.totalPrice}`.replace('.', ',')}
             </p>
           </button>
         ))

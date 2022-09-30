@@ -66,18 +66,18 @@ class SaleService extends BaseService {
     const checkedStatus = statusValidation(status);
     const checkedCustomer = customerValidation(role, checkedStatus);
     const checkedSellerOrAdmin = sellerAndAdminValidation(role, checkedStatus);
-
+      
     if (checkedCustomer) {
       const update = await this.repository.updateSaleStatus(id, status);
       return update;
     }
-
+      
     if (checkedSellerOrAdmin) {
       const update = await this.repository.updateSaleStatus(id, status);
       return update;
     }
-
-    handleThrowError('Invalid credntials', httpStatusCode.BAD_REQUEST);
+    
+    handleThrowError('Invalid credentials', httpStatusCode.BAD_REQUEST);
   }
 }
 

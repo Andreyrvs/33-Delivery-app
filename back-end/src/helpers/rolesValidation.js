@@ -4,7 +4,7 @@ const { httpStatusCode } = require('./httpStatusCode');
 const customerValidation = (role, checkedStatus) => {
   if (role === 'customer' && checkedStatus === 'Entregue') {
     return true;
-  }  
+  }
 };
 
 const sellerAndAdminValidation = (role, checkedStatus) => {
