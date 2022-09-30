@@ -1,10 +1,12 @@
 // import { useHistory } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import '../css/CustomerDetails.css';
-import { fetchAllUsers } from '../services/connectApi';
+import { fetchAll, fetchAllUsers, fetchUpdate } from '../services/connectApi';
 
-export default function CustomerDetails() {
+export default function CustomerDetails({ orderId, statusOrder,
+  saleDateOrder, sellerOrderId }) {
   const { sale, orderSelected } = useContext(MyContext);
   // const history = useHistory();
   const [sales, setSales] = useState([]);
@@ -12,10 +14,18 @@ export default function CustomerDetails() {
   const [status, setStatus] = useState();
   const [saleDate, setSaleDate] = useState();
   const [sellerName, setSellerName] = useState();
+  const [buttonIsDisabled, setButtonIsDisabled] = useState();
+  const UPDATESUCCES = 204;
 
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
-  const { role } = user;
+  const { role, token } = user;
+
+  const getFetchStatus = async () => {
+    const URL = `http://localhost:3001/orders/${orderId}`;
+    const statusSale = await fetchAll(URL);
+    setStatus(statusSale.status);
+  };
 
   const dateConfig = (date) => {
     const TEN = 10;
@@ -27,7 +37,7 @@ export default function CustomerDetails() {
   const getSellerName = async () => {
     const sellers = await fetchAllUsers();
     if (role === 'customer') {
-      const sellerNameFilter = sellers.filter((item) => sale[0].sellerId === item.id);
+      const sellerNameFilter = sellers.filter((item) => sellerOrderId === item.id);
       setSellerName(sellerNameFilter[0].name);
     } else if (role === 'seller') {
       const sellerNameFil = sellers.filter((item) => orderSelected.sellerId === item.id);
@@ -35,24 +45,47 @@ export default function CustomerDetails() {
     }
   };
 
+  const changeStatusOrder = async () => {
+    const URL = `http://localhost:3001/status/update/${orderId}`;
+
+    const PAYLOAD = {
+      id: orderId,
+      status: 'Entregue',
+      role,
+    };
+
+    const result = await fetchUpdate(URL, PAYLOAD, token);
+
+    if (result === UPDATESUCCES) {
+      setStatus('Entregue');
+      setButtonIsDisabled(true);
+    }
+  };
+
   useEffect(() => {
+    if (statusOrder === 'Em Trânsito') {
+      setButtonIsDisabled(false);
+    } else if (statusOrder === 'Pendente' || statusOrder === 'Preparando'
+    || statusOrder === 'Entregue') {
+      setButtonIsDisabled(true);
+    }
+    getFetchStatus();
     setSales(sale);
     getSellerName();
   }, []);
 
   useEffect(() => {
     if (sales && role === 'customer') {
-      // console.log(sales);
-      setSaleId(sale[0].id);
-      setStatus(sale[0].status);
-      dateConfig(sale[0].saleDate);
+      setSaleId(orderId);
+      // setStatus(sale[0].status);
+      dateConfig(saleDateOrder);
     } else if (orderSelected && role === 'seller') {
       // console.log(orderSelected);
       setSaleId(orderSelected.id);
       setStatus(orderSelected.status);
       dateConfig(orderSelected.saleDate);
     }
-  }, [sales, orderSelected, sale]);
+  }, [sales, orderSelected, sale, statusOrder]);
 
   return (
     <section className="customerDetailsContainer">
@@ -90,11 +123,18 @@ export default function CustomerDetails() {
         className="pedidoDetailsButton"
         data-testid="customer_order_details__button-delivery-check"
         type="button"
-        disabled
-        onClick={ () => setStatus('Entregue') }
+        disabled={ buttonIsDisabled }
+        onClick={ changeStatusOrder }
       >
         MARCAR COMO ENTREGUE
       </button>
     </section>
   );
 }
+
+CustomerDetails.propTypes = {
+  orderId: PropTypes.string,
+  statusOrder: PropTypes.string,
+  saleDateOrder: PropTypes.string,
+  sellerOrderId: PropTypes.string,
+}.isRequired;

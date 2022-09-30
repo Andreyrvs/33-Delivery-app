@@ -42,6 +42,7 @@ export default function SellerOrders() {
   };
 
   const viewOrderDetails = (order) => {
+    // console.log('o', order);
     setOrderSelected(order);
     history.push(`/seller/orders/${order.id}`);
   };
@@ -84,7 +85,7 @@ export default function SellerOrders() {
                   <p
                     data-testid={ `seller_orders__element-delivery-status-${item.id}` }
                   >
-                    {`${item.status}`.toUpperCase()}
+                    {`${item.status}`}
                   </p>
                 </div>
                 <div className="date-price-orderCard">

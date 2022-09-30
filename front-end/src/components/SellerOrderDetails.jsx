@@ -8,25 +8,24 @@ import SellerHeaderOrderDetails from './SellerHeaderOrderDetails';
 export default function SellerOrderDetails() {
   const { orderSelected } = useContext(MyContext);
   const [order, setOrder] = useState();
-
-  const MOCK = [{
-    id: 1,
-    name: 'Algo pra teste',
-    qtd: 2,
-    price: 1.20,
-    totalPrice: 2.40,
-  }];
+  const [productsList, setProductsList] = useState();
 
   const getOrderSelected = async () => {
     // console.log('id', orderSelected);
     const URL = `http://localhost:3001/orders/${orderSelected.id}`;
     const result = await fetchAll(URL);
+    setProductsList(result.products);
+    // console.log('result', productsList);
     setOrder(result);
   };
 
   useEffect(() => {
     getOrderSelected();
   }, []);
+
+  useEffect(() => {
+    getOrderSelected();
+  }, [orderSelected]);
 
   return (
     <section className="checkout">
@@ -44,12 +43,11 @@ export default function SellerOrderDetails() {
             <p className="titulo-right">Quantidade</p>
             <p className="titulo-right">Valor Unitário</p>
             <p className="titulo-right">Sub-total</p>
-            <p className="titulo-remover">Remover Item</p>
           </section>
         </section>
-        { MOCK && order && (
-          MOCK.map((item, index) => (
-            <section key={ order.id } className="item-container">
+        { productsList && order && (
+          productsList.map((item, index) => (
+            <section key={ index } className="item-container">
               <section className="left-container">
                 <section
                   className="item-number"
@@ -83,7 +81,7 @@ export default function SellerOrderDetails() {
                       `seller_order_details__element-order-table-quantity-${index}`
                     }
                   >
-                    {item.qtd}
+                    {item.quantity}
 
                   </p>
                 </section>
@@ -94,7 +92,7 @@ export default function SellerOrderDetails() {
                       `seller_order_details__element-order-table-unit-price-${index}`
                     }
                   >
-                    {formattedNumber(item.price)}
+                    {formattedNumber(item.price).replace('.', ',')}
 
                   </p>
                 </section>
@@ -105,7 +103,7 @@ export default function SellerOrderDetails() {
                       `seller_order_details__element-order-table-sub-total-${index}`
                     }
                   >
-                    {formattedNumber(item.totalPrice)}
+                    {formattedNumber(item.price * item.quantity)}
                   </p>
                 </section>
               </section>
