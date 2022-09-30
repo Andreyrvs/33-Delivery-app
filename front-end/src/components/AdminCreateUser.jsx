@@ -15,6 +15,11 @@ export default function AdminCreateUser() {
   const CREATED = 201;
   const CONFLICT = 409;
 
+  // verify and disable button
+  const nameLength = nameUser.length > verifyNameLength;
+  const verifyEmail = validateEmail(emailUser);
+  const verifyPass = passwordUser.length >= verifyPasswordLength;
+
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
   const { token } = user;
@@ -46,10 +51,13 @@ export default function AdminCreateUser() {
 
   const addUser = async (event) => {
     event.preventDefault();
+    let result = '';
     const URL = 'http://localhost:3001/admin/register';
-    const result = await fetchPost(URL, PAYLOAD, token);
+    if (nameLength && verifyEmail && verifyPass) {
+      result = await fetchPost(URL, PAYLOAD, token);
+    }
     if (result.status === CREATED) {
-      // console.log(result);
+      console.log(result);
     } else if (result.status === CONFLICT) {
       setMsgError('Erro ao gravar! Usuário já cadastrado');
     }
@@ -61,17 +69,12 @@ export default function AdminCreateUser() {
     clearForm();
   }, []);
 
-  // verify and disable button
-  const nameLength = nameUser.length > verifyNameLength;
-  const verifyEmail = validateEmail(emailUser);
-  const verifyPass = passwordUser.length >= verifyPasswordLength;
-
   useEffect(() => {
     if (nameLength && verifyEmail && verifyPass) {
       setIsDisabled(false);
-    } else {
+    } /* else if (!nameLength || !verifyEmail || !verifyPass) {
       setIsDisabled(true);
-    }
+    } */
   }, [nameUser, emailUser, passwordUser,
     isDisabled, nameLength, verifyEmail, verifyPass]);
 
@@ -149,18 +152,16 @@ export default function AdminCreateUser() {
           CADASTRAR
         </button>
       </form>
-      <p>
-        {
-          msgError ? (
-            <p
-              className="cadastroMsgErro"
-              data-testid="admin_manage__element-invalid-register"
-            >
-              { msgError }
-            </p>
-          ) : ''
-        }
-      </p>
+      {
+        msgError ? (
+          <p
+            className="cadastroMsgErro"
+            data-testid="admin_manage__element-invalid-register"
+          >
+            { msgError }
+          </p>
+        ) : ''
+      }
     </section>
   );
 }
