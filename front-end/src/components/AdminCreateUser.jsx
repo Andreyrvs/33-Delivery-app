@@ -141,6 +141,11 @@ export default function AdminCreateUser() {
           )
           */}
       </form>
+      <p
+        data-testid="admin_manage__element-invalid-register"
+      >
+        msg de erro
+      </p>
     </section>
   );
 }

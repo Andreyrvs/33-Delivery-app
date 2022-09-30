@@ -34,13 +34,38 @@ export default function AdminListUsers() {
         <div className="infoTableContainer">
           {listUser && listUser.map((item, index) => (
             <div key={ item.id } className="infoTableAdminList">
-              <p className="infoIndex" value={ index + 1 }>{index + 1}</p>
-              <p className="infoName" value={ item.name }>{item.name}</p>
-              <p className="infoEmail" value={ item.email }>{item.email}</p>
-              <p className="infoType" value={ item.role }>{item.role}</p>
+              <p
+                className="infoIndex"
+                value={ index + 1 }
+                data-testid={ `admin_manage__element-user-table-item-number-${index}` }
+              >
+                {index + 1}
+              </p>
+              <p
+                className="infoName"
+                value={ item.name }
+                data-testid={ `admin_manage__element-user-table-name-${index}` }
+              >
+                {item.name}
+              </p>
+              <p
+                className="infoEmail"
+                value={ item.email }
+                data-testid={ `admin_manage__element-user-table-email-${index}` }
+              >
+                {item.email}
+              </p>
+              <p
+                className="infoType"
+                value={ item.role }
+                data-testid={ `admin_manage__element-user-table-role-${index}` }
+              >
+                {item.role}
+              </p>
               <button
                 className="infoButtonDel"
                 type="button"
+                data-testid={ `admin_manage__element-user-table-remove-${index}` }
               >
                 Excluir
               </button>
