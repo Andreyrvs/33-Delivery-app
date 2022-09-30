@@ -7,20 +7,23 @@ const models = require('../database/models');
 chai.use(chaiHttp);
 
 const { expect } = chai;
+const test = {
+  "id": 1,
+  "name": "Delivery App Admin",
+  "email": "adm@deliveryapp.com",
+  "password": "a4c86edecc5aee06eff8fdeda69e0d04",
+  "role": "administrator",
+  get: () => (test)
+}
 
 describe('test rota POST/login', () => {
   let chaiHttpResponse;
 
   beforeEach(() => {
+
     sinon
-      .stub(models.User, "findOrCreate")
-      .resolves({
-        "id": 1,
-        "name": "Delivery App Admin",
-        "email": "adm@deliveryapp.com",
-        "password": "a4c86edecc5aee06eff8fdeda69e0d04",
-        "role": "administrator"
-    });
+      .stub(models.User, "findOne")
+      .resolves(test);
   });
 
     afterEach(() => {
@@ -33,13 +36,15 @@ describe('test rota POST/login', () => {
         .request(app)
         .post('/login')
         .send({
-          email: "zebirita@email.com",
-          password: "$#zebirita#$"
+          email: "adm@deliveryapp.com",
+          password: "--adm2@21!!--"
         });
       console.log('APAPAPAPAPAPAPAPAOAOAOAOAOAO', chaiHttpResponse);
       expect(chaiHttpResponse.status).to.be.equal(200);
       expect(chaiHttpResponse.body).to.be.an('object');
       expect(chaiHttpResponse.body).to.be.have.property('token');
+      // expect(chaiHttpResponse.body.message).to.be.equal('token');
+
     });
 
     it('login invalid', async () => {
@@ -50,7 +55,7 @@ describe('test rota POST/login', () => {
           email: 'marcilio@gamil.com',
           password: '123456'
         });
-      expect(chaiHttpResponse).to.have.status(404);
+      expect(chaiHttpResponse).to.have.status(401);
       expect(chaiHttpResponse.body).to.be.an('object');
     });
 
