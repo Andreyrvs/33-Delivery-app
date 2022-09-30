@@ -3,14 +3,18 @@ import { useState, useEffect, useContext } from 'react';
 // import { fetchPost } from '../services/connectApi';
 import '../css/AdminPage.css';
 import MyContext from '../context/MyContext';
+import validateEmail from '../util/validateEmail';
 
 export default function AdminCreateUser() {
   const [nameUser, setNameUser] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
   const [roleUser, setRoleUser] = useState('seller');
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+  // const [msgError, setMsgError] = useState('');
   const { setNewUser, newUser } = useContext(MyContext);
+  const verifyNameLength = 12;
+  const verifyPasswordLength = 6;
   // const url = 'http://localhost:3001/register';
   const addNewUser = {
     name: nameUser,
@@ -33,29 +37,51 @@ export default function AdminCreateUser() {
   };
 
   /*
+  const dataValidation = () => {
+    if (nameUser.length < verifyNameLength) {
+      setMsgError('O nome do usuário deve ter mais de 12 caracteres');
+    } else if (!verifyEmail) {
+      setMsgError('Email inválido, digite um endereço válido');
+    } else if (passwordUser.length < verifyPasswordLength) {
+      setMsgError('A senha deve ter mais de 6 caracteres');
+    } else {
+      return 'ok';
+    }
+  };
+  */
+
   const clearForm = () => {
     setNameUser('');
     setEmailUser('');
     setPasswordUser('');
   };
-  */
 
   const addUser = (event) => {
     event.preventDefault();
     // const result = await fetchPost(url, newUser);
-    console.log('result');
     setNewUser(() => [...newUser, addNewUser]);
-    // clearForm();
+    clearForm();
+    setIsDisabled(true);
   };
 
   useEffect(() => {
+    clearForm();
   }, []);
 
+  // verify and disable button
+  const nameLength = nameUser.length > verifyNameLength;
+  const verifyEmail = validateEmail(emailUser);
+  const verifyPass = passwordUser.length >= verifyPasswordLength;
+
   useEffect(() => {
-    if (nameUser && emailUser && passwordUser && roleUser) {
+    // console.log(nameLength, verifyEmail, verifyPass);
+    if (nameLength && verifyEmail && verifyPass) {
       setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
     }
-  }, [nameUser, emailUser, passwordUser, roleUser]);
+  }, [nameUser, emailUser, passwordUser,
+    isDisabled, nameLength, verifyEmail, verifyPass]);
 
   return (
     <section className="pageAdminContainer">
@@ -130,21 +156,18 @@ export default function AdminCreateUser() {
         >
           CADASTRAR
         </button>
+      </form>
+      <p>
         {/*
-          msgErro && (
+          msgError ? (
             <p
               className="cadastroMsgErro"
-              data-testid="common_register__element-invalid_register"
+              data-testid="admin_manage__element-invalid-register"
             >
-              { msgErro }
+              { msgError }
             </p>
-          )
+          ) : ''
           */}
-      </form>
-      <p
-        data-testid="admin_manage__element-invalid-register"
-      >
-        msg de erro
       </p>
     </section>
   );
