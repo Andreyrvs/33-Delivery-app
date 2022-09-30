@@ -2,6 +2,7 @@ const generateToken = require('./generateToken');
 const { CustomError, handleThrowError } = require('./errorHandler');
 const joi = require('./joi');
 const httpStatusCode = require('./httpStatusCode');
+const handdleMap = require('./haddleMap');
 
 module.exports = {
   generateToken,
@@ -9,4 +10,5 @@ module.exports = {
   handleThrowError,
   joi,
   httpStatusCode,
+  handdleMap,
 };

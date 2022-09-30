@@ -7,18 +7,18 @@ class SaleController extends BaseController {
     this.create = this.create.bind(this);
     this.readByCustomerId = this.readByCustomerId.bind(this);
     this.readBySellerId = this.readBySellerId.bind(this);
-    this.read = this.read.bind(this);
-    this.readOne = this.readOne.bind(this);
+    this.readWithProducts = this.readWithProducts.bind(this);
+    this.readOneWithProducts = this.readOneWithProducts.bind(this);
     this.updateSaleStatus = this.updateSaleStatus.bind(this);
   }
 
-  async read(_req, res) {
-    const data = await this.service.read();
+  async readWithProducts(_req, res) {
+    const data = await this.service.readWithProducts();
     return res.status(httpStatusCode.OK).json(data);
   }
 
-  async readOne(req, res) {
-    const order = await this.service.readOne(req.params.id);
+  async readOneWithProducts(req, res) {
+    const order = await this.service.readOneWithProducts(req.params.id);
     return res.status(httpStatusCode.OK).json(order);
   }
 
