@@ -12,6 +12,7 @@ export default function SellerOrders() {
   const [orders, setOrders] = useState();
   const [statusClass, setStatusClass] = useState();
   const { setOrderSelected } = useContext(MyContext);
+  // const [status, setStatus] = useState();
 
   const userString = localStorage.getItem('user');
   const user = JSON.parse(userString);
@@ -23,25 +24,26 @@ export default function SellerOrders() {
     setOrders(result);
   };
 
-  const getOrderStatus = () => {
-    if (orders) {
-      orders.map((item) => {
-        if (item.status === 'Pendente') {
-          setStatusClass('pending');
-        } else if (item.status === 'Entregue') {
-          setStatusClass('delivered');
-        } else if (item.status === 'Preparando') {
-          setStatusClass('preparing');
-        }
-        // console.log(item.status);
-        return item.status;
-      });
+  const getOrderStatus = (status) => {
+    let result = '';
+    if (status) {
+      if (status === 'Pendente') {
+        result = 'pending';
+      } else if (status === 'Entregue') {
+        result = 'delivered';
+      } else if (status === 'Preparando') {
+        result = 'preparing';
+      } else if (status === 'Em Trânsito') {
+        result = 'out';
+      }
     }
+    // console.log('ei', result);
+    return setStatusClass(result);
   };
 
-  const viewOrderDetails = (orderID) => {
-    setOrderSelected(orderID);
-    history.push(`/seller/orders/${orderID}`);
+  const viewOrderDetails = (order) => {
+    setOrderSelected(order);
+    history.push(`/seller/orders/${order.id}`);
   };
 
   useEffect(() => {
@@ -49,8 +51,11 @@ export default function SellerOrders() {
   }, []);
 
   useEffect(() => {
-    getOrderStatus();
+    if (orders) {
+      orders.forEach((item) => getOrderStatus(item.status));
+    }
   }, [orders]);
+
   return (
     <section
       className="container-sellerOrders"
@@ -61,7 +66,7 @@ export default function SellerOrders() {
             type="button"
             key={ item.id }
             className="order-sellerOrders"
-            onClick={ () => viewOrderDetails(item.id) }
+            onClick={ () => viewOrderDetails(item) }
           >
             <div className="order-Client-orderCard">
               <p data-testid={ `seller_orders__element-order-id-${item.id}` }>

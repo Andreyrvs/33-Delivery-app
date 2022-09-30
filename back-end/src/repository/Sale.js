@@ -31,8 +31,10 @@ class SaleRepository extends BaseRepository {
         through: { attributes: ['quantity'] },
       },
     });
-    const mappedproducts = handdleMap(orders[0].get().products);
-    return { ...orders[0].get(), products: mappedproducts };
+    const mappedOrders = orders.map((e) =>
+      ({ ...e.get(), products: handdleMap(e.get().products) }));
+    console.log(mappedOrders);
+    return mappedOrders;
   }
 
   async readOneWithProducts(id) {
@@ -46,6 +48,14 @@ class SaleRepository extends BaseRepository {
     });
     const mappedproducts = handdleMap(orders.get().products);
     return { ...orders.get(), products: mappedproducts };
+  }
+
+  async updateSaleStatus(id, status) {
+    const update = await this.model.update(
+      { status },
+      { where: { id } },
+    );
+    return update;
   }
 }
 

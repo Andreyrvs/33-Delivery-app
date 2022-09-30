@@ -7,10 +7,9 @@ class SaleController extends BaseController {
     this.create = this.create.bind(this);
     this.readByCustomerId = this.readByCustomerId.bind(this);
     this.readBySellerId = this.readBySellerId.bind(this);
-    this.read = this.read.bind(this);
-    this.readOne = this.readOne.bind(this);
     this.readWithProducts = this.readWithProducts.bind(this);
     this.readOneWithProducts = this.readOneWithProducts.bind(this);
+    this.updateSaleStatus = this.updateSaleStatus.bind(this);
   }
 
   async readWithProducts(_req, res) {
@@ -37,6 +36,11 @@ class SaleController extends BaseController {
   async create(req, res) {
     const data = await this.service.create(req.body);
     return res.status(httpStatusCode.CREATED).json(data);
+  }
+
+  async updateSaleStatus(req, res) {
+    await this.service.updateSaleStatus(req.params.id, req.body.status, req.user.role);
+    return res.status(httpStatusCode.NO_CONTENT).end();
   }
 }
 
