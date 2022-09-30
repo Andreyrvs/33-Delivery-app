@@ -6,10 +6,11 @@ const SaleController = Factory.sale().saleController;
 
 const saleRouter = express.Router();
 
-saleRouter.get('/orders', SaleController.read);
-saleRouter.get('/orders/:id', SaleController.readOne);
+saleRouter.get('/orders', SaleController.readWithProducts);
+saleRouter.get('/orders/:id', SaleController.readOneWithProducts);
 saleRouter.get('/customer/orders/:id', SaleController.readByCustomerId);
 saleRouter.get('/seller/orders/:id', SaleController.readBySellerId);
 saleRouter.post('/customer/checkout', Auth.customer, SaleController.create);
+saleRouter.patch('/status/update/:id', Auth.getRole, SaleController.updateSaleStatus);
 
 module.exports = saleRouter;

@@ -90,6 +90,19 @@
   width: 295px;
 }
 
+.status-orderCard-out {
+  background-color: #0207f6;
+  border-radius: 10px;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  height: 141px;
+  margin-left: 8px;
+  margin-top: 8px;
+  text-align: center;
+  width: 295px;
+}
+
 .date-price-orderCard {
   align-items: center;
   display: flex;

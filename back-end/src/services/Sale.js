@@ -1,5 +1,8 @@
 const BaseService = require('./Base');
 const SaleValidations = require('../validations/Sale');
+const statusValidation = require('../helpers/statusValidation');
+const { customerValidation, sellerAndAdminValidation } = require('../helpers/rolesValidation');
+const { handleThrowError, httpStatusCode } = require('../helpers');
 
 class SaleService extends BaseService {
   constructor(repository, saleProductRepo, productRepo, userRepo) {
@@ -47,6 +50,34 @@ class SaleService extends BaseService {
       return { ...rest, name: product.get().name, price: product.get().price };
     });
     return { ...createdSale.get(), products: await Promise.all(formatedProducts) };
+  }
+
+  async readWithProducts() {
+    const sales = await this.repository.readWithProducts();
+    return sales;
+  }
+
+  async readOneWithProducts(id) {
+    const sale = await this.repository.readOneWithProducts(id);
+    return sale;
+  }
+
+  async updateSaleStatus(id, status, role) {
+    const checkedStatus = statusValidation(status);
+    const checkedCustomer = customerValidation(role, checkedStatus);
+    const checkedSellerOrAdmin = sellerAndAdminValidation(role, checkedStatus);
+
+    if (checkedCustomer) {
+      const update = await this.repository.updateSaleStatus(id, status);
+      return update;
+    }
+
+    if (checkedSellerOrAdmin) {
+      const update = await this.repository.updateSaleStatus(id, status);
+      return update;
+    }
+
+    handleThrowError('Invalid credntials', httpStatusCode.BAD_REQUEST);
   }
 }
 

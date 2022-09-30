@@ -10,6 +10,7 @@ export default function MyProvider({ children }) {
   const [openModal, setOpenModal] = useState(false);
   const [msgModal, setMsgModal] = useState('');
   const [orderSelected, setOrderSelected] = useState();
+  const [statusOrderGlobal, setStatusOrderGlobal] = useState('Pendente');
 
   const contextValue = useMemo(() => ({
     cart,
@@ -26,6 +27,8 @@ export default function MyProvider({ children }) {
     setMsgModal,
     orderSelected,
     setOrderSelected,
+    statusOrderGlobal,
+    setStatusOrderGlobal,
   }), [cart, totalValue, sale, openModal, userLogin, msgModal, orderSelected]);
 
   return (
