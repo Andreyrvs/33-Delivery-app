@@ -51,7 +51,7 @@ export default function CustomerOrdersPage() {
             <p
               data-testid={ `customer_orders__element-card-price-${item.id}` }
             >
-              {item.totalPrice}
+              {`${item.totalPrice}`.replace('.', ',')}
             </p>
           </button>
         ))
