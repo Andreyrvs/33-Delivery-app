@@ -29,8 +29,8 @@ class BaseController {
   }
 
   async delete(req, res) {
-    const data = await this.service.delete(req.params.id);
-    return res.status(200).json(data);
+    await this.service.delete(req.params.id);
+    return res.status(204).end();
   }
 }
 

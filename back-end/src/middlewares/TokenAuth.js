@@ -20,6 +20,15 @@ class Auth {
     next();
   }
 
+  static admin(req, _res, next) {
+    const user = Auth.jwtToken(req.headers.authorization);
+    if (user.role !== 'administrator') {
+      handleThrowError('Role must be administrator', httpStatusCode.UNAUTHORIZED);
+    }
+    req.user = { ...user };
+    next();
+  }
+
   static jwtToken(authorization) {
     if (!authorization) {
       handleThrowError('Token not found', httpStatusCode.UNAUTHORIZED);
