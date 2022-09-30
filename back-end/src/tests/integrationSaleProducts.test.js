@@ -68,11 +68,14 @@ const quantity = (qtt) => ({
 const skolLataGet = { get: () => (skolLata(saleProduct(1)))};
 const heinekenGet = { get: () => (heineken(saleProduct(2)))};
 const antarcticaPilsenGet = { get: () => (antarcticaPilsen(saleProduct(3)))};
-const sale1get = { get: () => (sale1(skolLataGet, heinekenGet))};
+const sale1Get = { get: () => (sale1(skolLataGet, heinekenGet))};
 const sale2Get = { get: () => (sale2(skolLataGet, heinekenGet, antarcticaPilsenGet))};
 
-const salesGet = [sale1get, sale2Get];
-const sales = [sale1(skolLata(quantity(1)), heineken(quantity(2))), sale2(skolLata(quantity(1)), heineken(quantity(2)), antarcticaPilsen(quantity(3)))];
+const sale1Formated = sale1(skolLata(quantity(1)), heineken(quantity(2)))
+const sale2Formated = sale2(skolLata(quantity(1)), heineken(quantity(2)), antarcticaPilsen(quantity(3)))
+
+const salesGet = [sale1Get, sale2Get];
+const sales = [sale1Formated, sale2Formated];
 
 describe("test rota get/Orders", () => {
   let chaiHttpResponse;
@@ -81,7 +84,7 @@ describe("test rota get/Orders", () => {
     sinon.restore();
   });
 
-  it.only("Customer products success sale", async () => {
+  it("Customer products success sale", async () => {
     sinon.stub(models.Sale, "findAll").resolves(salesGet);
 
     chaiHttpResponse = await chai.request(app)
@@ -92,25 +95,26 @@ describe("test rota get/Orders", () => {
     expect(chaiHttpResponse.body).to.deep.equal(sales);
   });
 
-  it("Customer products falha", async () => {
-    sinon.stub(models.Product, "findByPk").resolves(null);
 
-    chaiHttpResponse = await chai.request(app).get("/customer/products/5");
+  it("Customer products success orders/:id", async () => {
+    sinon.stub(models.Sale, "findAll").resolves(sale1Get);
 
-    expect(chaiHttpResponse.status).to.be.equal(404);
-    expect(chaiHttpResponse.body).to.be.an("object");
-    expect(chaiHttpResponse.body).to.deep.equal({
-      message: "Has no product in batabase",
-    });
-  });
-
-  it("Customer products success findByPk", async () => {
-    sinon.stub(models.Product, "findByPk").resolves(heineken);
-
-    chaiHttpResponse = await chai.request(app).get("/customer/products/2");
+    chaiHttpResponse = await chai.request(app)
+      .get("/orders/1");
 
     expect(chaiHttpResponse.status).to.be.equal(200);
     expect(chaiHttpResponse.body).to.be.an("object");
-    expect(chaiHttpResponse.body).to.deep.equal(heineken);
+    expect(chaiHttpResponse.body).to.deep.equal(sale1Formated);
   });
+  
+  // it.only("Customer products error orders/:id", async () => {
+  //   sinon.stub(models.Sale, "findAll").resolves(null);
+
+  //   chaiHttpResponse = await chai.request(app)
+  //     .get("/orders/3");
+
+  //   expect(chaiHttpResponse.status).to.be.equal(200);
+  //   expect(chaiHttpResponse.body).to.be.an("object");
+  //   expect(chaiHttpResponse.body).to.deep.equal(null);
+  // });
 });
