@@ -1,18 +1,40 @@
-import React, { useContext } from 'react';
-import MyContext from '../context/MyContext';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../css/OrderDetailsPage.css';
+import { fetchAll } from '../services/connectApi';
 import { formattedNumber } from '../util/changeNumber';
 import CustomerDetails from './CustomerDetails';
 
 export default function OrderDetails() {
-  const { cart, totalValue } = useContext(MyContext);
+  const [cartOrder, setCartOrder] = useState();
+  const [productsList, setProductsList] = useState();
+  const { pathname } = useLocation();
+  const idOrderAdress = pathname.split('/');
+
+  const getFetchOrder = async () => {
+    const URL = `http://localhost:3001/orders/${idOrderAdress[3]}`;
+    const result = await fetchAll(URL);
+    setCartOrder([result]);
+    setProductsList(result.products);
+  };
+
+  useEffect(() => {
+    getFetchOrder();
+  }, []);
 
   return (
     <section className="checkout">
       <section className="finalize-order">
         <p className="finalize-order-text">Detalhe do Pedido</p>
       </section>
-      <CustomerDetails />
+      {cartOrder && (
+        <CustomerDetails
+          orderId={ idOrderAdress[3] }
+          statusOrder={ cartOrder[0].status }
+          saleDateOrder={ cartOrder[0].saleDate }
+          sellerOrderId={ cartOrder[0].sellerId }
+        />
+      )}
       <section className="checkout-container">
         <section className="checkout-titulo">
           <section className="titulo-left-container">
@@ -23,11 +45,10 @@ export default function OrderDetails() {
             <p className="titulo-right">Quantidade</p>
             <p className="titulo-right">Valor Unitário</p>
             <p className="titulo-right">Sub-total</p>
-            <p className="titulo-remover">Remover Item</p>
           </section>
         </section>
-        { cart && (
-          cart.map((item, index) => (
+        { cartOrder && productsList && (
+          productsList.map((item, index) => (
             <section key={ item.id } className="item-container">
               <section className="left-container">
                 <section
@@ -62,7 +83,7 @@ export default function OrderDetails() {
                       `customer_order_details__element-order-table-quantity-${index}`
                     }
                   >
-                    {item.qtd}
+                    {item.quantity}
 
                   </p>
                 </section>
@@ -73,7 +94,7 @@ export default function OrderDetails() {
                       `customer_order_details__element-order-table-unit-price-${index}`
                     }
                   >
-                    {formattedNumber(item.price)}
+                    {formattedNumber(item.price).replace('.', ',')}
 
                   </p>
                 </section>
@@ -84,7 +105,7 @@ export default function OrderDetails() {
                       `customer_order_details__element-order-table-sub-total-${index}`
                     }
                   >
-                    {formattedNumber(item.totalPrice)}
+                    {formattedNumber(item.price * item.quantity)}
                   </p>
                 </section>
               </section>
@@ -100,7 +121,7 @@ export default function OrderDetails() {
             >
               Total:
               {' '}
-              {formattedNumber(totalValue)}
+              {cartOrder && formattedNumber(cartOrder[0].totalPrice).replace('.', ',')}
             </p>
           </section>
         </section>

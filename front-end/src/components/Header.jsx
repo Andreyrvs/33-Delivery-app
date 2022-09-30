@@ -18,6 +18,14 @@ export default function Header({ pageName }) {
 
   const cartTotalPrice = cart.reduce((tot, cur) => tot + cur.totalPrice, 0);
 
+  const myOrders = () => {
+    if (role === 'customer') {
+      history.push('/customer/orders');
+    } else if (role === 'seller') {
+      history.push('/seller/orders');
+    }
+  };
+
   const handleStatusButton = () => {
     if (totalValue === 0) {
       setEmptyCar(true);
@@ -71,7 +79,7 @@ export default function Header({ pageName }) {
           data-testid="customer_products__element-navbar-link-orders"
           className="button-header"
           type="submit"
-          onClick={ () => history.push('/customer/orders') }
+          onClick={ myOrders }
         >
           MEUS PEDIDOS
         </button>
