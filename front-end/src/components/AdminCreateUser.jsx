@@ -1,19 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // import { useHistory } from 'react-router-dom';
-import { fetchPost } from '../services/connectApi';
+// import { fetchPost } from '../services/connectApi';
 import '../css/AdminPage.css';
+import MyContext from '../context/MyContext';
 
 export default function AdminCreateUser() {
   const [nameUser, setNameUser] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
   const [roleUser, setRoleUser] = useState('seller');
-  const [isDisabled, setIsDisabled] = useState(true);
-  const url = 'http://localhost:3001/register';
-  const newUser = {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { setNewUser, newUser } = useContext(MyContext);
+  // const url = 'http://localhost:3001/register';
+  const addNewUser = {
     name: nameUser,
     email: emailUser,
     password: passwordUser,
+    role: roleUser,
   };
   // const history = useHistory();
 
@@ -29,11 +32,24 @@ export default function AdminCreateUser() {
     }
   };
 
-  const addUser = async (event) => {
-    event.preventDefault();
-    const result = await fetchPost(url, newUser);
-    console.log(result);
+  /*
+  const clearForm = () => {
+    setNameUser('');
+    setEmailUser('');
+    setPasswordUser('');
   };
+  */
+
+  const addUser = (event) => {
+    event.preventDefault();
+    // const result = await fetchPost(url, newUser);
+    console.log('result');
+    setNewUser(() => [...newUser, addNewUser]);
+    // clearForm();
+  };
+
+  useEffect(() => {
+  }, []);
 
   useEffect(() => {
     if (nameUser && emailUser && passwordUser && roleUser) {
