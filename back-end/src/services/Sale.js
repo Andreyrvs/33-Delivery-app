@@ -48,6 +48,16 @@ class SaleService extends BaseService {
     });
     return { ...createdSale.get(), products: await Promise.all(formatedProducts) };
   }
+
+  async readWithProducts() {
+    const sales = await this.repository.readWithProducts();
+    return sales;
+  }
+
+  async readOneWithProducts(id) {
+    const sale = await this.repository.readOneWithProducts(id);
+    return sale;
+  }
 }
 
 module.exports = SaleService;

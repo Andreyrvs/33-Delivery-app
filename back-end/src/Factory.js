@@ -23,7 +23,7 @@ class Factory {
   }
 
   static sale() {
-    const saleRepository = new SaleRepository(model.Sale);
+    const saleRepository = new SaleRepository(model.Sale, model.Product);
     const saleProductRepository = new SaleProductRepository(model.SaleProduct);
     const productRepository = new ProductRepository(model.Product);
     const userRepository = new UserRepository(model.User);
