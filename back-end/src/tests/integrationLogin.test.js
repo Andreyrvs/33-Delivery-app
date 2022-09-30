@@ -11,7 +11,7 @@ const test = {
   "id": 1,
   "name": "Delivery App Admin",
   "email": "adm@deliveryapp.com",
-  "password": "a4c86edecc5aee06eff8fdeda69e0d04",
+  "password": "e10adc3949ba59abbe56e057f20f883e",
   "role": "administrator",
   get: () => (test)
 }
@@ -19,44 +19,40 @@ const test = {
 describe('test rota POST/login', () => {
   let chaiHttpResponse;
 
-  beforeEach(() => {
-
-    sinon
-      .stub(models.User, "findOne")
-      .resolves(test);
-  });
-
     afterEach(() => {
       sinon.restore();
     })
   
     it('Login success', async () => {
-
+      sinon.stub(models.User, "findOne").resolves(test);
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send({
           email: "adm@deliveryapp.com",
-          password: "--adm2@21!!--"
+          password: "123456"
         });
-      console.log('APAPAPAPAPAPAPAPAOAOAOAOAOAO', chaiHttpResponse);
+
       expect(chaiHttpResponse.status).to.be.equal(200);
       expect(chaiHttpResponse.body).to.be.an('object');
       expect(chaiHttpResponse.body).to.be.have.property('token');
       // expect(chaiHttpResponse.body.message).to.be.equal('token');
-
     });
 
     it('login invalid', async () => {
+      sinon.stub(models.User, "findOne").resolves(null);
+
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send({
-          email: 'marcilio@gamil.com',
+          email: 'wrongemail@wrongemail.com',
           password: '123456'
         });
-      expect(chaiHttpResponse).to.have.status(401);
+      
+      expect(chaiHttpResponse).to.have.status(404);
       expect(chaiHttpResponse.body).to.be.an('object');
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'User not found' });
     });
 
     it('login email missing', async () => {
@@ -68,6 +64,7 @@ describe('test rota POST/login', () => {
         });
       expect(chaiHttpResponse).to.have.status(401);
       expect(chaiHttpResponse.body).to.be.an('object');
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'The fields email and password are required' });
     });
 
     it('login password invalid', async () => {
@@ -76,10 +73,11 @@ describe('test rota POST/login', () => {
         .post('/login')
         .send({
           email: 'fulana@deliveryapp.com',
-          password: '123456789'
+          password: '12345'
         });
       expect(chaiHttpResponse).to.have.status(401);
       expect(chaiHttpResponse.body).to.be.an('object');
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'Password must be at least 6 characters' });
     });
 
     it('login password missing', async () => {
@@ -91,6 +89,8 @@ describe('test rota POST/login', () => {
         });
       expect(chaiHttpResponse).to.have.status(401);
       expect(chaiHttpResponse.body).to.be.an('object');
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'The fields email and password are required' });
+      
     });
   })
     

@@ -3,8 +3,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../api/app');
 const models  = require('../database/models');
-// const UserValidations = require('../validations/User')
-// const handleThrowError = require('../helpers/errorHandler')
 
 chai.use(chaiHttp);
 
