@@ -24,7 +24,7 @@ export default function SellerHeaderOrderDetails() {
 
   const getOrderStatus = async () => {
     const URL = `http://localhost:3001/orders/${saleId}`;
-    console.log(URL);
+    // console.log(URL);
     const result = await fetchAll(URL);
     // console.log('getOrderStatus', result);
     setStatus(result.status);
@@ -72,7 +72,7 @@ export default function SellerHeaderOrderDetails() {
     } else if (status === 'Preparando') {
       setIsDisabledPreparing(true);
       setIsDisabledDelivery(false);
-    } else if (status === 'Em Trânsito') {
+    } else if (status === 'Em Trânsito' || status === 'Entregue') {
       setIsDisabledPreparing(true);
       setIsDisabledDelivery(true);
     }
