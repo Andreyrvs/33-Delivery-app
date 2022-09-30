@@ -1,24 +1,37 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/AdminPage.css';
-import MyContext from '../context/MyContext';
+// import MyContext from '../context/MyContext';
+import { fetchAllUsers, fetchDelete } from '../services/connectApi';
 
 export default function AdminListUsers() {
-  const { newUser } = useContext(MyContext);
   const [listUser, setListUser] = useState();
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { token } = user;
+  const DELETESUCCES = 204;
 
-  /*
-  const deleteUser = async () => {
-    const URL = '';
-    const result = fecthDeleteUser(URL);
-    if (result.status = 'DELETESUCCES') {
-      setModalMsg('Usuário deletado com sucesso!');
+  const getAllUsers = async () => {
+    const result = await fetchAllUsers();
+    const usersFilter = result.filter((item) => item.role !== 'administrator');
+    setListUser(usersFilter);
+  };
+
+  const deleteUser = async (userId) => {
+    const URL = `http://localhost:3001/admin/delete/${userId}`;
+    const result = await fetchDelete(URL, token);
+    console.log(result);
+    if (result === DELETESUCCES) {
+      getAllUsers();
     }
-  }
-  */
+  };
 
   useEffect(() => {
-    setListUser(newUser);
-  }, [newUser]);
+    getAllUsers();
+  }, []);
+
+  useEffect(() => {
+    getAllUsers();
+  }, [listUser]);
 
   return (
     <section className="adminListUsersContainer">
@@ -66,6 +79,7 @@ export default function AdminListUsers() {
                 className="infoButtonDel"
                 type="button"
                 data-testid={ `admin_manage__element-user-table-remove-${index}` }
+                onClick={ () => deleteUser(item.id) }
               >
                 Excluir
               </button>

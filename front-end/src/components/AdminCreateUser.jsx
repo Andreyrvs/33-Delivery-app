@@ -1,8 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { fetchPost } from '../services/connectApi';
+import { useState, useEffect } from 'react';
+import { fetchPost } from '../services/connectApi';
 import '../css/AdminPage.css';
-import MyContext from '../context/MyContext';
 import validateEmail from '../util/validateEmail';
 
 export default function AdminCreateUser() {
@@ -11,18 +9,22 @@ export default function AdminCreateUser() {
   const [passwordUser, setPasswordUser] = useState('');
   const [roleUser, setRoleUser] = useState('seller');
   const [isDisabled, setIsDisabled] = useState(true);
-  // const [msgError, setMsgError] = useState('');
-  const { setNewUser, newUser } = useContext(MyContext);
+  const [msgError, setMsgError] = useState('');
   const verifyNameLength = 12;
   const verifyPasswordLength = 6;
-  // const url = 'http://localhost:3001/register';
-  const addNewUser = {
+  const CREATED = 201;
+  const CONFLICT = 409;
+
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { token } = user;
+
+  const PAYLOAD = {
     name: nameUser,
     email: emailUser,
     password: passwordUser,
     role: roleUser,
   };
-  // const history = useHistory();
 
   const handleInputName = ({ target }) => {
     if (target.name === 'cadastroName') {
@@ -36,30 +38,21 @@ export default function AdminCreateUser() {
     }
   };
 
-  /*
-  const dataValidation = () => {
-    if (nameUser.length < verifyNameLength) {
-      setMsgError('O nome do usuário deve ter mais de 12 caracteres');
-    } else if (!verifyEmail) {
-      setMsgError('Email inválido, digite um endereço válido');
-    } else if (passwordUser.length < verifyPasswordLength) {
-      setMsgError('A senha deve ter mais de 6 caracteres');
-    } else {
-      return 'ok';
-    }
-  };
-  */
-
   const clearForm = () => {
     setNameUser('');
     setEmailUser('');
     setPasswordUser('');
   };
 
-  const addUser = (event) => {
+  const addUser = async (event) => {
     event.preventDefault();
-    // const result = await fetchPost(url, newUser);
-    setNewUser(() => [...newUser, addNewUser]);
+    const URL = 'http://localhost:3001/admin/register';
+    const result = await fetchPost(URL, PAYLOAD, token);
+    if (result.status === CREATED) {
+      // console.log(result);
+    } else if (result.status === CONFLICT) {
+      setMsgError('Erro ao gravar! Usuário já cadastrado');
+    }
     clearForm();
     setIsDisabled(true);
   };
@@ -74,7 +67,6 @@ export default function AdminCreateUser() {
   const verifyPass = passwordUser.length >= verifyPasswordLength;
 
   useEffect(() => {
-    // console.log(nameLength, verifyEmail, verifyPass);
     if (nameLength && verifyEmail && verifyPass) {
       setIsDisabled(false);
     } else {
@@ -158,7 +150,7 @@ export default function AdminCreateUser() {
         </button>
       </form>
       <p>
-        {/*
+        {
           msgError ? (
             <p
               className="cadastroMsgErro"
@@ -167,7 +159,7 @@ export default function AdminCreateUser() {
               { msgError }
             </p>
           ) : ''
-          */}
+        }
       </p>
     </section>
   );
