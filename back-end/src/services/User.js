@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const { generateToken } = require('../helpers');
+const { generateToken, handleThrowError, httpStatusCode, joi } = require('../helpers');
 const BaseService = require('./Base');
 const UserValidations = require('../validations/User');
 
@@ -18,6 +18,14 @@ class UserService extends BaseService {
     const encryptedPsw = md5(body.password);
     const data = await this.repository.create({ ...body, password: encryptedPsw });
     UserValidations.checkIfCreated(data);
+    return data.user;
+  }
+
+  async adminCreate(body) {
+    joi.user.validateRoleJoi(body.role, httpStatusCode.BAD_REQUEST);
+    if (body.role === 'administrator') handleThrowError('Invalid Role', httpStatusCode.BAD_REQUEST);
+    const encryptedPsw = md5(body.password);
+    const data = await this.repository.create({ ...body, password: encryptedPsw });
     return data.user;
   }
 }
