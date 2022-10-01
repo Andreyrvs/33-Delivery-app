@@ -10,7 +10,11 @@ saleRouter.get('/orders', SaleController.readWithProducts);
 saleRouter.get('/orders/:id', SaleController.readOneWithProducts);
 saleRouter.get('/customer/orders/:id', SaleController.readByCustomerId);
 saleRouter.get('/seller/orders/:id', SaleController.readBySellerId);
-saleRouter.post('/customer/checkout', (req, res, nex) => Auth.customer(req,res,nex), SaleController.create);
+saleRouter.post(
+  "/customer/checkout",
+  (req, res, nex) => Auth.customer(req, res, nex),
+  SaleController.create
+);
 saleRouter.patch('/status/update/:id', Auth.getRole, SaleController.updateSaleStatus);
 
 module.exports = saleRouter;
