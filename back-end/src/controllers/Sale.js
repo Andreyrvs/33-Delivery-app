@@ -34,7 +34,10 @@ class SaleController extends BaseController {
 
   // req.body: { userId: number, sellerId: number, totalPrice: number, deliveryAddress: string, deliveryNumber: string, products: Array<{ productId: number, quantity: number }> }
   async create(req, res) {
+    console.log('adawdawda')
     const data = await this.service.create(req.body);
+    console.log('adawdawda', data)
+
     return res.status(httpStatusCode.CREATED).json(data);
   }
 

@@ -3,6 +3,9 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../api/app");
 const models = require("../database/models");
+const Auth = require('../middlewares/TokenAuth');
+const SaleValidations = require('../validations/Sale');
+const { sale } = require("../Factory");
 
 chai.use(chaiHttp);
 
@@ -54,6 +57,25 @@ const sale2 = (...rest) => ({
   status: "Pendente",
   products: [...rest],
 })
+
+const sale3 = {
+  userId: 3,
+  sellerId: 2,
+  totalPrice: "10.00",
+  deliveryAddress: "address2",
+  deliveryNumber: "7",
+  products: [{
+    productId: 1,
+    quantity: 3,
+  }]
+}
+
+const sale4 = [{
+  productId: 1,
+  quantity: 3,
+  saleId: 2,
+  get: () => (sale4[0])
+}]
 
 const saleProduct = (qtt) => ({
   SaleProduct: {
@@ -107,6 +129,23 @@ describe("test rota get/Orders", () => {
     expect(chaiHttpResponse.body).to.deep.equal(sale1Formated);
   });
   
+  it("teste creat fn sale", async () => {
+    sinon.stub(models.Sale, "create").resolves(sale1Get);
+    sinon.stub(Auth, 'customer').callsFake((req, res, nex) => (nex()))
+    sinon.stub(SaleValidations, 'checkUser').resolves()
+    sinon.stub(SaleValidations, 'checkSeller').resolves()
+    sinon.stub(SaleValidations, 'checkProducts').resolves()
+    sinon.stub(models.SaleProduct, 'bulkCreate').resolves(sale4)
+    console.log('adawdawda', Auth.customer)
+
+    chaiHttpResponse = await chai.request(app)
+      .post("/customer/checkout")
+      .send(sale3)
+
+    expect(chaiHttpResponse.status).to.be.equal(201);
+    expect(chaiHttpResponse.body).to.be.an("object");
+    // expect(chaiHttpResponse.body).to.deep.equal(sales);
+  });
   // it.only("Customer products error orders/:id", async () => {
   //   sinon.stub(models.Sale, "findAll").resolves(null);
 
