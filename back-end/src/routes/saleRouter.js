@@ -11,9 +11,9 @@ saleRouter.get('/orders/:id', SaleController.readOneWithProducts);
 saleRouter.get('/customer/orders/:id', SaleController.readByCustomerId);
 saleRouter.get('/seller/orders/:id', SaleController.readBySellerId);
 saleRouter.post(
-  "/customer/checkout",
+  '/customer/checkout',
   (req, res, nex) => Auth.customer(req, res, nex),
-  SaleController.create
+  SaleController.create,
 );
 saleRouter.patch('/status/update/:id', Auth.getRole, SaleController.updateSaleStatus);
 
