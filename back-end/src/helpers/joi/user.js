@@ -6,10 +6,10 @@ const email = joi.string().email().required().messages({
   'string.email': 'Email must be a valid email',
 });
 
-// const role = joi.string()
-//   .valid('administrator', 'seller', 'customer')
-//   .required()
-//   .messages({ 'any.only': 'Role can be only administrator, seller or customer' });
+const role = joi.string()
+  .valid('administrator', 'seller', 'customer')
+  .required()
+  .messages({ 'any.only': 'Role can be only administrator, seller or customer' });
 
 const password = joi.string().min(6).required().messages({
   'string.base': 'Password must be an string',
@@ -37,9 +37,11 @@ function joiHandler(value, statusCode, joiSchema) {
 const validateUserJoi = (value, statusCode) => joiHandler(value, statusCode, UserJoiSchema);
 const validateEmailJoi = (value, statusCode) => joiHandler(value, statusCode, email);
 const validateLoginJoi = (value, statusCode) => joiHandler(value, statusCode, UserLoginSchema);
+const validateRoleJoi = (value, statusCode) => joiHandler(value, statusCode, role);
 
 module.exports = {
   validateUserJoi,
   validateEmailJoi,
   validateLoginJoi,
+  validateRoleJoi,
 };

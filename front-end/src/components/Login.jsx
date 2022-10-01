@@ -23,11 +23,7 @@ export default function Login() {
   const NOTFOUND = 404;
   const UNAUTHORIZED = 401;
 
-  /*
   const userString = localStorage.getItem('user');
-  const user = JSON.parse(userString);
-  const { token } = user;
-  */
 
   const handleInputEmail = ({ target }) => {
     setloginEmail(target.value);
@@ -58,7 +54,6 @@ export default function Login() {
       } else if (result.data.role === 'seller') {
         history.push('/seller/orders');
       } else if (result.data.role === 'administrator') {
-        console.log('Faça a rota filhote');
         history.push('/admin/manage');
       }
     } else if (result.status === UNAUTHORIZED) {
@@ -73,17 +68,21 @@ export default function Login() {
   };
 
   useEffect(() => {
+    if (userString) {
+      const user = JSON.parse(userString);
+      const { token } = user;
+      if (token) {
+        history.push('/customer/products');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const validate = validateEmail(loginEmail);
     const psw = loginPassword.length >= SIX;
     if (validate && psw) {
       setisDisabled(false);
     }
-    /*
-    if (token && sale) {
-      console.log('ta logado');
-      // history.push('/customer/products');
-    }
-    */
   }, [loginEmail, loginPassword, msgError]);
 
   return (

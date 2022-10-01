@@ -1,24 +1,35 @@
-import { useState, useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { fetchPost } from '../services/connectApi';
+import { useState, useEffect } from 'react';
+import { fetchPost } from '../services/connectApi';
 import '../css/AdminPage.css';
-import MyContext from '../context/MyContext';
+import validateEmail from '../util/validateEmail';
 
 export default function AdminCreateUser() {
   const [nameUser, setNameUser] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
   const [roleUser, setRoleUser] = useState('seller');
-  const [isDisabled, setIsDisabled] = useState(false);
-  const { setNewUser, newUser } = useContext(MyContext);
-  // const url = 'http://localhost:3001/register';
-  const addNewUser = {
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [msgError, setMsgError] = useState('');
+  const verifyNameLength = 12;
+  const verifyPasswordLength = 6;
+  const CREATED = 201;
+  const CONFLICT = 409;
+
+  // verify and disable button
+  const nameLength = nameUser.length > verifyNameLength;
+  const verifyEmail = validateEmail(emailUser);
+  const verifyPass = passwordUser.length >= verifyPasswordLength;
+
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const { token } = user;
+
+  const PAYLOAD = {
     name: nameUser,
     email: emailUser,
     password: passwordUser,
     role: roleUser,
   };
-  // const history = useHistory();
 
   const handleInputName = ({ target }) => {
     if (target.name === 'cadastroName') {
@@ -32,30 +43,40 @@ export default function AdminCreateUser() {
     }
   };
 
-  /*
   const clearForm = () => {
     setNameUser('');
     setEmailUser('');
     setPasswordUser('');
   };
-  */
 
-  const addUser = (event) => {
+  const addUser = async (event) => {
     event.preventDefault();
-    // const result = await fetchPost(url, newUser);
-    console.log('result');
-    setNewUser(() => [...newUser, addNewUser]);
-    // clearForm();
+    let result = '';
+    const URL = 'http://localhost:3001/admin/register';
+    if (nameLength && verifyEmail && verifyPass) {
+      result = await fetchPost(URL, PAYLOAD, token);
+    }
+    if (result.status === CREATED) {
+      console.log(result);
+    } else if (result.status === CONFLICT) {
+      setMsgError('Erro ao gravar! Usuário já cadastrado');
+    }
+    clearForm();
+    setIsDisabled(true);
   };
 
   useEffect(() => {
+    clearForm();
   }, []);
 
   useEffect(() => {
-    if (nameUser && emailUser && passwordUser && roleUser) {
+    if (nameLength && verifyEmail && verifyPass) {
       setIsDisabled(false);
-    }
-  }, [nameUser, emailUser, passwordUser, roleUser]);
+    } /* else if (!nameLength || !verifyEmail || !verifyPass) {
+      setIsDisabled(true);
+    } */
+  }, [nameUser, emailUser, passwordUser,
+    isDisabled, nameLength, verifyEmail, verifyPass]);
 
   return (
     <section className="pageAdminContainer">
@@ -130,22 +151,17 @@ export default function AdminCreateUser() {
         >
           CADASTRAR
         </button>
-        {/*
-          msgErro && (
-            <p
-              className="cadastroMsgErro"
-              data-testid="common_register__element-invalid_register"
-            >
-              { msgErro }
-            </p>
-          )
-          */}
       </form>
-      <p
-        data-testid="admin_manage__element-invalid-register"
-      >
-        msg de erro
-      </p>
+      {
+        msgError ? (
+          <p
+            className="cadastroMsgErro"
+            data-testid="admin_manage__element-invalid-register"
+          >
+            { msgError }
+          </p>
+        ) : ''
+      }
     </section>
   );
 }

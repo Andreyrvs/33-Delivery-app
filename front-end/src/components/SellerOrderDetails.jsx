@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import '../css/OrderDetailsPage.css';
@@ -11,11 +12,9 @@ export default function SellerOrderDetails() {
   const [productsList, setProductsList] = useState();
 
   const getOrderSelected = async () => {
-    // console.log('id', orderSelected);
     const URL = `http://localhost:3001/orders/${orderSelected.id}`;
     const result = await fetchAll(URL);
     setProductsList(result.products);
-    // console.log('result', productsList);
     setOrder(result);
   };
 

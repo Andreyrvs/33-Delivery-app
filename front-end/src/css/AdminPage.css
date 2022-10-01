@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .titleAdminPage {
   margin: auto;
   margin-bottom: 30px;
@@ -134,11 +139,12 @@
   align-items: center;
   border-radius: 10px;
   display: flex;
-  font-size: 36px;
   font-weight: 500;
-  height: 63px;
-  margin-bottom: 10px;
   width: 1640px;
+}
+
+.infoTableAdminList p, button {
+  margin-bottom: 10px;
 }
 
 .infoIndex {
@@ -188,7 +194,7 @@
   color: white;
   cursor: pointer;
   display: flex;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 500;
   height: 63px;
   justify-content: center;
