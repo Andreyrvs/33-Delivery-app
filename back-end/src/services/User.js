@@ -16,8 +16,10 @@ class UserService extends BaseService {
   async create(body) {
     UserValidations.reqUser(body);
     const encryptedPsw = md5(body.password);
+    console.log('oooooooooooooop', body);
     const data = await this.repository.create({ ...body, password: encryptedPsw });
     UserValidations.checkIfCreated(data);
+    console.log('eeeeeeeeeeeeeeeeeepa', data);
     return data.user;
   }
 
