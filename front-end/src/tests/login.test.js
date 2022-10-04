@@ -1,70 +1,110 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/dom';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
+import mockLogin from './mockLogin';
+import mockFetch from './mockFetch';
 
-describe('teste rota /login', () => {
-  it('tem email', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const getEmail = screen.getByTestId('common_login__input-email');
-    expect(getEmail).toBeInTheDocument();
-    expect(getEmail.type).toBe('email');
+describe('Testes da página de Login', () => {
+  const dataTestInputEmail = 'common_login__input-email';
+  const dataTestInputPassword = 'common_login__input-password';
+  const dataTestButtonLogin = 'common_login__button-login';
+  const dataTestButtonRegister = 'common_login__button-register';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
   });
 
-  it('tem password', () => {
+  it('Renderizar na rota /login', () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const getPassword = screen.getByTestId('common_login__input-password');
-    expect(getPassword).toBeInTheDocument();
-    expect(getPassword.type).toBe('password');
+
+    expect(history.location.pathname).toBe('/login');
   });
 
-  it('tem button login', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const getLogin = screen.getByTestId('common_login__button-login');
-    const button = screen.getAllByRole('button');
-    expect(getLogin).toBeInTheDocument();
-    expect(button).toHaveLength(2);
-  });
-
-  it('tem button register', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const register = screen.getByTestId('common_login__button-register');
-    expect(register).toBeInTheDocument();
-  });
-
-  it('button register tem texto, "Ainda não tenho cadastro"', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const click1 = jest.fn();
-    userEvent.click(screen.getByText('Ainda não tenho cadastro'));
-    expect(click1).toHaveBeenCalledTimes(0);
-  });
-
-  it('tem button register, redireciona', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/login');
-    const getRegister = screen.getByTestId('common_login__button-register');
-    userEvent.click(getRegister);
-    const { location: { pathname } } = history;
-    expect(pathname).toBe('/register');
-  });
-
-  it('verifica email e password', () => {
+  it('tem data-test-"common_login__input-email', () => {
     renderWithRouter(<App />);
-    const validEmail = 'email@example.com';
-    const validPassword = '1234567';
 
-    const inputEmail = screen.getByTestId('common_login__input-email');
-    const inputPassword = screen.getByTestId('common_login__input-password');
-    const button = screen.getByRole('button', { name: /login/i });
+    const inputEmail = screen.getByTestId(dataTestInputEmail);
 
-    userEvent.type(inputEmail, validEmail);
-    userEvent.type(inputPassword, validPassword);
-    expect(button).toBeEnabled();
+    expect(inputEmail).toBeInTheDocument();
   });
+
+  it('Tem data-test-"common_login__input-password"', () => {
+    renderWithRouter(<App />);
+
+    const inputPassword = screen.getByTestId(dataTestInputPassword);
+
+    expect(inputPassword).toBeInTheDocument();
+  });
+
+  it('Tem data-test-"common_login__button-login"', () => {
+    renderWithRouter(<App />);
+
+    const buttonLogin = screen.getByTestId(dataTestButtonLogin);
+
+    expect(buttonLogin).toBeInTheDocument();
+  });
+
+  it('Tem data-test-"common_login__button-register"', () => {
+    renderWithRouter(<App />);
+
+    const buttonRegister = screen.getByTestId(dataTestButtonRegister);
+
+    expect(buttonRegister).toBeInTheDocument();
+  });
+
+  it('Se o formato de email for inválido botão de login devera esta desabilitado', () => {
+    renderWithRouter(<App />);
+
+    const inputEmail = screen.getByTestId(dataTestInputEmail);
+    const buttonLogin = screen.getByTestId(dataTestButtonLogin);
+
+    userEvent.type(inputEmail, mockLogin.loginInvalid.email);
+
+    expect(buttonLogin).toBeDisabled();
+  });
+
+  it('Se o formato de password inválido botão de login devera esta desabilitado', () => {
+    renderWithRouter(<App />);
+
+    const inputEmail = screen.getByTestId(dataTestInputEmail);
+    const buttonLogin = screen.getByTestId(dataTestButtonLogin);
+
+    userEvent.type(inputEmail, mockLogin.loginInvalid.password);
+
+    expect(buttonLogin).toBeDisabled();
+  });
+
+  it(`Redireciona o (administrador) para tela de gerenciamento se as
+  credenciais forem corretamente preenchidas`, async () => {
+    global.fetch = jest.fn(mockFetch.mockFetchSuccess);
+
+    const { history } = renderWithRouter(<App />);
+
+    const inputEmail = screen.getByTestId(dataTestInputEmail);
+    const inputPassword = screen.getByTestId(dataTestInputPassword);
+    const buttonLogin = screen.getByTestId(dataTestButtonLogin);
+
+    userEvent.type(inputEmail, mockLogin.validLoginAdmin.email);
+    userEvent.type(inputPassword, mockLogin.validLoginAdmin.password);
+    userEvent.click(buttonLogin);
+
+    expect(history.location.pathname).toBe('/login');
+  });
+
+  // it('redireciona para tela de registro ao clicar no botão', async () => {
+  //   global.fetch = jest.fn(mockFetch.mockFetchSuccess);
+  //   const { history } = renderWithRouter(<App />);
+
+  //   const buttonRegister = screen.getByTestId(dataTestButtonRegister);
+
+  //   userEvent.click(buttonRegister);
+
+  //   const findRegist = await screen.findByTestId('common_register__input-name');
+
+  //   expect(findRegist).toBeInTheDocument();
+  //   expect(history.location.pathname).toBe('/register');
+  // });
 });
