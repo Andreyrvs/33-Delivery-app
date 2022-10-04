@@ -93,18 +93,4 @@ describe('Testes da página de Login', () => {
 
     expect(history.location.pathname).toBe('/login');
   });
-
-  // it('redireciona para tela de registro ao clicar no botão', async () => {
-  //   global.fetch = jest.fn(mockFetch.mockFetchSuccess);
-  //   const { history } = renderWithRouter(<App />);
-
-  //   const buttonRegister = screen.getByTestId(dataTestButtonRegister);
-
-  //   userEvent.click(buttonRegister);
-
-  //   const findRegist = await screen.findByTestId('common_register__input-name');
-
-  //   expect(findRegist).toBeInTheDocument();
-  //   expect(history.location.pathname).toBe('/register');
-  // });
 });
