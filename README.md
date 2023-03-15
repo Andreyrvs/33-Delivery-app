@@ -1,13 +1,77 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# My Awesome Project
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+## Contexto
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+Este projeto trata-se de uma ferramenta de back-office para armazenar e buscar dados de erros que ocorreram com clientes.
+
+<!-- 
+> Utiliza a API []()
+ -->
+
+<!-- 
+Colegas que contribuíram para a realização do projeto:
+
+- [@colega1](https://github.com/ "github")
+- [@colega2](https://github.com/ "github")
+ -->
+
+## Técnologias usadas
+
+Front-end:
+> Desenvolvido usando: React, Redux, CSS3, HTML5, Redis, ES6
+
+Back-end:
+> Desenvolvido usando: NodeJS, ExpressJS, MongoDB, MYSQL, ES6
+
+## Habilidades
+
+Adquiri essas habilidades ao desenvolver esse projeto:
+
+## Preview da Aplicação
+
+| ![Login](./aplicacao-) | ![Home](./aplicacao-) |
+| ----------- | ----------- |
+
+## Instalando Dependências
+
+- clone o projeto:
+
+  ```bash
+  git clone 
+  ```
+
+  > Backend
+
+  ```bash
+  cd api/ 
+  npm install
+  ```
+
+  > Frontend
+
+  ```bash
+  cd src/
+  npm install
+  ```
+
+## Executando aplicação
+
+- Para rodar o back-end:
+
+  ```bash
+  cd api/ && npm start
+  ```
+
+- Para rodar o front-end:
+
+  ```bash
+  cd src/ && npm start
+  ```
+
+## Executando Testes
+
+- Para rodar todos os testes:
+
+  ```bash
+  npm test
+  ```
