@@ -28,10 +28,10 @@ Colegas que contribuíram para a realização do projeto:
 ## Técnologias usadas
 
 Front-end:
-> Desenvolvido usando: React, Redux, CSS3, HTML5, Redis, ES6
+> Desenvolvido usando: React, CSS3, HTML5, Javascript, JWT
 
 Back-end:
-> Desenvolvido usando: Node.js, Express.js, Javascript, ES6, MYSQL, Sequelize ORM,Docker, JWT, Mochajs, Chaijs, SinonJs,
+> Desenvolvido usando: Node.js, Express.js, Javascript, ES6, MYSQL, Sequelize ORM,Docker, JWT, Mochajs, Chaijs, SinonJs.
 
 ## Habilidades
 
@@ -47,13 +47,27 @@ Adquiri essas habilidades ao desenvolver esse projeto:
 - clone o projeto:
 
   ```bash
-  git clone 
+  git clone git@github.com:Andreyrvs/33-delivery-app.git && 
+  cd 33-delivery-app
+  ```
+
+  > Banco de Dados
+
+  ```bash
+  cd back-end &&
+  docker compose up -d
+  ```
+
+  ```bash
+  cd .. &&
+  npm run db:reset
   ```
 
   > Backend
 
   ```bash
-  cd api/ 
+  cd 33-delivery-app &&
+  db:reset
   npm install
   ```
 
