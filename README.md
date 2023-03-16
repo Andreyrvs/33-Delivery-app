@@ -39,8 +39,14 @@ Adquiri essas habilidades ao desenvolver esse projeto:
 
 ## Preview da Aplicação
 
-| ![Login](./aplicacao-) | ![Home](./aplicacao-) |
-| ----------- | ----------- |
+| Aplicativo de delivery                           | Disk Pinga🥛                                       |
+| :---:                                            | :---:                                              |
+| Login                                            | Home                                               |
+| ![Login](./readme-assets/01-aplicacao-login.webp) | ![Home](./readme-assets/02-aplicacao-home.webp)     |
+| Carrinho de compras                              | Pedidos                                            |
+| ![Cart](./readme-assets/03-aplicacao-cart.webp)   | ![orders](./readme-assets/04-aplicacao-orders.webp) |
+| Painel do admnistrador                           | Painel do Vendedor                                 |
+| ![Admin](./readme-assets/05-aplicacao-adm.webp)   | ![Seller](./readme-assets/06-aplicacao-seller.webp) |
 
 ## Instalando Dependências
 
@@ -52,6 +58,11 @@ Adquiri essas habilidades ao desenvolver esse projeto:
   ```
 
   > Banco de Dados
+
+  | .   | Diagrama DER                                          | .   |
+  | --- | :---:                                                 | --- |
+  |     | ![Login](./readme-assets/07-aplicacao-diagram-er.webp) |     |
+  | .   |                                                       | .   |
 
   ```bash
   cd back-end &&
