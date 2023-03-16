@@ -66,9 +66,8 @@ Adquiri essas habilidades ao desenvolver esse projeto:
   > Backend
 
   ```bash
-  cd 33-delivery-app &&
-  db:reset
-  npm install
+  npm run dev:prestart &&
+  npm run dev
   ```
 
   > Frontend
