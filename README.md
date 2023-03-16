@@ -92,5 +92,8 @@ Adquiri essas habilidades ao desenvolver esse projeto:
 - Para rodar todos os testes do front-end:
 
   ```bash
-  npm test
+  # na raiz do projeto
+  npm run pretest
+  cd front-end
+  test:coverage
   ```
