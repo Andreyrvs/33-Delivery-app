@@ -63,37 +63,33 @@ Adquiri essas habilidades ao desenvolver esse projeto:
   npm run db:reset
   ```
 
-  > Backend
+  > Backend && Frontend
 
   ```bash
-  npm run dev:prestart &&
-  npm run dev
-  ```
+  npm run dev:prestart
 
-  > Frontend
-
-  ```bash
-  cd src/
-  npm install
   ```
 
 ## Executando aplicação
 
-- Para rodar o back-end:
+- Para rodar o back-end && front-end:
 
   ```bash
-  cd api/ && npm start
-  ```
-
-- Para rodar o front-end:
-
-  ```bash
-  cd src/ && npm start
+  npm run dev
   ```
 
 ## Executando Testes
 
-- Para rodar todos os testes:
+- Para rodar todos os testes do back-end:
+
+  ```bash
+  # na raiz do projeto
+  npm run pretest
+  cd back-end
+  test:coverage
+  ```
+
+- Para rodar todos os testes do front-end:
 
   ```bash
   npm test
